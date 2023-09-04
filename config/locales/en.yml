@@ -18,7 +18,7 @@ en:
             success: The link deletion succeeded.
           update:
             error: The link update failed.
-            success: The link update failed.
+            success: The link update succeeded.
       titles:
         nav: Navigation
     nav:
