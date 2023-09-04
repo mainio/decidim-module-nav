@@ -16,10 +16,10 @@ original module. The development may diverge from the original module and we may
 want to add extra features to it as well.
 
 Admin view:
-![Admin view](https://github.com/mainio/decidim-module-nav/blob/media/admin.png)
+![Admin view](docs/admin.png)
 
 Homepage view:
-![Home view](https://github.com/mainio/decidim-module-nav/blob/media/home.png)
+![Home view](docs/home.png)
 
 ## Installation
 
