@@ -1,0 +1,44 @@
+---
+fi:
+  decidim:
+    admin:
+      models:
+        nav:
+          link:
+            fields:
+              href: Linkki
+              title: Otsikko
+              weight: Järjestysnumero
+      nav:
+        links:
+          create:
+            error: Linkin luonti epäonnistui.
+            success: Linkin luonti onnistui.
+          destroy:
+            success: Linkin poisto onnistui.
+          update:
+            error: Linkin päivitys epäonnistui.
+            success: Linkin päivitys onnistui.
+      titles:
+        nav: Navigaatio
+    nav:
+      admin:
+        links:
+          edit:
+            title: Otsikko
+            update: Päivitä
+          form:
+            href: Linkki
+            new_tab: Uuteen välilehteen
+            same_tab: Samaan välilehteen
+            title: Otsikko
+            weight: Järjestysnumero
+          index:
+            no_links: Linkkejä ei ole saatavilla.
+          new:
+            create: Luo
+            title: Otsikko
+  decidim_nav:
+    admin:
+      menu:
+        nav: Navigaatio

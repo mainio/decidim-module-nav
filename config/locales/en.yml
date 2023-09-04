@@ -1,0 +1,44 @@
+---
+en:
+  decidim:
+    admin:
+      models:
+        nav:
+          link:
+            fields:
+              href: Link
+              title: Title
+              weight: Order number
+      nav:
+        links:
+          create:
+            error: The link creation failed.
+            success: The link creation succeeded.
+          destroy:
+            success: The link deletion succeeded.
+          update:
+            error: The link update failed.
+            success: The link update failed.
+      titles:
+        nav: Navigation
+    nav:
+      admin:
+        links:
+          edit:
+            title: Title
+            update: Update
+          form:
+            href: Link
+            new_tab: New tab
+            same_tab: Same tab
+            title: Title
+            weight: Order number
+          index:
+            no_links: No links available.
+          new:
+            create: Create
+            title: Title
+  decidim_nav:
+    admin:
+      menu:
+        nav: Navigation

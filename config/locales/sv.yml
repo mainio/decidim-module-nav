@@ -1,0 +1,44 @@
+---
+sv:
+  decidim:
+    admin:
+      models:
+        nav:
+          link:
+            fields:
+              href: Länk
+              title: Titel
+              weight: Ordernummer
+      nav:
+        links:
+          create:
+            error: Det gick inte att skapa länken.
+            success: Länkskapningen lyckades.
+          destroy:
+            success: Länkraderingen lyckades.
+          update:
+            error: Länkuppdateringen misslyckades.
+            success: Länkuppdateringen lyckades.
+      titles:
+        nav: Navigering
+    nav:
+      admin:
+        links:
+          edit:
+            title: Titel
+            update: Uppdatera
+          form:
+            href: Länk
+            new_tab: Ny flik
+            same_tab: Samma flik
+            title: Titel
+            weight: Ordernummer
+          index:
+            no_links: Inga länkar tillgängliga.
+          new:
+            create: Skapa
+            title: Titel
+  decidim_nav:
+    admin:
+      menu:
+        nav: Navigering
