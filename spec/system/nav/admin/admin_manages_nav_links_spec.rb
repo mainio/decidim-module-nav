@@ -35,7 +35,7 @@ describe "Nav Links", type: :system do
         find("*[type=submit]").click
       end
 
-      expect(page).to have_admin_callout("Success")
+      expect(page).to have_admin_callout("The link creation succeeded.")
       within "table" do
         expect(page).to have_content("My title")
       end
@@ -67,7 +67,7 @@ describe "Nav Links", type: :system do
           within ".edit_link" do
             expect(page).to have_field("link[title_en]", with: translated(nav_link.title, locale: :en))
             expect(page).to have_field("link[href_en]", with: translated(nav_link.href, locale: :en))
-            expect(page).to have_field("Weight", with: nav_link.weight)
+            expect(page).to have_field("Order number", with: nav_link.weight)
           end
         end
 
@@ -86,7 +86,7 @@ describe "Nav Links", type: :system do
             find("*[type=submit]").click
           end
 
-          expect(page).to have_admin_callout("Success")
+          expect(page).to have_admin_callout("The link update succeeded.")
 
           within "table" do
             expect(page).to have_content("Another title")
@@ -99,9 +99,9 @@ describe "Nav Links", type: :system do
         within find("#nav_link_#{nav_link.id}", text: translated(nav_link.title)) do
           accept_confirm { click_link "Delete" }
         end
-        expect(page).to have_admin_callout("Success")
+        expect(page).to have_admin_callout("The link deletion succeeded.")
         within ".card-section" do
-          expect(page).to have_content("No links")
+          expect(page).to have_content("No links available.")
         end
       end
     end
