@@ -16,6 +16,3 @@ jobs:
     name: Lint code
     uses: mainio/gha-decidim-module/.github/workflows/lint.yml@main
     secrets: inherit
-    with:
-      eslint: true
-      stylelint: true
