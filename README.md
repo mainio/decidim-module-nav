@@ -26,7 +26,7 @@ Homepage view:
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'decidim-nav', github: "mainio/decidim-module-nav", branch: "main"
+gem "decidim-nav", github: "mainio/decidim-module-nav", branch: "main"
 ```
 
 And then execute:
