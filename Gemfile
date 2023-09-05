@@ -15,25 +15,26 @@ DECIDIM_VERSION = Decidim::Nav.decidim_version
 gem "decidim", DECIDIM_VERSION
 gem "decidim-nav", path: "."
 
-gem "bootsnap"
-gem "uglifier", "~> 4.1"
+gem "bootsnap", "~> 1.4"
+
+gem "puma", ">= 5.6.2"
+
+gem "faker", "~> 2.14"
 
 group :development, :test do
-  gem "faker", "~> 2.18"
+  gem "byebug", "~> 11.0", platform: :mri
 
   gem "decidim-dev", DECIDIM_VERSION
-  gem "rubocop-performance"
-  gem "simplecov", require: false
+
+  gem "brakeman", "~> 5.2"
+  gem "parallel_tests", "~> 3.7"
+  gem "rubocop-faker"
 end
 
 group :development do
-  gem "letter_opener_web", "~> 1.3"
+  gem "letter_opener_web", "~> 2.0"
   gem "listen", "~> 3.1"
   gem "spring", "~> 2.0"
   gem "spring-watcher-listen", "~> 2.0"
-  gem "web-console", "~> 3.5"
-end
-
-group :test do
-  gem "rubocop-faker"
+  gem "web-console", "~> 4.2"
 end
