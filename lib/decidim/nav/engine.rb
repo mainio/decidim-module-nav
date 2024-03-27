@@ -10,20 +10,16 @@ module Decidim
 
       initializer "decidim_nav.menu" do
         config.after_initialize do
-          # Overrides the default menu
-          Decidim::MenuRegistry.create(:menu)
+          builder = Decidim::Nav::MenuBuilder.new
+          builder.build
+        end
+      end
 
-          # Adds the correct items for the menu
-          Decidim.menu :menu do |menu|
-            Link.with_organization(current_organization).top_level.ordered.each_with_index do |link, idx|
-              menu.add_item "link_#{link.id}".to_sym,
-                            translated_attribute(link.title),
-                            translated_attribute(link.href),
-                            position: idx,
-                            active: :exact,
-                            target: link.target
-            end
-          end
+      initializer "decidim_nav.add_customizations", before: "decidim_comments.query_extensions" do
+        config.to_prepare do
+          # Presenter extensions
+          Decidim::MenuPresenter.include(Decidim::Nav::MenuPresenterExtensions)
+          Decidim::MenuItemPresenter.include(Decidim::Nav::MenuItemPresenterExtensions)
         end
       end
     end

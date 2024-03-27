@@ -1,5 +1,22 @@
 ---
 fi:
+  activemodel:
+    attributes:
+      nav_link:
+        href: Linkki
+        parent_id: Yläsivu
+        target: Linkin kohde
+        target_options:
+          new_tab: Uusi välilehti
+          same_tab: Sama välilehti
+        title: Otsikko
+        weight: Järjestysnumero
+      nav_link_rule:
+        operator: Operaattori
+        position: Järjestysnumero
+        rule_type: Tyyppi
+        source: Lähde
+        value: Arvo
   decidim:
     admin:
       models:
@@ -25,19 +42,35 @@ fi:
       admin:
         links:
           edit:
-            title: Otsikko
+            title: Muokkaa linkkiä
             update: Päivitä
           form:
-            href: Linkki
-            new_tab: Uuteen välilehteen
-            same_tab: Samaan välilehteen
-            title: Otsikko
-            weight: Järjestysnumero
+            add_rule: Lisää sääntö
+            current_page_rules: Nykyisen sivun säännöt
+            no_parent: (Juuritasolla)
           index:
             no_links: Linkkejä ei ole saatavilla.
+          link_rule:
+            down: Alas
+            link_rule: Sääntö
+            operator:
+              contains: Sisältää tekstin
+              end_with: Päättyy tekstiin
+              equals: Yhtä kuin
+              start_with: Alkaa tekstillä
+              not_contains: Ei sisällä tekstiä
+              not_end_with: Ei pääty tekstiin
+              not_equals: Erisuuri kuin
+              not_start_with: Ei ala tekstillä
+            remove: Poista
+            up: Ylös
           new:
             create: Luo
-            title: Otsikko
+            title: Uusi linkki
+      shared:
+        subnav:
+          close: Sulje alavalikko kohteelle %{title}
+          open: Avaa alavalikko kohteelle %{title}
   decidim_nav:
     admin:
       menu:

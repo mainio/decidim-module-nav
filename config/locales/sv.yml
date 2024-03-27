@@ -1,5 +1,22 @@
 ---
 sv:
+  activemodel:
+    attributes:
+      nav_link:
+        href: Länk
+        parent_id: Föräldrasida
+        target: Länkmål
+        target_options:
+          new_tab: Ny flik
+          same_tab: Samma flik
+        title: Titel
+        weight: Ordernummer
+      nav_link_rule:
+        operator: Operatör
+        position: Beställningsposition
+        rule_type: Typ
+        source: Källa
+        value: Värde
   decidim:
     admin:
       models:
@@ -25,19 +42,35 @@ sv:
       admin:
         links:
           edit:
-            title: Titel
+            title: Redigera länk
             update: Uppdatera
           form:
-            href: Länk
-            new_tab: Ny flik
-            same_tab: Samma flik
-            title: Titel
-            weight: Ordernummer
+            add_rule: Lägg till regel
+            current_page_rules: Aktuella sidregler
+            no_parent: (På rotnivå)
           index:
             no_links: Inga länkar tillgängliga.
+          link_rule:
+            down: Ner
+            link_rule: Regel
+            operator:
+              contains: Innehåller text
+              end_with: Avslutar med text
+              equals: Lika
+              start_with: Börjar med text
+              not_contains: Innehåller ingen text
+              not_end_with: Slutar inte med text
+              not_equals: Är inte lika med
+              not_start_with: Börjar inte med text
+            remove: Radera
+            up: Upp
           new:
             create: Skapa
-            title: Titel
+            title: Ny länk
+      shared:
+        subnav:
+          close: Stäng undernavigering för %{title}
+          open: Öppna undernavigering för %{title}
   decidim_nav:
     admin:
       menu:

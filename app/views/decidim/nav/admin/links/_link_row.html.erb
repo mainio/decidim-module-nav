@@ -1,0 +1,22 @@
+<tr id="<%= "nav_link_#{link.id}" %>">
+  <td>
+    <%== "#{"&ndash;" * level}&nbsp;" if level > 0 %>
+    <%= translated_attribute(link.title) %>
+  </td>
+  <td>
+    <%= link.weight %>
+  </td>
+  <td>
+    <%= link_to translated_attribute(link.href), translated_attribute(link.href), target: :blank %>
+  </td>
+  <td class="table-list__actions">
+    <% if allowed_to? :update, :nav_link %>
+      <%= icon_link_to "pencil", [:edit, link], t("actions.edit", scope: "decidim.admin"), class: "action-icon--edit", method: :get, data: {} %>
+    <% end %>
+    <% if allowed_to? :destroy, :nav_link %>
+      <%= icon_link_to "circle-x", link, t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } %>
+    <% end %>
+  </td>
+</tr>
+
+<%= render partial: "link_row", collection: link.children, as: :link, locals: { level: level + 1 } %>

@@ -22,7 +22,11 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
-          update_link
+          transaction do
+            update_link
+            update_rules
+          end
+
           broadcast(:ok)
         end
 
@@ -36,12 +40,38 @@ module Decidim
 
         def attributes
           {
+            parent_id: form.parent_id,
             title: form.title,
             href: form.href,
             weight: form.weight,
             target: form.target,
             organization: form.organization
           }
+        end
+
+        def update_rules
+          # Update the rules
+          form.current_page_rules.each do |r|
+            if r.deleted
+              rule = @link.rules.find_by(id: r.id) if r.id.present?
+              rule.destroy! if rule
+              next
+            end
+
+            attrs = {
+              value: r.value,
+              rule_type: r.rule_type,
+              source: r.source,
+              position: r.position,
+              operator: r.operator
+            }
+            if r.id.present?
+              rule = @link.rules.find(id: r.id)
+              rule.update!(attrs)
+            else
+              @link.rules.create!(attrs)
+            end
+          end
         end
       end
     end

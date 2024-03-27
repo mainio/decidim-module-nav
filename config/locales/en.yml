@@ -1,5 +1,22 @@
 ---
 en:
+  activemodel:
+    attributes:
+      nav_link:
+        href: Link
+        parent_id: Parent page
+        target: Link target
+        target_options:
+          new_tab: New tab
+          same_tab: Same tab
+        title: Title
+        weight: Order number
+      nav_link_rule:
+        operator: Operator
+        position: Order position
+        rule_type: Type
+        source: Source
+        value: Value
   decidim:
     admin:
       models:
@@ -25,19 +42,35 @@ en:
       admin:
         links:
           edit:
-            title: Title
+            title: Edit link
             update: Update
           form:
-            href: Link
-            new_tab: New tab
-            same_tab: Same tab
-            title: Title
-            weight: Order number
+            add_rule: Add rule
+            current_page_rules: Current page rules
+            no_parent: (At root level)
           index:
             no_links: No links available.
+          link_rule:
+            down: Down
+            link_rule: Rule
+            operator:
+              contains: Contains text
+              end_with: Ends with text
+              equals: Equals
+              start_with: Starts with text
+              not_contains: Does not contain text
+              not_end_with: Does not end with text
+              not_equals: Does not equal
+              not_start_with: Does not start with text
+            remove: Remove
+            up: Up
           new:
             create: Create
-            title: Title
+            title: New link
+      shared:
+        subnav:
+          close: Close subnavigation for %{title}
+          open: Open subnavigation for %{title}
   decidim_nav:
     admin:
       menu:

@@ -21,22 +21,43 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid?
 
-          create_link
-          broadcast(:ok)
+          transaction do
+            create_link
+            create_rules
+          end
+
+          broadcast(:ok, link)
         end
 
         private
 
-        attr_reader :form
+        attr_reader :form, :link
 
         def create_link
-          Decidim::Nav::Link.create!(
+          @link = Decidim::Nav::Link.create!(
+            parent_id: form.parent_id,
             title: form.title,
             href: form.href,
             weight: form.weight,
             target: form.target,
             organization: form.organization
           )
+        end
+
+        def create_rules
+          # Create the rules
+          form.current_page_rules.each do |r|
+            next if r.deleted
+
+            attrs = {
+              value: r.value,
+              rule_type: r.rule_type,
+              source: r.source,
+              position: r.position,
+              operator: r.operator
+            }
+            link.rules.create!(attrs)
+          end
         end
       end
     end
