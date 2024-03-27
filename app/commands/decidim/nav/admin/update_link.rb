@@ -66,7 +66,7 @@ module Decidim
               operator: r.operator
             }
             if r.id.present?
-              rule = @link.rules.find(id: r.id)
+              rule = @link.rules.find(r.id)
               rule.update!(attrs)
             else
               @link.rules.create!(attrs)
