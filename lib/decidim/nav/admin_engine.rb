@@ -11,7 +11,6 @@ module Decidim
 
       routes do
         resources :links, except: [:show]
-        root to: "links#index"
       end
 
       initializer "decidim_nav_admin.mount_routes" do
