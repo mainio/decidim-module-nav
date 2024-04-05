@@ -14,6 +14,14 @@ module Decidim
         attribute :operator, Integer
         attribute :deleted, Boolean, default: false
 
+        def map_model(rule)
+          # Map the literal enum values to their integer values as expected
+          # by the form.
+          self.rule_type = Decidim::Nav::LinkRule.rule_types[rule.rule_type]
+          self.source = Decidim::Nav::LinkRule.sources[rule.source]
+          self.operator = Decidim::Nav::LinkRule.operators[rule.operator]
+        end
+
         def to_param
           return id if id.present?
 
