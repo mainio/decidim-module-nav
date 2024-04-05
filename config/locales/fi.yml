@@ -19,6 +19,8 @@ fi:
         value: Arvo
   decidim:
     admin:
+      actions:
+        links: Linkit
       models:
         nav:
           link:

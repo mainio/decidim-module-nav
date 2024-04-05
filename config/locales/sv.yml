@@ -19,6 +19,8 @@ sv:
         value: Värde
   decidim:
     admin:
+      actions:
+        links: Länkar
       models:
         nav:
           link:

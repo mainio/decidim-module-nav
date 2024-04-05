@@ -1,0 +1,12 @@
+<%
+current_children = children[link.id]
+%>
+
+<div class="actions-panel bg-secondary">
+  <%= link_to translated_attribute(link.href), class: "action-link", target: link.target do %>
+    <span><%= translated_attribute(link.title) %></span>
+    <%= icon("arrow-right", role: "img", "aria-hidden": true) %>
+  <% end %>
+</div>
+
+<%= render partial: "decidim/nav/shared/action_panel_link", collection: current_children, as: :link, locals: { children: current_children } if current_children %>

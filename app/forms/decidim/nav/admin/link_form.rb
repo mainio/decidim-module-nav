@@ -18,11 +18,9 @@ module Decidim
 
         validates :title, translatable_presence: true
         validates :href, translatable_presence: true
-        validates :weight, presence: true
+        validates :weight, :navigable, presence: true
 
-        validate :validate_link_parent_organization
-
-        alias organization current_organization
+        validate :validate_link_parent_context
 
         def map_model(model)
           self.current_page_rules = model.rules.current_page.map do |rule|
@@ -30,12 +28,16 @@ module Decidim
           end
         end
 
+        def navigable
+          context[:navigable]
+        end
+
         private
 
-        def validate_link_parent_organization
+        def validate_link_parent_context
           return if parent_id.blank?
 
-          errors.add(:parent_id, :invalid) unless Link.with_organization(current_organization).exists?(parent_id)
+          errors.add(:parent_id, :invalid) if navigable.blank? || !Link.with_navigable(navigable).exists?(parent_id)
         end
       end
     end

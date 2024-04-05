@@ -1,5 +1,5 @@
 <%= decidim_form_for(@form, url: link_path(link), html: { class: "form edit_nav_link" }) do |f| %>
-  <%= render partial: "form", object: f, locals: { title: t(".title") } %>
+  <%= render partial: "decidim/nav/admin/links/form", object: f, locals: { title: t(".title") } %>
 
   <div class="button--double form-general-submit">
     <%= f.submit t(".update") %>

@@ -19,6 +19,8 @@ en:
         value: Value
   decidim:
     admin:
+      actions:
+        links: Links
       models:
         nav:
           link:

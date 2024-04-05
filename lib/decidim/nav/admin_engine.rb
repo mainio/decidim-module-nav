@@ -10,13 +10,25 @@ module Decidim
       paths["lib/tasks"] = nil
 
       routes do
-        resources :links
+        resources :links, except: [:show]
         root to: "links#index"
       end
 
       initializer "decidim_nav_admin.mount_routes" do
         Decidim::Core::Engine.routes do
           mount Decidim::Nav::AdminEngine, at: "/admin", as: :decidim_admin_nav
+        end
+      end
+
+      initializer "decidim_nav_admin.extra_admin_routes", before: :add_routing_paths do
+        Decidim::ParticipatoryProcesses::AdminEngine.routes.append do
+          scope "/participatory_processes/:participatory_process_slug" do
+            resources :components, only: [], param: :component_id do
+              member do
+                resources :component_links, except: [:show]
+              end
+            end
+          end
         end
       end
 
@@ -28,6 +40,13 @@ module Decidim
                         position: 1.25,
                         active: is_active_link?(decidim_admin_nav.links_path),
                         if: allowed_to?(:update, :organization, organization: current_organization)
+        end
+      end
+
+      initializer "decidim_nav_admin.add_customizations", before: "decidim_comments.query_extensions" do
+        config.to_prepare do
+          # Controler extensions
+          Decidim::Admin::ComponentsController.include(Decidim::Nav::Admin::ComponentsControllerExtensions)
         end
       end
 

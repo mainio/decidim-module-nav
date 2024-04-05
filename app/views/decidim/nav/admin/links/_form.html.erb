@@ -33,14 +33,14 @@
     <div class="current-page-rules">
       <%= fields_for "current_page_rules[#{blank_rule.to_param}]", blank_rule do |rule_form| %>
         <script type="text/template" class="decidim-template">
-          <%= render "link_rule", form: rule_form, id: blank_rule.to_param %>
+          <%= render "decidim/nav/admin/links/link_rule", form: rule_form, id: blank_rule.to_param %>
         </script>
       <% end %>
 
       <div class="current-page-rules-list">
         <% @form.current_page_rules.each do |rule| %>
           <%= fields_for "current_page_rules[]", rule do |rule_form| %>
-            <%= render "link_rule", form: rule_form, id: rule.to_param %>
+            <%= render "decidim/nav/admin/links/link_rule", form: rule_form, id: rule.to_param %>
           <% end %>
         <% end %>
       </div>

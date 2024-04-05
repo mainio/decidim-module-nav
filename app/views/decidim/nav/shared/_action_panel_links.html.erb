@@ -1,0 +1,15 @@
+<%
+links = Decidim::Nav::Link.with_navigable(navigable).ordered
+top = []
+children = {}
+links.each do |link|
+  if link.parent_id.present?
+    children[link.parent_id] ||= []
+    children[link.parent_id] << link
+  else
+    top << link
+  end
+end
+%>
+
+<%= render partial: "decidim/nav/shared/action_panel_link", collection: top, as: :link, locals: { children: children } %>

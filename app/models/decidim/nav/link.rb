@@ -4,11 +4,11 @@ module Decidim
   module Nav
     class Link < ApplicationRecord
       belongs_to :parent, class_name: "Decidim::Nav::Link", optional: true
-      belongs_to :organization, foreign_key: "decidim_organization_id", class_name: "Decidim::Organization"
+      belongs_to :navigable, polymorphic: true
       has_many :children, -> { ordered }, foreign_key: :parent_id, class_name: "Decidim::Nav::Link", inverse_of: :parent, dependent: :destroy
       has_many :rules, -> { ordered }, foreign_key: :decidim_nav_link_id, class_name: "Decidim::Nav::LinkRule", inverse_of: :link, dependent: :destroy
 
-      scope :with_organization, ->(organization) { where(organization: organization) }
+      scope :with_navigable, ->(navigable) { where(navigable: navigable) }
       scope :top_level, -> { where(parent: nil) }
       scope :ordered, -> { order(:weight) }
 
@@ -32,6 +32,12 @@ module Decidim
         locale ||= I18n.locale
 
         href[locale.to_s].presence || href[organization.default_locale]
+      end
+
+      def organization
+        return navigable if navigable.is_a?(Decidim::Organization)
+
+        navigable.organization
       end
     end
   end

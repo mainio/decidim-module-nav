@@ -66,7 +66,7 @@ module Decidim
       # fetched from within this set.
       def all_links_for(organization)
         @all_links_for ||= {}
-        @all_links_for[organization.id] ||= Link.with_organization(organization).ordered.includes(:rules)
+        @all_links_for[organization.id] ||= Link.with_navigable(organization).ordered.includes(:rules)
       end
 
       # Fetches the top level links from the all links set.

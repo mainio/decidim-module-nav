@@ -40,7 +40,7 @@ module Decidim
             href: form.href,
             weight: form.weight,
             target: form.target,
-            organization: form.organization
+            navigable: form.navigable
           )
         end
 
