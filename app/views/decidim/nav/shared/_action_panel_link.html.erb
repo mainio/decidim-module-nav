@@ -3,7 +3,7 @@ current_children = children[link.id]
 %>
 
 <div class="actions-panel bg-secondary">
-  <%= link_to translated_attribute(link.href), class: "action-link", target: link.target do %>
+  <%= link_to translated_attribute(link.href), class: "action-link", target: link.target.presence do %>
     <span><%= translated_attribute(link.title) %></span>
     <%= icon("arrow-right", role: "img", "aria-hidden": true) %>
   <% end %>
