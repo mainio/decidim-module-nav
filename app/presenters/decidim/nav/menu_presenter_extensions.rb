@@ -8,7 +8,7 @@ module Decidim
 
       included do
         def render
-          content_tag :nav, class: "main-nav", role: "navigation", "aria-label": @options.fetch(:label, nil) do
+          content_tag :nav, class: "main-nav", "aria-label": @options.fetch(:label, nil) do
             render_menu
           end
         end
