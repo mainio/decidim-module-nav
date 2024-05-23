@@ -22,7 +22,7 @@ module Decidim
             if icon_name == "cog" && respond_to?(:component_links_path)
               # Add the link to the links management after the cog icon
               # extra = icon_link_to_orig()
-              match = url.match(%r{/([0-9]+)/edit$})
+              match = url.match(%r{/([0-9]+)/edit(\?.*)?$})
               extra = icon_link_to_orig(
                 "globe",
                 component_links_path(component_id: match[1]),
