@@ -21,7 +21,9 @@ module Decidim
             href: href,
             weight: weight,
             target: target,
-            organization: organization
+            parent_id: nil,
+            navigable: organization,
+            current_page_rules: []
           )
         end
         let(:invalid) { false }

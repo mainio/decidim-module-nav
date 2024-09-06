@@ -7,7 +7,7 @@ describe "Nav Links", type: :system do
 
   let(:admin) { create :user, :admin, :confirmed }
   let(:organization) { admin.organization }
-  let(:target) { %w(link_target_blank link_target_).sample }
+  let(:target) { ["Same tab", "New tab"].sample }
 
   before do
     switch_to_host(organization.host)
@@ -21,17 +21,18 @@ describe "Nav Links", type: :system do
     it "can create new nav links" do
       click_link "Add"
 
-      within ".new_link " do
-        fill_in_i18n :link_title,
-                     "#link-title-tabs",
+      within ".new_nav_link " do
+        fill_in_i18n :nav_link_title,
+                     "#nav_link-title-tabs",
                      en: "My title",
                      es: "Mi título",
                      ca: "títol mon"
-        fill_in_i18n :link_href,
-                     "#link-href-tabs",
+        fill_in_i18n :nav_link_href,
+                     "#nav_link-href-tabs",
                      en: "http://example.org"
-        fill_in "link_weight", with: "1"
-        choose target
+        fill_in "nav_link_weight", with: "1"
+        select target, from: "nav_link[target]"
+
         find("*[type=submit]").click
       end
 
@@ -42,7 +43,7 @@ describe "Nav Links", type: :system do
     end
 
     context "with existing nav links" do
-      let!(:nav_link) { create(:nav_link, organization: organization) }
+      let!(:nav_link) { create(:nav_link, navigable: organization) }
 
       before do
         visit current_path
@@ -64,25 +65,26 @@ describe "Nav Links", type: :system do
         end
 
         it "keep the existing link attributes" do
-          within ".edit_link" do
-            expect(page).to have_field("link[title_en]", with: translated(nav_link.title, locale: :en))
-            expect(page).to have_field("link[href_en]", with: translated(nav_link.href, locale: :en))
+          within ".edit_nav_link" do
+            expect(page).to have_field("nav_link[title_en]", with: translated(nav_link.title, locale: :en))
+            expect(page).to have_field("nav_link[href_en]", with: translated(nav_link.href, locale: :en))
             expect(page).to have_field("Order number", with: nav_link.weight)
           end
         end
 
         it "can edit them" do
-          within ".edit_link " do
-            fill_in_i18n :link_title,
-                         "#link-title-tabs",
+          within ".edit_nav_link " do
+            fill_in_i18n :nav_link_title,
+                         "#nav_link-title-tabs",
                          en: "Another title",
                          es: "Otro título",
                          ca: "Altre títol"
-            fill_in_i18n "link_href",
-                         "#link-href-tabs",
+            fill_in_i18n "nav_link_href",
+                         "#nav_link-href-tabs",
                          en: "http://another-example.org"
-            fill_in "link_weight", with: "9"
-            choose target
+            fill_in "nav_link_weight", with: "9"
+            select target, from: "nav_link[target]"
+
             find("*[type=submit]").click
           end
 
