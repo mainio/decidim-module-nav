@@ -25,13 +25,15 @@ module Decidim
             "title" => title,
             "href" => href,
             "target" => target,
-            "weight" => weight
+            "weight" => weight,
+            "current_page_rules" => []
 
           }
         end
         let(:context) do
           {
-            "current_organization" => organization
+            "current_organization" => organization,
+            "navigable" => organization
           }
         end
 
