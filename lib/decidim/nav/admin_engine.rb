@@ -36,6 +36,7 @@ module Decidim
           menu.add_item :nav,
                         t("menu.nav", scope: "decidim_nav.admin"),
                         decidim_admin_nav.links_path,
+                        icon_name: "map-pin-line",
                         position: 1.25,
                         active: is_active_link?(decidim_admin_nav.links_path),
                         if: allowed_to?(:update, :organization, organization: current_organization)
