@@ -1,13 +1,15 @@
+<% add_decidim_page_title(t("decidim.admin.titles.nav")) %>
 <div class="card" id="nav_links">
-  <div class="card-divider">
-    <h2 class="card-title">
-        <%= t "decidim.admin.titles.nav" %> <%= link_to t("actions.add", scope: "decidim.admin"), new_link_path, class: "button tiny button--title" %>
-    </h2>
+  <div class="item_show__header">
+    <h1 class="item_show__header-title">
+      <%= t "decidim.admin.titles.nav" %>
+      <%= link_to t("actions.add", scope: "decidim.admin"), new_link_path, class: "button button__sm button__secondary" %>
+    </h1>
   </div>
-  <div class="card-section">
-    <% if @links.any? %>
-      <div class="table-scroll">
-        <table class="table-list">
+
+  <% if @links.any? %>
+    <div class="table-scroll">
+      <table class="table-list">
         <thead>
           <tr>
             <th><%= t("models.nav.link.fields.title", scope: "decidim.admin") %></th>
@@ -16,13 +18,13 @@
             <th></th>
           </tr>
         </thead>
+
         <tbody>
           <%= render partial: "decidim/nav/admin/links/link_row", collection: @links, as: :link, locals: { level: 0 } %>
         </tbody>
-        </table>
-      </div>
-    <% else %>
-      <p><%= t(".no_links") %></p>
-    <% end %>
-  </div>
+      </table>
+    </div>
+  <% else %>
+    <p><%= t(".no_links") %></p>
+  <% end %>
 </div>

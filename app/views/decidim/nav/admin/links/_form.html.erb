@@ -1,53 +1,55 @@
-<div class="card">
-  <div class="card-divider">
-    <h2 class="card-title"><%= title %></h2>
-  </div>
-  <div class="card-section">
-    <div class="row column">
-      <%= form.select :parent_id, link_parent_options, include_blank: t(".no_parent") %>
-    </div>
-
-    <div class="row column">
-      <%= form.translated :text_field, :title %>
-    </div>
-
-    <div class="row column">
-      <%= form.translated :text_field, :href %>
-    </div>
-
-    <div class="row column">
-      <%= form.number_field :weight %>
-    </div>
-
-    <div class="row column">
-      <%= form.select :target, target_options %>
-    </div>
-  </div>
-</div>
-
-<div class="card">
-  <div class="card-divider">
-    <h2 class="card-title"><%= t(".current_page_rules") %></h2>
-  </div>
-  <div class="card-section">
-    <div class="current-page-rules">
-      <%= fields_for "current_page_rules[#{blank_rule.to_param}]", blank_rule do |rule_form| %>
-        <script type="text/template" class="decidim-template">
-          <%= render "decidim/nav/admin/links/link_rule", form: rule_form, id: blank_rule.to_param %>
-        </script>
-      <% end %>
-
-      <div class="current-page-rules-list">
-        <% @form.current_page_rules.each do |rule| %>
-          <%= fields_for "current_page_rules[]", rule do |rule_form| %>
-            <%= render "decidim/nav/admin/links/link_rule", form: rule_form, id: rule.to_param %>
-          <% end %>
-        <% end %>
+<div class="form__wrapper">
+  <div class="card pt-4">
+    <div class="card-section">
+      <div class="row column">
+        <%= form.select :parent_id, link_parent_options, include_blank: t(".no_parent") %>
       </div>
 
-      <button class="button small hollow add-current-page-rule"><%= t(".add_rule") %></button>
+      <div class="row column">
+        <%= form.translated :text_field, :title %>
+      </div>
+
+      <div class="row column">
+        <%= form.translated :text_field, :href %>
+      </div>
+
+      <div class="row column">
+        <%= form.number_field :weight %>
+      </div>
+
+      <div class="row column">
+        <%= form.select :target, target_options %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card pt-4">
+    <div class="card-divider">
+      <h2 class="card-title"><%= t(".current_page_rules") %></h2>
+    </div>
+
+    <div class="card-section">
+      <div class="current-page-rules">
+        <%= fields_for "current_page_rules[#{blank_rule.to_param}]", blank_rule do |rule_form| %>
+          <script type="text/template" class="decidim-template">
+            <%= render "decidim/nav/admin/links/link_rule", form: rule_form, id: blank_rule.to_param %>
+          </script>
+        <% end %>
+
+        <div class="current-page-rules-list">
+          <% @form.current_page_rules.each do |rule| %>
+            <%= fields_for "current_page_rules[]", rule do |rule_form| %>
+              <%= render "decidim/nav/admin/links/link_rule", form: rule_form, id: rule.to_param %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="row column mt-4">
+          <button class="button button__sm button__secondary add-current-page-rule"><%= t(".add_rule") %></button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<%= javascript_pack_tag "decidim_nav_admin" %>
+<%= append_javascript_pack_tag "decidim_nav_admin" %>
