@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe "Menu", type: :system do
   let(:organization) { create(:organization) }
-  let!(:nav_link) { create(:nav_link, organization: organization) }
+  let!(:nav_link) { create(:nav_link, navigable: organization) }
 
   before do
     switch_to_host(organization.host)

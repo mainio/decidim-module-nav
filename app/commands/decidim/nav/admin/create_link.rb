@@ -47,7 +47,7 @@ module Decidim
         def create_rules
           # Create the rules
           form.current_page_rules.each do |r|
-            next if r.deleted
+            next if r.deleted?
 
             attrs = {
               value: r.value,

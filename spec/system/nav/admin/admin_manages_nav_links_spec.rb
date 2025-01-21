@@ -21,17 +21,11 @@ describe "Nav Links", type: :system do
     it "can create new nav links" do
       click_link "Add"
 
-      within ".new_link " do
-        fill_in_i18n :link_title,
-                     "#link-title-tabs",
-                     en: "My title",
-                     es: "Mi título",
-                     ca: "títol mon"
-        fill_in_i18n :link_href,
-                     "#link-href-tabs",
-                     en: "http://example.org"
-        fill_in "link_weight", with: "1"
-        choose target
+      within ".new_nav_link " do
+        fill_in "nav_link[title_en]", with: "My title"
+        fill_in "nav_link[href_en]", with: "http://example.org"
+        fill_in "nav_link[weight]", with: "1"
+        select target == "link_target_blank" ? "New tab" : "Same tab", from: "nav_link[target]"
         find("*[type=submit]").click
       end
 
@@ -42,7 +36,7 @@ describe "Nav Links", type: :system do
     end
 
     context "with existing nav links" do
-      let!(:nav_link) { create(:nav_link, organization: organization) }
+      let!(:nav_link) { create(:nav_link, navigable: organization) }
 
       before do
         visit current_path
@@ -64,25 +58,19 @@ describe "Nav Links", type: :system do
         end
 
         it "keep the existing link attributes" do
-          within ".edit_link" do
-            expect(page).to have_field("link[title_en]", with: translated(nav_link.title, locale: :en))
-            expect(page).to have_field("link[href_en]", with: translated(nav_link.href, locale: :en))
-            expect(page).to have_field("Order number", with: nav_link.weight)
+          within ".edit_nav_link" do
+            expect(page).to have_field("nav_link[title_en]", with: translated(nav_link.title, locale: :en))
+            expect(page).to have_field("nav_link[href_en]", with: translated(nav_link.href, locale: :en))
+            expect(page).to have_field("nav_link[weight]", with: nav_link.weight)
           end
         end
 
         it "can edit them" do
-          within ".edit_link " do
-            fill_in_i18n :link_title,
-                         "#link-title-tabs",
-                         en: "Another title",
-                         es: "Otro título",
-                         ca: "Altre títol"
-            fill_in_i18n "link_href",
-                         "#link-href-tabs",
-                         en: "http://another-example.org"
-            fill_in "link_weight", with: "9"
-            choose target
+          within ".edit_nav_link " do
+            fill_in "nav_link[title_en]", with: "Another title"
+            fill_in "nav_link[href_en]", with: "http://another-example.org"
+            fill_in "nav_link[weight]", with: "9"
+            select target == "link_target_blank" ? "New tab" : "Same tab", from: "nav_link[target]"
             find("*[type=submit]").click
           end
 

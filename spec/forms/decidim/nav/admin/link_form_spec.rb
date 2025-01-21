@@ -19,6 +19,7 @@ module Decidim
         let(:weight) { (1..5).to_a.sample }
         let(:organization) { create(:organization) }
         let(:target) { ["blank", ""].sample }
+        let(:navigable) { organization }
 
         let(:attributes) do
           {
@@ -26,12 +27,12 @@ module Decidim
             "href" => href,
             "target" => target,
             "weight" => weight
-
           }
         end
         let(:context) do
           {
-            "current_organization" => organization
+            "current_organization" => organization,
+            "navigable" => navigable
           }
         end
 

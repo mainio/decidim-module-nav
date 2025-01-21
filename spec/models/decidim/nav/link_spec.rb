@@ -7,21 +7,26 @@ module Decidim
     describe Link do
       subject { nav_link }
 
-      let(:organization) { build(:organization) }
-      let(:nav_link) { build(:nav_link, organization: organization) }
+      let(:organization) { create(:organization) }
+      let(:nav_link) { build(:nav_link, navigable: organization) }
 
       it "has an association for organisation" do
         expect(subject.organization).to eq(organization)
       end
 
       describe "validations" do
-        it "is valid" do
-          expect(subject).to be_valid
+        context "when has organization" do
+          it "is valid" do
+            expect(subject).to be_valid
+          end
         end
 
-        it "is not valid without an organisation" do
-          subject.organization = nil
-          expect(subject).not_to be_valid
+        context "when doesn't have a organization" do
+          let(:nav_link) { build(:nav_link) }
+
+          it "is not valid without an organisation" do
+            expect(subject).not_to be_valid
+          end
         end
       end
     end
