@@ -5,7 +5,7 @@ require "spec_helper"
 describe "Nav Links", type: :system do
   include Decidim::SanitizeHelper
 
-  let(:admin) { create :user, :admin, :confirmed }
+  let(:admin) { create(:user, :admin, :confirmed) }
   let(:organization) { admin.organization }
   let(:target) { %w(link_target_blank link_target_).sample }
 
@@ -52,7 +52,7 @@ describe "Nav Links", type: :system do
 
       context "when editing a link" do
         before do
-          within find("#nav_link_#{nav_link.id}", text: translated(nav_link.title)) do
+          within "#nav_link_#{nav_link.id}", text: translated(nav_link.title) do
             click_link "Edit"
           end
         end
@@ -78,17 +78,17 @@ describe "Nav Links", type: :system do
 
           within "table" do
             expect(page).to have_content("Another title")
-            expect(page).not_to have_content(translated(nav_link.title, locale: :en))
+            expect(page).to have_no_content(translated(nav_link.title, locale: :en))
           end
         end
       end
 
       it "can delete them" do
-        within find("#nav_link_#{nav_link.id}", text: translated(nav_link.title)) do
+        within "#nav_link_#{nav_link.id}", text: translated(nav_link.title) do
           accept_confirm { click_link "Delete" }
         end
         expect(page).to have_admin_callout("The link deletion succeeded.")
-        within ".card-section" do
+        within "#nav_links" do
           expect(page).to have_content("No links available.")
         end
       end

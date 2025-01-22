@@ -13,7 +13,7 @@ module Decidim
         end
       end
 
-      def create_menu(key, &create_links)
+      def create_menu(key, &)
         # Overrides the default menu or the previous menu
         Decidim::MenuRegistry.create(key)
 
@@ -21,7 +21,7 @@ module Decidim
 
         # Adds the correct items for the menu
         Decidim.menu key do |menu|
-          links = instance_eval(&create_links)
+          links = instance_eval(&)
           links.each_with_index do |link, idx|
             options = {
               position: idx,
