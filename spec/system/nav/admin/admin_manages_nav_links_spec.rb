@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Nav Links", type: :system do
+describe "NavLinks" do
   include Decidim::SanitizeHelper
 
   let(:admin) { create(:user, :admin, :confirmed) }
@@ -13,13 +13,13 @@ describe "Nav Links", type: :system do
     switch_to_host(organization.host)
     login_as admin, scope: :user
     visit decidim_admin.root_path
-    click_link "Settings"
-    click_link "Navigation"
+    click_on "Settings"
+    click_on "Navigation"
   end
 
   describe "Managing nav links" do
     it "can create new nav links" do
-      click_link "Add"
+      click_on "Add"
 
       within ".new_nav_link " do
         fill_in "nav_link[title_en]", with: "My title"
@@ -53,7 +53,7 @@ describe "Nav Links", type: :system do
       context "when editing a link" do
         before do
           within "#nav_link_#{nav_link.id}", text: translated(nav_link.title) do
-            click_link "Edit"
+            click_on "Edit"
           end
         end
 
@@ -85,7 +85,7 @@ describe "Nav Links", type: :system do
 
       it "can delete them" do
         within "#nav_link_#{nav_link.id}", text: translated(nav_link.title) do
-          accept_confirm { click_link "Delete" }
+          accept_confirm { click_on "Delete" }
         end
         expect(page).to have_admin_callout("The link deletion succeeded.")
         within "#nav_links" do

@@ -8,7 +8,7 @@ module Decidim
       has_many :children, -> { ordered }, foreign_key: :parent_id, class_name: "Decidim::Nav::Link", inverse_of: :parent, dependent: :destroy
       has_many :rules, -> { ordered }, foreign_key: :decidim_nav_link_id, class_name: "Decidim::Nav::LinkRule", inverse_of: :link, dependent: :destroy
 
-      scope :with_navigable, ->(navigable) { where(navigable: navigable) }
+      scope :with_navigable, ->(navigable) { where(navigable:) }
       scope :top_level, -> { where(parent: nil) }
       scope :ordered, -> { order(:weight) }
 

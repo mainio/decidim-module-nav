@@ -3,8 +3,8 @@
 module Decidim
   module Nav
     class SubmenuPresenter < Decidim::MenuPresenter
-      def render(&block)
-        render_menu(&block)
+      def render(&)
+        render_menu(&)
       end
     end
   end

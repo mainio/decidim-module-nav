@@ -8,8 +8,8 @@ module Decidim
       describe UpdateLink do
         subject { described_class.new(form, nav_link) }
 
-        let(:nav_link) { create :nav_link, navigable: organization }
-        let(:organization) { create :organization }
+        let(:nav_link) { create(:nav_link, navigable: organization) }
+        let(:organization) { create(:organization) }
         let(:title) { Decidim::Faker::Localized.literal("New title") }
         let(:href) { Decidim::Faker::Localized.literal(::Faker::Internet.url) }
         let(:weight) { (1..10).to_a.sample }
@@ -18,11 +18,11 @@ module Decidim
         let(:form) do
           double(
             invalid?: invalid,
-            title: title,
-            href: href,
-            weight: weight,
-            target: target,
-            organization: organization,
+            title:,
+            href:,
+            weight:,
+            target:,
+            organization:,
             parent_id: nav_link.id,
             navigable: organization,
             current_page_rules: [

@@ -12,7 +12,7 @@ module Decidim
           submenu = @menu_item.submenu
           data[:submenu] = true if submenu
 
-          content_tag :li, class: link_wrapper_classes, data: data do
+          content_tag(:li, class: link_wrapper_classes, data:) do
             output = [link_to(composed_label, url, link_options)]
             if submenu
               if @view.respond_to?(:simple_menu)

@@ -5,12 +5,12 @@ require "spec_helper"
 describe Decidim::Nav::Admin::Permissions do
   subject { described_class.new(user, permission_action, context).permissions.allowed? }
 
-  let(:user) { build :user, :admin, organization: organization }
-  let(:organization) { build :organization }
+  let(:user) { build(:user, :admin, organization:) }
+  let(:organization) { build(:organization) }
   let(:permission_action) { Decidim::PermissionAction.new(**action) }
   let(:context) { {} }
   let(:action) do
-    { scope: scope, action: action_name, subject: action_subject }
+    { scope:, action: action_name, subject: action_subject }
   end
   let(:action_name) { :foo }
   let(:scope) { :admin }
@@ -20,7 +20,7 @@ describe Decidim::Nav::Admin::Permissions do
     it { is_expected.to be true }
 
     context "when user is not admin" do
-      let(:user) { build :user, organization: organization }
+      let(:user) { build(:user, organization:) }
 
       it { is_expected.to be false }
     end

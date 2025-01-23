@@ -6,7 +6,7 @@ module Decidim
     class MenuBuilder
       def build
         builder = self
-        create_menu(:menu) do
+        create_menu(:home_content_block_menu) do
           builder.clear_cache_for(current_organization)
           builder.clear_submenus
           builder.top_level_links_for(current_organization)
@@ -25,7 +25,7 @@ module Decidim
           links.each_with_index do |link, idx|
             options = {
               position: idx,
-              active: link.current?(request.fullpath, locale: current_locale),
+              active: link.current?(request.fullpath),
               target: link.target
             }
 

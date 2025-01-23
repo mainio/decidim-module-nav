@@ -23,13 +23,13 @@ module Decidim
 
         def new
           enforce_permission_to :new, :nav_link
-          @form = form(Decidim::Nav::Admin::LinkForm).instance(navigable: navigable)
+          @form = form(Decidim::Nav::Admin::LinkForm).instance(navigable:)
           render template: "decidim/nav/admin/links/new"
         end
 
         def create
           enforce_permission_to :new, :nav_link
-          @form = form(Decidim::Nav::Admin::LinkForm).from_params(params, navigable: navigable)
+          @form = form(Decidim::Nav::Admin::LinkForm).from_params(params, navigable:)
 
           Decidim::Nav::Admin::CreateLink.call(@form) do
             on(:ok) do
@@ -46,13 +46,13 @@ module Decidim
 
         def edit
           enforce_permission_to :update, :nav_link, nav_link: link
-          @form = form(Decidim::Nav::Admin::LinkForm).from_model(link, navigable: navigable)
+          @form = form(Decidim::Nav::Admin::LinkForm).from_model(link, navigable:)
           render template: "decidim/nav/admin/links/edit"
         end
 
         def update
           enforce_permission_to :update, :nav_link, nav_link: link
-          @form = form(Decidim::Nav::Admin::LinkForm).from_params(params, navigable: navigable)
+          @form = form(Decidim::Nav::Admin::LinkForm).from_params(params, navigable:)
 
           Decidim::Nav::Admin::UpdateLink.call(@form, link) do
             on(:ok) do
