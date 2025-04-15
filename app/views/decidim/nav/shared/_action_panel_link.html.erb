@@ -2,11 +2,15 @@
 current_children = children[link.id]
 %>
 
-<div class="actions-panel bg-secondary">
-  <%= link_to translated_attribute(link.href), class: "action-link", target: link.target.presence do %>
+<li>
+  <%= link_to translated_attribute(link.href), target: link.target.presence do %>
     <span><%= translated_attribute(link.title) %></span>
-    <%= icon("arrow-right", role: "img", "aria-hidden": true) %>
+    <%= icon("arrow-right-line", role: "img", "aria-hidden": true) %>
   <% end %>
-</div>
+</li>
 
-<%= render partial: "decidim/nav/shared/action_panel_link", collection: current_children, as: :link, locals: { children: current_children } if current_children %>
+<% if current_children.present? %>
+  <ul class="menu-bar__main-dropdown__submenu">
+    <%= render partial: "decidim/nav/shared/action_panel_link", collection: current_children, as: :link, locals: { children: children } %>
+  </ul>
+<% end %>
