@@ -1,0 +1,7 @@
+.active-link {
+  @apply underline decoration-2;
+}
+
+.menu-link {
+  @apply hover:underline;
+}
