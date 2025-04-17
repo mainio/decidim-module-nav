@@ -2,6 +2,10 @@
   @apply underline decoration-2;
 }
 
+.active-locale {
+  @apply underline decoration-2;
+}
+
 .menu-link {
   @apply hover:underline;
 }

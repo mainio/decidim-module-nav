@@ -1,0 +1,76 @@
+<div class="main-bar__links-desktop__item-wrapper">
+  <% if available_locales.length > 3 %>
+    <div class="main-bar__language-container">
+      <button id="trigger-dropdown-language-chooser" data-component="dropdown" data-target="dropdown-menu-language-chooser" class="flex">
+        <%= icon "global-line" %>
+        <span><%= t("name", scope: "locale" ) %></span>
+        <%= icon "arrow-down-s-line" %>
+        <span class="sr-only">
+          <% available_locales.each do |locale| %>
+            <span lang="<%= locale %>">
+              <%= I18n.with_locale(locale) { t("layouts.decidim.language_chooser.choose_language") } %>
+            </span>
+          <% end %>
+        </span>
+      </button>
+
+      <div id="dropdown-menu-language-chooser" aria-hidden="true">
+        <ul class="main-bar__language" role="menu">
+          <% (available_locales - [I18n.locale.to_s]).each do |locale| %>
+            <li class="text-black text-md hover:underline hover:text-white transition" role="presentation">
+              <%= link_to locale_name(locale), decidim.locale_path(locale:), method: :post, role: "menuitem", lang: locale, class: "p-2 w-full block" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% else %>
+    <div class="simple-locales-container flex flex-row gap-2">
+      <% available_locales.each do |locale| %>
+        <%= link_to locale_name(locale),
+                    decidim.locale_path(locale:),
+                    method: :post,
+                    role: "menuitem",
+                    lang: locale,
+                    class: "locale p-2 text-md text-black hover:underline transition" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<% if !current_user %>
+  <div>
+    <%= link_to decidim.new_user_session_path, class: "main-bar__links-desktop__item", "aria-label": t("layouts.decidim.header.log_in") do %>
+      <%= icon "login-box-line" %><span><%= t("layouts.decidim.header.log_in") %></span>
+    <% end %>
+  </div>
+<% else %>
+  <div class="main-bar__dropdown-container">
+    <button id="trigger-dropdown-account" class="main-bar__dropdown-trigger" data-component="dropdown" data-target="dropdown-menu-account">
+      <% unread_data = current_user_unread_data %>
+      <% if unread_data[:unread_items] %>
+        <%= content_tag :span, "", class: "main-bar__notification", data: unread_data %>
+      <% end %>
+      <% if current_user.avatar.attached? %>
+        <span class="main-bar__avatar">
+          <span>
+            <%= image_tag(
+                  current_user.attached_uploader(:avatar).variant_url(:thumb),
+                  alt: t("decidim.author.avatar", name: decidim_sanitize(current_user.avatar.name))
+                ) %>
+          </span>
+        </span>
+      <% else %>
+        <span class="main-bar__links-desktop__item">
+          <%= icon "user-smile-line" %>
+          <span><%= t("layouts.decidim.user_profile.account") %></span>
+        </span>
+      <% end %>
+    </button>
+    <div id="dropdown-menu-account" aria-hidden="true">
+      <ul class="dropdown dropdown__bottom main-bar__dropdown">
+        <%= render partial: "layouts/decidim/header/main_links_dropdown", locals: { unread_data: } %>
+      </ul>
+    </div>
+  </div>
+<% end %>
