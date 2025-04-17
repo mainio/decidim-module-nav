@@ -9,3 +9,19 @@
 .menu-link {
   @apply hover:underline;
 }
+
+.home__menu {
+  @apply block py-4 bg-white border-y;
+}
+
+.home__menu__container {
+  @apply flex flex-row justify-start gap-2;
+}
+
+.home__menu-element--link {
+  @apply text-black;
+}
+
+.home__menu-submenu {
+  @apply absolute left-0 top-full hidden min-w-[200px] bg-white text-black border p-2 shadow-md group-hover:block group-focus:block;
+}
