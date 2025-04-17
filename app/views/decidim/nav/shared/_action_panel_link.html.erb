@@ -5,6 +5,12 @@ current_children = children[link.id]
 <%= content_tag(:div, class: ("menu__bar-element relative group")) do %>
   <%= link_to translated_attribute(link.href), target: link.target.presence, class: ("button button__text menu__bar-element--link") do %>
     <span><%= translated_attribute(link.title) %></span>
+
+    <% if current_children.present? %>
+      <span class="ml-2 p-px bg-gray-3 rounded border-2 border-gray-3">
+        <%= icon "arrow-down-s-line", class: "w-6 h-6 flex-none text-black fill-current bg-gray-3 transition-transform duration-200 group-hover:rotate-180" %>
+      </span>
+    <% end %>
   <% end %>
 
   <% if current_children.present? %>
