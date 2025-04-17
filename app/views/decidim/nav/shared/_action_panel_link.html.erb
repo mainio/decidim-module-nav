@@ -2,14 +2,14 @@
 current_children = children[link.id]
 %>
 
-<%= content_tag(home_menu ? :div : nil, class: ("home__menu-element group" if home_menu)) do %>
-  <%= link_to translated_attribute(link.href), target: link.target.presence, class: ("button button__text home__menu-element--link" if home_menu) do %>
+<%= content_tag(:div, class: ("menu__bar-element relative group")) do %>
+  <%= link_to translated_attribute(link.href), target: link.target.presence, class: ("button button__text menu__bar-element--link") do %>
     <span><%= translated_attribute(link.title) %></span>
   <% end %>
 
   <% if current_children.present? %>
-    <div class="home__menu-submenu">
-      <%= render partial: "decidim/nav/shared/action_panel_link", collection: current_children, as: :link, locals: { children: children, home_menu: home_menu } %>
+    <div class="menu__bar-submenu">
+      <%= render partial: "decidim/nav/shared/action_panel_link", collection: current_children, as: :link, locals: { children: children } %>
     </div>
   <% end %>
 <% end %>

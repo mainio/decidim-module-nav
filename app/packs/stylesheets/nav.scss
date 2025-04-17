@@ -10,18 +10,30 @@
   @apply hover:underline;
 }
 
-.home__menu {
+.menu__bar {
   @apply block py-4 bg-white border-y;
 }
 
-.home__menu__container {
-  @apply flex flex-row justify-start gap-2;
+.menu__bar-container {
+  @apply flex flex-row gap-6 ml-4;
 }
 
-.home__menu-element--link {
-  @apply text-black;
+.menu__bar-element--link {
+  @apply text-black text-lg;
 }
 
-.home__menu-submenu {
-  @apply absolute left-0 top-full hidden min-w-[200px] bg-white text-black border p-2 shadow-md group-hover:block group-focus:block;
+.menu__bar-submenu {
+  @apply absolute left-0 top-full hidden min-w-[200px] z-50 bg-white border p-2 shadow-md group-hover:block group-focus-within:block;
+
+  .menu__bar-element--link{
+    @apply px-px;
+  }
+}
+
+.menu-bar__actions {
+  @apply block right-4 absolute;
+
+  .menu-link {
+    @apply border-black text-black;
+  }
 }

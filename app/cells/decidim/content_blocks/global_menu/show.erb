@@ -1,10 +1,9 @@
-<section id="home__menu" class="home__menu">
-  <div class="home__menu__container">
+<section id="home__menu" class="menu__bar">
+  <div class="menu__bar-container">
     <%= controller.view_context.render(
         partial: "decidim/nav/shared/action_panel_links",
         locals: {
-          navigable: current_organization,
-          home_menu: true
+          navigable: current_organization
         }
     ) %>
   </div>
