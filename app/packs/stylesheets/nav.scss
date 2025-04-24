@@ -11,7 +11,27 @@
 }
 
 .menu__bar {
-  @apply block py-4 bg-white border-y;
+  @apply py-4 bg-white border-y;
+}
+
+.menu__bar-element {
+  @apply relative hidden sm:max-lg:hidden lg:block;
+}
+
+.menu__bar-mobile {
+  @apply relative w-full;
+}
+
+.menu-element {
+  @apply flex items-center gap-0.5;
+}
+
+.menu-element-mobile {
+  @apply flex items-center justify-between w-full h-12 text-3xl px-4 border-b;
+}
+
+.menu-element-caret {
+  @apply ml-2 p-px bg-gray-3 rounded border-2 border-gray-3;
 }
 
 .menu__bar-container {
@@ -23,17 +43,34 @@
 }
 
 .menu__bar-submenu {
-  @apply absolute left-0 top-full hidden min-w-[200px] z-50 bg-white border p-2 shadow-md group-hover:block group-focus-within:block;
+  @apply absolute left-0 top-full hidden min-w-[200px] z-50 bg-white border p-2 shadow-md;
 
   .menu__bar-element--link{
     @apply px-px;
   }
 }
 
-.menu-bar__actions {
+.menu__bar-actions {
   @apply block right-56 absolute;
 
   .menu-link {
     @apply border-black text-black;
   }
 }
+
+.mobile-menu {
+  @apply relative top-16 left-0 w-full h-[calc(100vh-4rem)] bg-white z-50 shadow-lg overflow-auto;
+}
+
+.mobile-language {
+  @apply flex justify-center mb-10 bg-gray-3;
+}
+
+header {
+  .main-bar {
+    &__search {
+      @apply hidden lg:block col-span-2 col-start-5 xl:col-start-4;
+    }
+  }
+}
+

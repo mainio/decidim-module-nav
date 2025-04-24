@@ -1,21 +1,25 @@
-<%
-current_children = children[link.id]
-%>
+<% current_children = children[link.id] %>
+<% mobile ||= false %>
 
-<%= content_tag(:div, class: ("menu__bar-element relative group")) do %>
-  <%= link_to translated_attribute(link.href), target: link.target.presence, class: ("button button__text menu__bar-element--link") do %>
-    <span><%= translated_attribute(link.title) %></span>
+
+<%= content_tag(:div, class: mobile ? "menu__bar-mobile" : "menu__bar-element") do %>
+  <div class="<%= mobile ? 'menu-element-mobile' : 'menu-element' %>">
+    <%= link_to translated_attribute(link.href), target: link.target.presence, class: ("button button__text menu__bar-element--link") do %>
+      <span><%= translated_attribute(link.title) %></span>
+    <% end %>
 
     <% if current_children.present? %>
-      <span class="ml-2 p-px bg-gray-3 rounded border-2 border-gray-3">
-        <%= icon "arrow-down-s-line", class: "w-6 h-6 flex-none text-black fill-current bg-gray-3 transition-transform duration-200 group-hover:rotate-180" %>
+      <% submenu_id = "submenu-#{link.id}#{"-mobile" if mobile}" %>
+
+      <span class="menu-element-caret" data-toggle-target="<%= submenu_id %>">
+        <%= icon "arrow-down-s-line", class: "w-6 h-6 flex-none text-black fill-current bg-gray-3" %>
       </span>
     <% end %>
-  <% end %>
+  </div>
 
   <% if current_children.present? %>
-    <div class="menu__bar-submenu">
-      <%= render partial: "decidim/nav/shared/action_panel_link", collection: current_children, as: :link, locals: { children: children } %>
+    <div id="<%= submenu_id %>", class="menu__bar-submenu">
+      <%= render partial: "decidim/nav/shared/action_panel_link", collection: current_children, as: :link, locals: { children: children, mobile: mobile } %>
     </div>
   <% end %>
 <% end %>
