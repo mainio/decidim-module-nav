@@ -16,7 +16,7 @@ end
 <% mobile ||= false %>
 
 <% if mobile %>
-  <div class="mobile-menu hidden" id="mobile-menu">
+  <div class="mobile-menu hidden" id="mobile-menu" role="menu" aria-labelledby="toggle-mobile-menu">
     <div class="pl-4 mb-10">
       <%= render partial: "layouts/decidim/header/main_search" %>
     </div>

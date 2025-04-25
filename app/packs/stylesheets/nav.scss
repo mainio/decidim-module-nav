@@ -11,7 +11,7 @@
 }
 
 .menu__bar {
-  @apply py-4 bg-white border-y;
+  @apply py-4 bg-white border-y hidden lg:block;
 }
 
 .menu__bar-element {
