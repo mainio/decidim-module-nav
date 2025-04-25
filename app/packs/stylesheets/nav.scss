@@ -50,6 +50,14 @@
   }
 }
 
+.menu__bar-submenu-mobile {
+  @apply hidden transition-all duration-300 overflow-hidden pl-2 bg-gray-3 py-2 space-y-2;
+
+  .menu-element-mobile {
+    @apply border-b-0 border-l-2 border-gray-2;
+  }
+}
+
 .menu__bar-actions {
   @apply block right-56 absolute;
 
@@ -70,6 +78,18 @@ header {
   .main-bar {
     &__search {
       @apply hidden lg:block col-span-2 col-start-5 xl:col-start-4;
+    }
+
+    &__links-desktop {
+      @apply flex;
+
+      &__item {
+        @apply hidden lg:flex flex-col items-center text-secondary px-2 py-1 rounded hover:underline hover:bg-background;
+
+        &-wrapper {
+          @apply hidden lg:flex gap-x-4 xl:gap-x-6;
+        }
+      }
     }
   }
 }

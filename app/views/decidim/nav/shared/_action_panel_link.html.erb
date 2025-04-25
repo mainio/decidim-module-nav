@@ -24,7 +24,7 @@
   </div>
 
   <% if current_children.present? %>
-    <div id="<%= submenu_id %>", class="menu__bar-submenu">
+    <div id="<%= submenu_id %>", class="<%= mobile ? 'menu__bar-submenu-mobile' : "menu__bar-submenu" %>">
       <%= render partial: "decidim/nav/shared/action_panel_link", collection: current_children, as: :link, locals: { children: children, mobile: mobile } %>
     </div>
   <% end %>
