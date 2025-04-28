@@ -105,23 +105,44 @@ const initializeMobileMode = () => {
       first.focus();
     }
   });
+}
 
-  document.querySelectorAll("[data-toggle-target]").forEach(caret => {
+const handleSubmenu = () => {
+  const submenuCarets = document.querySelectorAll("[data-toggle-target]");
+
+  submenuCarets.forEach(caret => {
     caret.addEventListener("click", (e) => {
       e.stopPropagation();
       caret.classList.toggle("rotate-180");
 
-      const targetId = caret.getAttribute("data-toggle-target");
-      const submenu = document.getElementById(targetId);
+      const submenuId = caret.getAttribute("data-toggle-target");
+      const submenu = document.getElementById(submenuId);
 
-      if (submenu) {
-        const isExpanded = caret.getAttribute("aria-expanded") === "true";
+      if (!submenu) return;
 
-        submenu.style.display = isExpanded ? "none" : "block";
+      const isExpanded = caret.getAttribute("aria-expanded") === "true";
+      console.log(isExpanded)
+      caret.setAttribute("aria-expanded", (!isExpanded).toString());
 
-        caret.setAttribute("aria-expanded", (!isExpanded).toString());
-      }
+      submenu.style.display = isExpanded ? "none" : "block";
     });
+  });
+
+  document.addEventListener("click", (e) => {
+    submenuCarets.forEach(caret => {
+      const submenuId = caret.getAttribute("data-toggle-target");
+      const submenu = document.getElementById(submenuId);
+
+      if (!submenu) return;
+
+      const isExpanded = caret.getAttribute("aria-expanded") === "true";
+
+      if (isExpanded && !caret.contains(e.target) && !submenu.contains(e.target)) {
+        caret.classList.toggle("rotate-180");
+        caret.setAttribute("aria-expanded", "false");
+        submenu.style.display = "none";
+      }
+    })
   });
 }
 
@@ -129,4 +150,5 @@ $(() => {
   activeLink();
   activeLocale();
   initializeMobileMode();
+  handleSubmenu();
 })

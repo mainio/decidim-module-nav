@@ -15,7 +15,7 @@
 }
 
 .menu__bar-element {
-  @apply relative hidden sm:max-lg:hidden lg:block;
+  @apply relative hidden sm:max-lg:hidden lg:block self-center;
 }
 
 .menu__bar-mobile {
