@@ -76,7 +76,7 @@ const initializeMobileMode = () => {
 
     if (!isHidden) {
       focusGuard.trap(focusWrapper);
-
+      mobileMenuButton.innerHTML = '<%= icon "close-line" class="w-8 h-8" %>'
       const focusable = getFocusableElements();
 
       if (focusable.length > 0) {
@@ -84,6 +84,7 @@ const initializeMobileMode = () => {
       }
     } else {
       focusGuard.disable();
+      mobileMenuButton.innerHTML = '<%= icon "menu-line" class="w-8 h-8" %>'
     }
   });
 
@@ -120,10 +121,21 @@ const handleSubmenu = () => {
 
       if (!submenu) return;
 
-      const isExpanded = caret.getAttribute("aria-expanded") === "true";
-      console.log(isExpanded)
-      caret.setAttribute("aria-expanded", (!isExpanded).toString());
+      submenuCarets.forEach(otherCaret => {
+        if (otherCaret === caret) return;
 
+        const otherSubmenuId = otherCaret.getAttribute("data-toggle-target");
+        const otherSubmenu = document.getElementById(otherSubmenuId);
+
+        if (!otherSubmenu) return;
+
+        otherCaret.classList.remove("rotate-180");
+        otherCaret.setAttribute("aria-expanded", "false");
+        otherSubmenu.style.display = "none";
+      });
+
+      const isExpanded = caret.getAttribute("aria-expanded") === "true";
+      caret.setAttribute("aria-expanded", (!isExpanded).toString());
       submenu.style.display = isExpanded ? "none" : "block";
     });
   });
