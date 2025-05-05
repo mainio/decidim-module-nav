@@ -1,0 +1,29 @@
+<% current_children = children[link.id] %>
+<% mobile ||= false %>
+
+
+<li class="<%= mobile ? 'submenu-element-mobile' : 'submenu-element' %>">
+  <%= link_to translated_attribute(link.href), target: link.target.presence, class: ("button button__text menu__bar-element--link") do %>
+    <span><%= translated_attribute(link.title) %></span>
+  <% end %>
+
+  <% if current_children.present? %>
+    <% submenu_id = "submenu-#{link.id}#{"-mobile" if mobile}" %>
+
+    <button
+      type="button"
+      class="submenu-element-caret"
+      aria-expanded="false"
+      aria-controls="<%= submenu_id %>"
+      data-toggle-target="<%= submenu_id %>">
+      <%= icon "arrow-down-s-line", class: "w-6 h-6 flex-none text-black fill-current bg-gray-3", "aria-hidden": "true" %>
+      <span class="sr-only">Toggle submenu for <%= translated_attribute(link.title) %></span>
+    </button>
+  <% end %>
+</li>
+
+  <% if current_children.present? %>
+    <ul id="<%= submenu_id %>" class="<%= mobile ? 'menu__bar-submenu-mobile' : "menu__bar-submenu" %>">
+      <%= render partial: "decidim/nav/shared/action_panel_submenu", collection: current_children, as: :link, locals: { children: children, mobile: mobile } %>
+    </ul>
+  <% end %>

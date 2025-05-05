@@ -43,19 +43,19 @@
 }
 
 .menu__bar-submenu {
-  @apply absolute mt-4 hidden min-w-[300px] z-50 bg-white border p-6 shadow-md;
+  @apply absolute mt-4 hidden min-w-[300px] z-50 bg-white border-t shadow-md left-0;
 
   .menu__bar-element--link{
     @apply px-px;
   }
 }
 
+.submenu-element {
+  @apply list-none pl-0 block w-full px-4 py-4 hover:bg-gray-3 text-center;
+}
+
 .menu__bar-submenu-mobile {
   @apply hidden transition-all duration-300 overflow-hidden pl-2 bg-gray-3 py-2 space-y-2;
-
-  .menu-element-mobile {
-    @apply border-b-0 border-l-2 border-gray-2;
-  }
 }
 
 .menu__bar-actions {
@@ -67,7 +67,15 @@
 }
 
 .mobile-menu {
-  @apply relative top-16 left-0 w-full h-[calc(100vh-4rem)] bg-white z-50 shadow-lg overflow-auto;
+  @apply relative left-0 w-full h-[calc(100vh-4rem)] bg-white z-50 shadow-lg overflow-auto;
+
+  form {
+    @apply flex justify-center gap-2;
+
+    input {
+      @apply bg-gray-3 rounded p-2;
+    }
+  }
 }
 
 .mobile-language {

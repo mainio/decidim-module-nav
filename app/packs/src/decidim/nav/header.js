@@ -43,7 +43,6 @@ const activeLocale = () => {
 
 const initializeMobileMode = () => {
   const mobileMenuButton = document.getElementById("toggle-mobile-menu");
-  const adminBar = document.getElementById("admin-bar");
   const mainBar = document.getElementById("main-bar");
   const mobileMenu = document.getElementById("mobile-menu");
 
@@ -51,11 +50,8 @@ const initializeMobileMode = () => {
   focusWrapper.setAttribute("id", "focus-wrapper");
   focusWrapper.style.position = "relative";
 
-  const menus = adminBar ? [adminBar, mainBar] : [mainBar];
-  const firstMenu = adminBar || mainBar;
-
-  firstMenu.parentNode.insertBefore(focusWrapper, firstMenu);
-  menus.forEach(menu => focusWrapper.appendChild(menu));
+  mainBar.parentNode.insertBefore(focusWrapper, mainBar);
+  focusWrapper.appendChild(mainBar);
   focusWrapper.appendChild(mobileMenu);
 
   const focusGuard = new FocusGuard(focusWrapper);
@@ -74,9 +70,13 @@ const initializeMobileMode = () => {
     const isHidden = mobileMenu.classList.toggle("hidden");
     document.body.classList.toggle("overflow-hidden", !isHidden);
 
+    const openIcon = mobileMenuButton.dataset.iconOpen;
+    const closeIcon = mobileMenuButton.dataset.iconClose;
+
     if (!isHidden) {
       focusGuard.trap(focusWrapper);
-      mobileMenuButton.innerHTML = '<%= icon "close-line" class="w-8 h-8" %>'
+      mobileMenuButton.innerHTML = closeIcon;
+
       const focusable = getFocusableElements();
 
       if (focusable.length > 0) {
@@ -84,7 +84,7 @@ const initializeMobileMode = () => {
       }
     } else {
       focusGuard.disable();
-      mobileMenuButton.innerHTML = '<%= icon "menu-line" class="w-8 h-8" %>'
+      mobileMenuButton.innerHTML = openIcon;
     }
   });
 

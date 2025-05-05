@@ -11,7 +11,12 @@
       <%= render partial: "layouts/decidim/header/main_account_menu" %>
     </div>
 
-    <button id="toggle-mobile-menu" class="lg:hidden absolute right-4">
+    <button
+      id="toggle-mobile-menu"
+      class="lg:hidden absolute right-4"
+      data-icon-open='<%= icon "menu-line", class: "w-8 h-8" %>'
+      data-icon-close='<%= icon "close-line", class: "w-8 h-8" %>'
+    >
       <%= icon "menu-line", class: "w-8 h-8" %>
     </button>
   </div>
