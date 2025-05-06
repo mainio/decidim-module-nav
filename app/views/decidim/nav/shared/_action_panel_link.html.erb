@@ -13,11 +13,11 @@
 
       <button
         type="button"
-        class="menu-element-caret"
+        class="<%= mobile ? 'menu-element-caret-mobile' : 'menu-element-caret' %>"
         aria-expanded="false"
         aria-controls="<%= submenu_id %>"
         data-toggle-target="<%= submenu_id %>">
-        <%= icon "arrow-down-s-line", class: "w-6 h-6 flex-none text-black fill-current bg-gray-3", "aria-hidden": "true" %>
+        <%= icon "arrow-down-s-line", class: mobile ? "mobile-caret" : "caret", "aria-hidden": "true" %>
         <span class="sr-only">Toggle submenu for <%= translated_attribute(link.title) %></span>
       </button>
     <% end %>

@@ -62,7 +62,8 @@ const initializeMobileMode = () => {
     )].filter(el =>
       el.offsetWidth > 0 &&
       el.offsetHeight > 0 &&
-      !el.classList.contains("focusguard")
+      !el.classList.contains("focusguard") &&
+      !(el.tagName === "A" && el.getAttribute("aria-label") === "Go to front page")
     );
   };
 
@@ -112,9 +113,11 @@ const handleSubmenu = () => {
   const submenuCarets = document.querySelectorAll("[data-toggle-target]");
 
   submenuCarets.forEach(caret => {
+    const caretIcon = caret.querySelector("svg");
+
     caret.addEventListener("click", (e) => {
       e.stopPropagation();
-      caret.classList.toggle("rotate-180");
+      caretIcon.classList.toggle("rotate-180");
 
       const submenuId = caret.getAttribute("data-toggle-target");
       const submenu = document.getElementById(submenuId);
@@ -122,6 +125,8 @@ const handleSubmenu = () => {
       if (!submenu) return;
 
       submenuCarets.forEach(otherCaret => {
+        const caretIcon = otherCaret.querySelector("svg");
+
         if (otherCaret === caret) return;
 
         const otherSubmenuId = otherCaret.getAttribute("data-toggle-target");
@@ -129,7 +134,7 @@ const handleSubmenu = () => {
 
         if (!otherSubmenu) return;
 
-        otherCaret.classList.remove("rotate-180");
+        caretIcon.classList.remove("rotate-180");
         otherCaret.setAttribute("aria-expanded", "false");
         otherSubmenu.style.display = "none";
       });
