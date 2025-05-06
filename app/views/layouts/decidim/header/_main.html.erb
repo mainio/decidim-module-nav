@@ -8,16 +8,19 @@
     </div>
     <div class="main-bar__links-desktop">
       <%= render partial: "layouts/decidim/header/main_links_desktop" %>
-      <%= render partial: "layouts/decidim/header/main_account_menu" %>
     </div>
 
-    <button
-      id="toggle-mobile-menu"
-      class="lg:hidden absolute right-4"
-      data-icon-open='<%= icon "menu-line", class: "w-8 h-8" %>'
-      data-icon-close='<%= icon "close-line", class: "w-8 h-8" %>'
-    >
-      <%= icon "menu-line", class: "w-8 h-8" %>
-    </button>
+    <div class="lg:hidden flex items-center gap-2">
+      <%= render partial: "layouts/decidim/header/mobile_account_menu" %>
+
+      <button
+        id="toggle-mobile-menu"
+        class="relative"
+        data-icon-open='<%= icon "menu-line", class: "w-8 h-8" %>'
+        data-icon-close='<%= icon "close-line", class: "w-8 h-8" %>'
+      >
+        <%= icon "menu-line", class: "w-8 h-8" %>
+      </button>
+    </div>
   </div>
 </div>

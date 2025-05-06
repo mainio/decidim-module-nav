@@ -67,6 +67,14 @@ const initializeMobileMode = () => {
     );
   };
 
+  const mobileAccount = document.getElementById("trigger-dropdown-account-mobile")
+  const accountMenu = document.getElementById("dropdown-menu-account-mobile");
+
+  mobileAccount.addEventListener("click", () => {
+    const isHidden = accountMenu.getAttribute("aria-hidden") === "true";
+    accountMenu.setAttribute("aria-hidden", isHidden);
+  })
+
   mobileMenuButton.addEventListener("click", () => {
     const isHidden = mobileMenu.classList.toggle("hidden");
     document.body.classList.toggle("overflow-hidden", !isHidden);

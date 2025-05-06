@@ -108,18 +108,6 @@ header {
     &__search {
       @apply hidden lg:block col-span-2 col-start-5 xl:col-start-4;
     }
-
-    &__links-desktop {
-      @apply flex;
-
-      &__item {
-        @apply hidden lg:flex flex-col items-center text-secondary px-2 py-1 rounded hover:underline hover:bg-background;
-
-        &-wrapper {
-          @apply hidden lg:flex gap-x-4 xl:gap-x-6;
-        }
-      }
-    }
   }
 }
 

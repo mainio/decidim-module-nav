@@ -5,8 +5,8 @@
     <% end %>
   </div>
 <% else %>
-  <div class="main-bar__dropdown-container">
-    <button id="trigger-dropdown-account" class="main-bar__dropdown-trigger" data-component="dropdown" data-target="dropdown-menu-account">
+  <div class="mobile-dropdown-container">
+    <button id="trigger-dropdown-account-mobile" class="main-bar__dropdown-trigger" data-component="dropdown" data-target="dropdown-menu-account-mobile">
       <% unread_data = current_user_unread_data %>
       <% if unread_data[:unread_items] %>
         <%= content_tag :span, "", class: "main-bar__notification", data: unread_data %>
@@ -27,8 +27,8 @@
         </span>
       <% end %>
     </button>
-    <div id="dropdown-menu-account" aria-hidden="true">
-      <ul class="dropdown dropdown__bottom main-bar__dropdown">
+    <div id="dropdown-menu-account-mobile" aria-hidden="true">
+      <ul class="">
         <%= render partial: "layouts/decidim/header/main_links_dropdown", locals: { unread_data: } %>
       </ul>
     </div>
