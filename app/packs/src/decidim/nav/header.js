@@ -163,9 +163,34 @@ const handleSubmenu = () => {
   });
 }
 
+const mediaQuery = window.matchMedia('(min-width: 1024px)');
+
+const handleScreenSize = (size) => {
+  const mobileMenuButton = document.getElementById("toggle-mobile-menu");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const openIcon = mobileMenuButton.dataset.iconOpen;
+  const accountMenu = document.getElementById("dropdown-menu-account")
+
+  if (size.matches) {
+    mobileMenu.classList.add("hidden");
+    mobileMenuButton.innerHTML = openIcon;
+    document.body.classList.remove("overflow-hidden");
+    if (accountMenu) {
+      accountMenu.classList.remove("mobile-account");
+    }
+  } else {
+    if (accountMenu) {
+      accountMenu.classList.add("mobile-account");
+    }
+  }
+
+  mediaQuery.addEventListener("change", handleScreenSize);
+}
+
 $(() => {
   activeLink();
   activeLocale();
   initializeMobileMode();
   handleSubmenu();
+  handleScreenSize(mediaQuery);
 })
