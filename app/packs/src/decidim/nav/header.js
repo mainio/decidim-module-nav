@@ -41,39 +41,78 @@ const activeLocale = () => {
   })
 }
 
-const initializeMobileMode = () => {
+let focusGuard;
+
+const initializeAccountMenu = () => {
+  const mobileAccount = document.getElementById("trigger-dropdown-account-mobile")
+  const accountMenu = document.getElementById("dropdown-menu-account-mobile");
+  const focusWrapper = document.getElementById("focus-wrapper-mobile");
+
+  mobileAccount.addEventListener("click", () => {
+    const isHidden = accountMenu.getAttribute("aria-hidden") === "false";
+    console.log(isHidden)
+    accountMenu.setAttribute("aria-hidden", !isHidden);
+    document.body.classList.toggle("overflow-hidden", isHidden);
+
+    if (!isHidden) {
+      focusGuard.trap(focusWrapper);
+
+      const focusable = getFocusableElements(focusWrapper, "#toggle-mobile-menu");
+
+      if (focusable.length > 0) {
+        focusable[0].focus();
+      }
+    } else {
+      focusGuard.disable();
+    }
+  });
+
+  focusWrapper.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab" || accountMenu.getAttribute("aria-hidden") === "true") return;
+
+    const focusable = getFocusableElements(focusWrapper, "#toggle-mobile-menu");
+
+    if (focusable.length === 0) return;
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+}
+
+const getFocusableElements = (focusWrapper, ignored) => {
+  return [...focusWrapper.querySelectorAll(
+    `a[href], button:not([disabled]):not(${ignored}), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])`
+  )].filter(el =>
+    el.offsetWidth > 0 &&
+    el.offsetHeight > 0 &&
+    !el.classList.contains("focusguard") &&
+    !(el.tagName === "A" && el.getAttribute("aria-label") === "Go to front page")
+  );
+};
+
+
+const initializeMobileMenu = () => {
   const mobileMenuButton = document.getElementById("toggle-mobile-menu");
   const mainBar = document.getElementById("main-bar");
   const mobileMenu = document.getElementById("mobile-menu");
 
   const focusWrapper = document.createElement("div");
-  focusWrapper.setAttribute("id", "focus-wrapper");
+  focusWrapper.setAttribute("id", "focus-wrapper-mobile");
   focusWrapper.style.position = "relative";
 
   mainBar.parentNode.insertBefore(focusWrapper, mainBar);
   focusWrapper.appendChild(mainBar);
   focusWrapper.appendChild(mobileMenu);
 
-  const focusGuard = new FocusGuard(focusWrapper);
-
-  const getFocusableElements = () => {
-    return [...focusWrapper.querySelectorAll(
-      'a[href], button:not([disabled]):not(#toggle-mobile-menu), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
-    )].filter(el =>
-      el.offsetWidth > 0 &&
-      el.offsetHeight > 0 &&
-      !el.classList.contains("focusguard") &&
-      !(el.tagName === "A" && el.getAttribute("aria-label") === "Go to front page")
-    );
-  };
-
-  const mobileAccount = document.getElementById("trigger-dropdown-account-mobile")
-  const accountMenu = document.getElementById("dropdown-menu-account-mobile");
-
-  mobileAccount.addEventListener("click", () => {
-    const isHidden = accountMenu.getAttribute("aria-hidden") === "true";
-    accountMenu.setAttribute("aria-hidden", isHidden);
-  })
+  focusGuard = new FocusGuard(focusWrapper);
 
   mobileMenuButton.addEventListener("click", () => {
     const isHidden = mobileMenu.classList.toggle("hidden");
@@ -86,7 +125,7 @@ const initializeMobileMode = () => {
       focusGuard.trap(focusWrapper);
       mobileMenuButton.innerHTML = closeIcon;
 
-      const focusable = getFocusableElements();
+      const focusable = getFocusableElements(focusWrapper, "#trigger-dropdown-account-mobile");
 
       if (focusable.length > 0) {
         focusable[0].focus();
@@ -100,7 +139,7 @@ const initializeMobileMode = () => {
   focusWrapper.addEventListener("keydown", (e) => {
     if (e.key !== "Tab" || mobileMenu.classList.contains("hidden")) return;
 
-    const focusable = getFocusableElements();
+    const focusable = getFocusableElements(focusWrapper, "#trigger-dropdown-account-mobile");
 
     if (focusable.length === 0) return;
 
@@ -177,28 +216,32 @@ const handleScreenSize = (size) => {
   const mobileMenuButton = document.getElementById("toggle-mobile-menu");
   const mobileMenu = document.getElementById("mobile-menu");
   const openIcon = mobileMenuButton.dataset.iconOpen;
-  const accountMenu = document.getElementById("dropdown-menu-account")
+  const accountMenu = document.getElementById("dropdown-menu-account-mobile");
+  const mobileAccount = document.getElementById("trigger-dropdown-account-mobile")
 
   if (size.matches) {
-    mobileMenu.classList.add("hidden");
-    mobileMenuButton.innerHTML = openIcon;
-    document.body.classList.remove("overflow-hidden");
-    if (accountMenu) {
-      accountMenu.classList.remove("mobile-account");
+    if (accountMenu.getAttribute("aria-hidden") === "false") {
+      accountMenu.setAttribute("aria-hidden", "true");
+      mobileAccount.setAttribute("aria-expanded", "false");
     }
-  } else {
-    if (accountMenu) {
-      accountMenu.classList.add("mobile-account");
-    }
-  }
 
-  mediaQuery.addEventListener("change", handleScreenSize);
+    if (!mobileMenu.classList.contains("hidden")) {
+      mobileMenu.classList.add("hidden");
+      mobileMenuButton.innerHTML = openIcon;
+    }
+
+    document.body.classList.remove("overflow-hidden");
+  } else {
+    return;
+  }
 }
 
 $(() => {
   activeLink();
   activeLocale();
-  initializeMobileMode();
+  initializeMobileMenu();
+  initializeAccountMenu();
   handleSubmenu();
   handleScreenSize(mediaQuery);
+  mediaQuery.addEventListener("change", handleScreenSize);
 })
