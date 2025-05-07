@@ -50,8 +50,6 @@ const initializeAccountMenu = () => {
 
   mobileAccount.addEventListener("click", () => {
     const isHidden = accountMenu.getAttribute("aria-hidden") === "false";
-    console.log(isHidden)
-    accountMenu.setAttribute("aria-hidden", !isHidden);
     document.body.classList.toggle("overflow-hidden", isHidden);
 
     if (!isHidden) {
@@ -216,13 +214,11 @@ const handleScreenSize = (size) => {
   const mobileMenuButton = document.getElementById("toggle-mobile-menu");
   const mobileMenu = document.getElementById("mobile-menu");
   const openIcon = mobileMenuButton.dataset.iconOpen;
-  const accountMenu = document.getElementById("dropdown-menu-account-mobile");
   const mobileAccount = document.getElementById("trigger-dropdown-account-mobile")
 
   if (size.matches) {
-    if (accountMenu.getAttribute("aria-hidden") === "false") {
-      accountMenu.setAttribute("aria-hidden", "true");
-      mobileAccount.setAttribute("aria-expanded", "false");
+    if (mobileAccount.getAttribute("aria-expanded") === "true") {
+      mobileAccount.dispatchEvent(new Event("click"))
     }
 
     if (!mobileMenu.classList.contains("hidden")) {
