@@ -12,8 +12,13 @@ module Decidim
           submenu = @menu_item.submenu
           data[:submenu] = true if submenu
 
-          content_tag(:li, class: link_wrapper_classes, data:) do
-            output = [link_to(composed_label, url, link_options)]
+          content_tag(:li, role: :menuitem, class: link_wrapper_classes, data:) do
+            output = if url == "#"
+                       [content_tag(:span, composed_label, class: "sidebar-menu__item-disabled")]
+                     else
+                       [link_to(composed_label, url, link_options)]
+                     end
+
             if submenu
               if @view.respond_to?(:simple_menu)
                 # Admin-facing submenu
@@ -49,16 +54,6 @@ module Decidim
             end
 
             safe_join(output)
-          end
-        end
-
-        private
-
-        def link_options
-          if is_active_link?(url, active)
-            { aria: { current: "page" } }
-          else
-            {}
           end
         end
       end
