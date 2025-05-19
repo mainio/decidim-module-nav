@@ -7,7 +7,9 @@ const activeLink = () => {
   links.forEach(link => {
     link.classList.add("menu-link");
 
-    if (window.location.pathname.includes(link.getAttribute("href"))) {
+    if (window.location.pathname.includes(link.getAttribute("href")) && link.getAttribute("href") !== "/") {
+      link.classList.add("active-link");
+    } else if (window.location.pathname === "/" && link.getAttribute("href") === "/") {
       link.classList.add("active-link");
     }
   });
@@ -18,7 +20,9 @@ const activeLink = () => {
   mobileLinks.forEach(link => {
     link.classList.add("menu-link");
 
-    if (window.location.pathname.includes(link.getAttribute("href"))) {
+    if (window.location.pathname.includes(link.getAttribute("href")) && link.getAttribute("href") !== "/") {
+      link.classList.add("active-link");
+    } else if (window.location.pathname === "/" && link.getAttribute("href") === "/") {
       link.classList.add("active-link");
     }
   })

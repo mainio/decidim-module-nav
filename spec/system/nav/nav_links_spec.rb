@@ -23,7 +23,7 @@ describe "Menu" do
   end
 
   it "renders the the nav link in menu main menu" do
-    within "#home__menu" do
+    within "#menu-bar" do
       expect(page).to have_link(translated(nav_link.title, locale: :en), href: link)
     end
   end
