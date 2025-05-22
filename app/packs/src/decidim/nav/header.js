@@ -1,31 +1,36 @@
 import FocusGuard from "src/decidim/focus_guard"
 
 const activeLink = () => {
-  // For desktop
-  const links = document.querySelectorAll("#menu-bar a");
+  const highLightLink = (selector) => {
+    const links = document.querySelectorAll(`${selector} a`);
 
-  links.forEach(link => {
-    link.classList.add("menu-link");
+    links.forEach(link => link.classList.add("menu-link"));
 
-    if (window.location.pathname.includes(link.getAttribute("href")) && link.getAttribute("href") !== "/") {
-      link.classList.add("active-link");
-    } else if (window.location.pathname === "/" && link.getAttribute("href") === "/") {
-      link.classList.add("active-link");
+    const currentPath = window.location.pathname;
+    let closestMatch = null;
+    let closestMatchLength = 0;
+
+    links.forEach(link => {
+      const href = link.getAttribute("href");
+
+      if (currentPath === href || (href !== "/" && currentPath.startsWith(href))) {
+        if (href.length > closestMatchLength) {
+          closestMatch = link;
+          closestMatchLength = href.length;
+        }
+      }
+    })
+
+    if (closestMatch) {
+      closestMatch.classList.add("active-link");
     }
-  });
+  }
 
-  // For mobile
-  const mobileLinks = document.querySelectorAll("#mobile-menu a");
+  // desktop
+  highLightLink("#menu-bar");
 
-  mobileLinks.forEach(link => {
-    link.classList.add("menu-link");
-
-    if (window.location.pathname.includes(link.getAttribute("href")) && link.getAttribute("href") !== "/") {
-      link.classList.add("active-link");
-    } else if (window.location.pathname === "/" && link.getAttribute("href") === "/") {
-      link.classList.add("active-link");
-    }
-  })
+  // mobile
+  highLightLink("#mobile-menu");
 }
 
 const activeLocale = () => {
