@@ -231,22 +231,24 @@ const mediaQuery = window.matchMedia('(min-width: 1024px)');
 const handleScreenSize = (size) => {
   const mobileMenuButton = document.getElementById("toggle-mobile-menu");
   const mobileMenu = document.getElementById("mobile-menu");
-  const openIcon = mobileMenuButton.dataset.iconOpen;
   const mobileAccount = document.getElementById("trigger-dropdown-account-mobile")
+  if (mobileMenuButton) {
+    const openIcon = mobileMenuButton.dataset.iconOpen;
 
-  if (size.matches) {
-    if (mobileAccount && mobileAccount.getAttribute("aria-expanded") === "true") {
-      mobileAccount.dispatchEvent(new Event("click"))
+    if (size.matches) {
+      if (mobileAccount && mobileAccount.getAttribute("aria-expanded") === "true") {
+        mobileAccount.dispatchEvent(new Event("click"))
+      }
+
+      if (!mobileMenu.classList.contains("hidden")) {
+        mobileMenu.classList.add("hidden");
+        mobileMenuButton.innerHTML = openIcon;
+      }
+
+      document.body.classList.remove("overflow-hidden");
+    } else {
+      return;
     }
-
-    if (!mobileMenu.classList.contains("hidden")) {
-      mobileMenu.classList.add("hidden");
-      mobileMenuButton.innerHTML = openIcon;
-    }
-
-    document.body.classList.remove("overflow-hidden");
-  } else {
-    return;
   }
 }
 
