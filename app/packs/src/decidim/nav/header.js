@@ -113,56 +113,59 @@ const initializeMobileMenu = () => {
   const mainBar = document.getElementById("main-bar");
   const mobileMenu = document.getElementById("mobile-menu");
 
-  const focusWrapper = document.createElement("div");
-  focusWrapper.setAttribute("id", "focus-wrapper-mobile");
-  focusWrapper.style.position = "relative";
+  if (mainBar) {
 
-  mainBar.parentNode.insertBefore(focusWrapper, mainBar);
-  focusWrapper.appendChild(mainBar);
-  focusWrapper.appendChild(mobileMenu);
+    const focusWrapper = document.createElement("div");
+    focusWrapper.setAttribute("id", "focus-wrapper-mobile");
+    focusWrapper.style.position = "relative";
 
-  focusGuard = new FocusGuard(focusWrapper);
+    mainBar.parentNode.insertBefore(focusWrapper, mainBar);
+    focusWrapper.appendChild(mainBar);
+    focusWrapper.appendChild(mobileMenu);
 
-  mobileMenuButton.addEventListener("click", () => {
-    const isHidden = mobileMenu.classList.toggle("hidden");
-    document.body.classList.toggle("overflow-hidden", !isHidden);
+    focusGuard = new FocusGuard(focusWrapper);
 
-    const openIcon = mobileMenuButton.dataset.iconOpen;
-    const closeIcon = mobileMenuButton.dataset.iconClose;
+    mobileMenuButton.addEventListener("click", () => {
+      const isHidden = mobileMenu.classList.toggle("hidden");
+      document.body.classList.toggle("overflow-hidden", !isHidden);
 
-    if (!isHidden) {
-      focusGuard.trap(focusWrapper);
-      mobileMenuButton.innerHTML = closeIcon;
+      const openIcon = mobileMenuButton.dataset.iconOpen;
+      const closeIcon = mobileMenuButton.dataset.iconClose;
+
+      if (!isHidden) {
+        focusGuard.trap(focusWrapper);
+        mobileMenuButton.innerHTML = closeIcon;
+
+        const focusable = getFocusableElements(focusWrapper, "#trigger-dropdown-account-mobile");
+
+        if (focusable.length > 0) {
+          focusable[0].focus();
+        }
+      } else {
+        focusGuard.disable();
+        mobileMenuButton.innerHTML = openIcon;
+      }
+    });
+
+    focusWrapper.addEventListener("keydown", (e) => {
+      if (e.key !== "Tab" || mobileMenu.classList.contains("hidden")) return;
 
       const focusable = getFocusableElements(focusWrapper, "#trigger-dropdown-account-mobile");
 
-      if (focusable.length > 0) {
-        focusable[0].focus();
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
-    } else {
-      focusGuard.disable();
-      mobileMenuButton.innerHTML = openIcon;
-    }
-  });
-
-  focusWrapper.addEventListener("keydown", (e) => {
-    if (e.key !== "Tab" || mobileMenu.classList.contains("hidden")) return;
-
-    const focusable = getFocusableElements(focusWrapper, "#trigger-dropdown-account-mobile");
-
-    if (focusable.length === 0) return;
-
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  });
+    });
+  }
 }
 
 const hideMenus = () => {
