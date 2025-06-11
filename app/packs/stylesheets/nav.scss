@@ -123,3 +123,8 @@ header {
   }
 }
 
+.simple-locales-container {
+  .locale {
+    @apply text-[--primary];
+  }
+}

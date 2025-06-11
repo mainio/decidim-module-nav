@@ -24,7 +24,7 @@
         </ul>
       </div>
     </div>
-  <% else %>
+  <% elsif available_locales.length > 1 %>
     <div class="simple-locales-container flex flex-row gap-2">
       <% available_locales.each do |locale| %>
         <%= link_to locale_name(locale),
