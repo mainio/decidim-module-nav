@@ -128,3 +128,12 @@ header {
     @apply text-[--primary];
   }
 }
+
+header {
+  .main-bar {
+    &__links-desktop,
+    > *:last-child {
+      @apply col-start-8;
+    }
+  }
+}
