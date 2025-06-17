@@ -1,11 +1,5 @@
 <div id="menu-bar" class="menu__bar hidden sm:max-lg:hidden lg:block">
   <div class="menu__bar-container items-center">
     <%= render partial: "decidim/nav/shared/action_panel_links", locals: { navigable: current_organization } %>
-
-    <% if content_for?(:participatory_space_actions) %>
-      <div class="menu__bar-actions">
-        <%= content_for :participatory_space_actions %>
-      </div>
-    <% end %>
   </div>
 </div>

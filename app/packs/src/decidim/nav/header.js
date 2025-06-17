@@ -23,6 +23,16 @@ const activeLink = () => {
 
     if (closestMatch) {
       closestMatch.classList.add("active-link");
+
+      const menuElement = closestMatch.closest(".menu-element");
+
+      if (menuElement) {
+        const caret = menuElement.querySelector(".menu-element-caret");
+
+        if (caret) {
+          caret.classList.add("active-caret");
+        }
+      }
     }
   }
 
