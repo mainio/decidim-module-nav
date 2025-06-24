@@ -13,7 +13,7 @@ const activeLink = () => {
     links.forEach(link => {
       const href = link.getAttribute("href");
 
-      if (currentPath === href || (href !== "/" && currentPath.startsWith(href))) {
+      if (href && (currentPath === href || (href !== "/" && currentPath.startsWith(href)))) {
         if (href.length > closestMatchLength) {
           closestMatch = link;
           closestMatchLength = href.length;
@@ -32,6 +32,17 @@ const activeLink = () => {
         if (caret) {
           caret.classList.add("active-caret");
         }
+      }
+
+      const parent = closestMatch.closest(".menu__bar-submenu");
+
+      if (parent) {
+        const parentWrapper = parent.closest(".menu__bar-element");
+        const parentLink = parentWrapper.querySelector(".menu-element > a");
+        const parentCaret = parentWrapper.querySelector(".menu-element-caret");
+
+        parentLink.classList.add("active-link");
+        parentCaret.classList.add("active-caret");
       }
     }
   }
