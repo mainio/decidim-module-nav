@@ -77,3 +77,9 @@ en:
     admin:
       menu:
         nav: Navigation
+  layouts:
+    decidim:
+      header:
+        main:
+          menu: Menu
+          platform: Participation platform

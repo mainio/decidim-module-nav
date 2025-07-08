@@ -2,6 +2,7 @@
   <div class="main-bar">
     <div class="main-bar__logo">
       <%= render partial: "layouts/decidim/logo", locals: { organization: current_organization } %>
+      <span class="text-sm md:text-lg"><%= t(".platform") %></span>
     </div>
     <div class="main-bar__search">
       <%= render partial: "layouts/decidim/header/main_search" %>
@@ -16,11 +17,13 @@
       <div id="mobile-menu-button-wrapper">
         <button
           id="toggle-mobile-menu"
-          class="relative"
+          class="toggle-mobile-menu"
+          aria-label="Toggle main menu"
           data-icon-open='<%= icon "menu-line", class: "w-8 h-8" %>'
           data-icon-close='<%= icon "close-line", class: "w-8 h-8" %>'
         >
           <%= icon "menu-line", class: "w-8 h-8" %>
+          <span><%= t(".menu") %></span>
         </button>
       </div>
     </div>

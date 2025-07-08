@@ -77,3 +77,9 @@ fi:
     admin:
       menu:
         nav: Navigaatio
+  layouts:
+    decidim:
+      header:
+        main:
+          menu: Valikko
+          platform: Osallistumisalusta

@@ -99,6 +99,14 @@
   }
 }
 
+.toggle-mobile-menu {
+  @apply relative flex flex-col justify-center items-center text-[--primary] font-bold text-sm;
+
+  svg {
+    @apply fill-[--primary];
+  }
+}
+
 .mobile-language {
   @apply flex justify-center bg-gray-3 border-b;
 }
@@ -119,6 +127,10 @@ header {
   .main-bar {
     &__search {
       @apply hidden lg:block col-span-2 col-start-5 xl:col-start-4;
+    }
+
+    &__logo {
+      @apply col-span-6 flex flex-col items-center justify-center sm:col-span-5 md:col-span-2 xl:col-span-1;
     }
   }
 }
