@@ -70,6 +70,8 @@ fi:
             create: Luo
             title: Uusi linkki
       shared:
+        action_panel_links:
+          search: Haku
         subnav:
           close: Sulje alavalikko kohteelle %{title}
           open: Avaa alavalikko kohteelle %{title}
@@ -81,5 +83,9 @@ fi:
     decidim:
       header:
         main:
+          close: Sulje
           menu: Valikko
           platform: Osallistumisalusta
+        mobile_account_menu:
+          menu: Käyttäjätili
+          close: Sulje

@@ -18,12 +18,15 @@
         <button
           id="toggle-mobile-menu"
           class="toggle-mobile-menu"
-          aria-label="Toggle main menu"
-          data-icon-open='<%= icon "menu-line", class: "w-8 h-8" %>'
-          data-icon-close='<%= icon "close-line", class: "w-8 h-8" %>'
+          aria-label="Toggle mobile menu"
+          data-label-open='<%= t(".menu") %>'
+          data-label-close='<%= t(".close") %>'
         >
-          <%= icon "menu-line", class: "w-8 h-8" %>
-          <span><%= t(".menu") %></span>
+          <span class="mobile-menu-icon">
+            <%= icon "menu-line", class: "w-8 h-8 icon-menu" %>
+            <%= icon "close-line", class: "w-8 h-8 icon-close hidden" %>
+          </span>
+          <span class="mobile-menu-label w-16"><%= t(".menu") %></span>
         </button>
       </div>
     </div>

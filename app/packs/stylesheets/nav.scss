@@ -27,7 +27,7 @@
 }
 
 .menu-element-mobile {
-  @apply flex items-center justify-between w-full h-12 text-3xl pl-4 border-b;
+  @apply flex items-center justify-between w-full h-12 text-3xl pl-4 border-b-2 border-background;
 }
 
 .menu-element-caret {
@@ -35,7 +35,7 @@
 }
 
 .menu-element-caret-mobile {
-  @apply h-[47px] w-[70px] rounded-none border-l border-black flex items-center justify-center;
+  @apply h-[47px] w-[70px] rounded-none border-l-2 border-background flex items-center justify-center;
 }
 
 .caret {
@@ -108,17 +108,49 @@
 }
 
 .mobile-language {
-  @apply flex justify-center bg-gray-3 border-b;
+  @apply flex justify-center bg-background;
+}
+
+.mobile-search-container {
+  @apply py-6 px-4;
+
+  form {
+    @apply rounded-none border bg-white h-10;
+  }
+
+  button[type=submit] {
+    @apply w-10 h-10 top-0 right-0 bg-secondary text-white border-l border-black;
+
+    svg {
+      @apply inline fill-white;
+    }
+  }
+
+  #input-search {
+    @apply w-full bg-white;
+  }
+}
+
+.mobile-search {
+  @apply text-xl font-bold font-bio;
 }
 
 .dropdown-menu-account-mobile {
-  @apply fixed top-32 left-0 right-0 h-[calc(100vh-8rem)] bg-white z-50 p-4 overflow-y-auto;
+  @apply fixed left-0 right-0 h-[calc(100vh-4rem)] bg-white z-50 overflow-y-auto border-t-2;
 
   > ul {
-    @apply flex flex-col items-center space-y-6 mt-4;
+    @apply flex flex-col items-start gap-4 pt-4;
 
-    li > a {
-      @apply text-2xl;
+    li {
+      @apply border-b-2 border-background w-full pb-4;
+
+      a {
+        @apply text-xl font-bold font-bio pl-5;
+
+        svg {
+          @apply h-6 w-6 fill-[--primary];
+        }
+      }
     }
   }
 }

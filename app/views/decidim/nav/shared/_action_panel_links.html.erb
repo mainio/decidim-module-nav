@@ -17,10 +17,6 @@ end
 
 <% if mobile %>
   <div class="mobile-menu hidden" id="mobile-menu" role="menu" aria-labelledby="toggle-mobile-menu">
-    <div class="pl-4 mb-10">
-      <%= render partial: "layouts/decidim/header/main_search" %>
-    </div>
-
     <div class="mobile-language">
       <% if available_locales.length > 3 %>
         <div class="main-bar__language-container">
@@ -48,20 +44,27 @@ end
           </div>
         </div>
       <% else %>
-        <div class="simple-locales-container flex flex-row gap-2">
-          <% available_locales.each do |locale| %>
-            <%= link_to locale_name(locale),
-                        decidim.locale_path(locale:),
-                        method: :post,
-                        role: "menuitem",
-                        lang: locale,
-                        class: "locale p-2 text-md text-black hover:underline transition" %>
-          <% end %>
-        </div>
+        <% unless available_locales.length == 1 %>
+          <div class="simple-locales-container flex flex-row gap-2">
+            <% available_locales.each do |locale| %>
+              <%= link_to locale_name(locale),
+                          decidim.locale_path(locale:),
+                          method: :post,
+                          role: "menuitem",
+                          lang: locale,
+                          class: "locale p-2 text-md text-black hover:underline transition" %>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
     </div>
 
     <%= render partial: "decidim/nav/shared/action_panel_link", collection: top, as: :link, locals: { children: children, mobile: mobile } %>
+
+    <div class="mobile-search-container">
+      <span class="mobile-search"><%= t(".search") %></span>
+      <%= render partial: "layouts/decidim/header/main_search" %>
+    </div>
   </div>
 <% end %>
 

@@ -73,30 +73,102 @@ const activeLocale = () => {
 
 let focusGuard;
 
+const hideMobileMenu = (mobileMenu) => {
+  const mobileMenuButton = document.getElementById("toggle-mobile-menu");
+
+  const iconSpan = mobileMenuButton.querySelector(".mobile-menu-icon");
+  const labelSpan = mobileMenuButton.querySelector(".mobile-menu-label");
+
+  const openIcon = mobileMenuButton.dataset.iconOpen;
+  const openLabel = mobileMenuButton.dataset.labelOpen;
+
+  mobileMenu.classList.add("hidden");
+  iconSpan.innerHTML = openIcon;
+  labelSpan.innerHTML = openLabel;
+}
+
+const changeMobileMenuIcon = () => {
+  const iconContainer = document.querySelector(".mobile-menu-icon");
+
+  if(!iconContainer) return;
+
+  const menuIcon = iconContainer.querySelector(".icon-menu");
+  const closeIcon = iconContainer.querySelector(".icon-close");
+
+  const menuVisible = !menuIcon.classList.contains("hidden");
+
+  menuIcon.classList.toggle("hidden", menuVisible);
+  closeIcon.classList.toggle("hidden", !menuVisible);
+}
+
+const changeAccountIcon = () => {
+  const iconContainer = document.querySelector(".mobile-account-icon");
+
+  if(!iconContainer) return;
+
+  const userIcon = iconContainer.querySelector(".icon-user");
+  const closeIcon = iconContainer.querySelector(".icon-close");
+
+  const userVisible = !userIcon.classList.contains("hidden");
+
+  userIcon.classList.toggle("hidden", userVisible);
+  closeIcon.classList.toggle("hidden", !userVisible);
+}
+
+const hideAccountMenu = (accountMenuTrigger) => {
+  const notification = document.querySelector(".account-notification");
+  const labelSpan = accountMenuTrigger.querySelector(".mobile-account-label");
+  const openLabel = accountMenuTrigger.dataset.labelOpen;
+
+  changeAccountIcon();
+  labelSpan.innerHTML = openLabel;
+  notification.classList.add("main-bar__notification");
+}
+
 const initializeAccountMenu = () => {
-  const mobileAccount = document.getElementById("trigger-dropdown-account-mobile")
+  const mobileAccount = document.getElementById("trigger-dropdown-account-mobile");
   const accountMenu = document.getElementById("dropdown-menu-account-mobile");
   const focusWrapper = document.getElementById("focus-wrapper-mobile");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const notification = mobileAccount.querySelector(".main-bar__notification");
 
   if (mobileAccount) {
-    mobileAccount.addEventListener("click", () => {
-      const isHidden = accountMenu.getAttribute("aria-hidden") === "false";
-      document.body.classList.toggle("overflow-hidden", isHidden);
+    if (notification) {
+      notification.classList.add("account-notification");
+    }
 
-      if (!isHidden) {
+    mobileAccount.addEventListener("click", () => {
+      const labelSpan = mobileAccount.querySelector(".mobile-account-label");
+
+      const closeLabel = mobileAccount.dataset.labelClose;
+
+      if (!mobileMenu.classList.contains("hidden")) {
+        hideMobileMenu(mobileMenu);
+      }
+
+      const visible = accountMenu.getAttribute("aria-hidden") === "false";
+      document.body.classList.toggle("overflow-hidden", visible);
+
+      if (!visible) {
+        focusGuard.disable();
+        hideAccountMenu(mobileAccount);
+      } else {
         focusGuard.trap(focusWrapper);
+        changeAccountIcon();
+        labelSpan.innerHTML = closeLabel;
+
+        notification.classList.remove("main-bar__notification");
 
         const focusable = getFocusableElements(focusWrapper, "#toggle-mobile-menu");
 
         if (focusable.length > 0) {
           focusable[0].focus();
         }
-      } else {
-        focusGuard.disable();
       }
     });
 
     focusWrapper.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { focusGuard.disable(); document.body.classList.toggle("overflow-hidden", false); }
       if (e.key !== "Tab" || accountMenu.getAttribute("aria-hidden") === "true") return;
 
       const focusable = getFocusableElements(focusWrapper, "#toggle-mobile-menu");
@@ -124,7 +196,7 @@ const getFocusableElements = (focusWrapper, ignored) => {
     el.offsetWidth > 0 &&
     el.offsetHeight > 0 &&
     !el.classList.contains("focusguard") &&
-    !(el.tagName === "A" && el.getAttribute("aria-label") === "Go to front page")
+    !(el.tagName === "A" && el.closest(".main-bar__logo"))
   );
 };
 
@@ -150,12 +222,15 @@ const initializeMobileMenu = () => {
       const isHidden = mobileMenu.classList.toggle("hidden");
       document.body.classList.toggle("overflow-hidden", !isHidden);
 
-      const openIcon = mobileMenuButton.dataset.iconOpen;
-      const closeIcon = mobileMenuButton.dataset.iconClose;
+      const labelSpan = mobileMenuButton.querySelector(".mobile-menu-label");
+
+      const openLabel = mobileMenuButton.dataset.labelOpen;
+      const closeLabel = mobileMenuButton.dataset.labelClose;
 
       if (!isHidden) {
         focusGuard.trap(focusWrapper);
-        mobileMenuButton.innerHTML = closeIcon;
+        changeMobileMenuIcon();
+        labelSpan.innerHTML = closeLabel;
 
         const focusable = getFocusableElements(focusWrapper, "#trigger-dropdown-account-mobile");
 
@@ -164,11 +239,17 @@ const initializeMobileMenu = () => {
         }
       } else {
         focusGuard.disable();
-        mobileMenuButton.innerHTML = openIcon;
+        changeMobileMenuIcon();
+        labelSpan.innerHTML = openLabel;
       }
     });
 
     focusWrapper.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        focusGuard.disable();
+        document.body.classList.toggle("overflow-hidden", false);
+        mobileMenu.classList.toggle("hidden");
+      }
       if (e.key !== "Tab" || mobileMenu.classList.contains("hidden")) return;
 
       const focusable = getFocusableElements(focusWrapper, "#trigger-dropdown-account-mobile");
@@ -207,6 +288,33 @@ const hideMenus = () => {
         submenu.style.display = "none";
       }
     });
+
+    // handle accountmenu icon change and mobilemenu close
+
+    const mobileMenuButton = document.getElementById("toggle-mobile-menu");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    const accountTrigger = document.getElementById("trigger-dropdown-account-mobile");
+    const accountMenu = document.getElementById("dropdown-menu-account-mobile");
+
+    if (accountMenu.getAttribute("aria-hidden") === "false" && !accountTrigger.contains(e.target) && !accountMenu.contains(e.target)) {
+      focusGuard.disable();
+      document.body.classList.toggle("overflow-hidden", false);
+
+      hideAccountMenu(accountTrigger);
+    }
+
+    if (!mobileMenu.classList.contains("hidden") && !mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+      focusGuard.disable();
+
+      mobileMenu.classList.toggle("hidden");
+      document.body.classList.toggle("overflow-hidden", false);
+
+      const labelSpan = mobileMenuButton.querySelector(".mobile-menu-label");
+      const openLabel = mobileMenuButton.dataset.labelOpen;
+      changeMobileMenuIcon();
+      labelSpan.innerHTML = openLabel;
+    }
   });
 }
 
@@ -247,23 +355,36 @@ const handleSubmenu = () => {
   });
 }
 
+const handleAccountMenu = () => {
+  const header = document.querySelector("header");
+  const dropdown = document.querySelector(".dropdown-menu-account-mobile");
+
+  if (header && dropdown) {
+    const headerHeight = header.offsetHeight;
+    dropdown.style.top = `${headerHeight}px`;
+  }
+}
+
 const mediaQuery = window.matchMedia('(min-width: 1024px)');
 
 const handleScreenSize = (size) => {
   const mobileMenuButton = document.getElementById("toggle-mobile-menu");
   const mobileMenu = document.getElementById("mobile-menu");
-  const mobileAccount = document.getElementById("trigger-dropdown-account-mobile")
-  if (mobileMenuButton) {
-    const openIcon = mobileMenuButton.dataset.iconOpen;
 
+  const mobileAccount = document.getElementById("trigger-dropdown-account-mobile");
+
+  if (mobileAccount) {
+    handleAccountMenu();
+  }
+
+  if (mobileMenuButton) {
     if (size.matches) {
       if (mobileAccount && mobileAccount.getAttribute("aria-expanded") === "true") {
         mobileAccount.dispatchEvent(new Event("click"))
       }
 
       if (!mobileMenu.classList.contains("hidden")) {
-        mobileMenu.classList.add("hidden");
-        mobileMenuButton.innerHTML = openIcon;
+        hideMobileMenu(mobileMenu);
       }
 
       document.body.classList.remove("overflow-hidden");

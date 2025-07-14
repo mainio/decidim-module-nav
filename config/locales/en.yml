@@ -70,6 +70,8 @@ en:
             create: Create
             title: New link
       shared:
+        action_panel_links:
+          search: Search
         subnav:
           close: Close subnavigation for %{title}
           open: Open subnavigation for %{title}
@@ -81,5 +83,9 @@ en:
     decidim:
       header:
         main:
+          close: Close
           menu: Menu
           platform: Participation platform
+        mobile_account_menu:
+          menu: Profile
+          close: Close
