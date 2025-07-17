@@ -130,9 +130,10 @@ const initializeAccountMenu = () => {
   const accountMenu = document.getElementById("dropdown-menu-account-mobile");
   const focusWrapper = document.getElementById("focus-wrapper-mobile");
   const mobileMenu = document.getElementById("mobile-menu");
-  const notification = mobileAccount.querySelector(".main-bar__notification");
 
   if (mobileAccount) {
+    const notification = mobileAccount.querySelector(".main-bar__notification");
+
     if (notification) {
       notification.classList.add("account-notification");
     }
@@ -395,12 +396,14 @@ const handleScreenSize = (size) => {
 }
 
 $(() => {
-  activeLink();
-  activeLocale();
-  initializeMobileMenu();
-  initializeAccountMenu();
-  handleSubmenu();
-  handleScreenSize(mediaQuery);
-  hideMenus();
-  mediaQuery.addEventListener("change", handleScreenSize);
+  if (document.getElementById("main-bar")) {
+    activeLink();
+    activeLocale();
+    initializeMobileMenu();
+    initializeAccountMenu();
+    handleSubmenu();
+    handleScreenSize(mediaQuery);
+    hideMenus();
+    mediaQuery.addEventListener("change", handleScreenSize);
+  }
 })
