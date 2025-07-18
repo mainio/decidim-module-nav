@@ -85,7 +85,6 @@ fi:
         main:
           close: Sulje
           menu: Valikko
-          platform: OSALLISTUMISALUSTA
         mobile_account_menu:
           menu: Käyttäjätili
           close: Sulje

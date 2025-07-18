@@ -85,7 +85,6 @@ en:
         main:
           close: Close
           menu: Menu
-          platform: PARTICIPATION PLATFORM
         mobile_account_menu:
           menu: Profile
           close: Close
