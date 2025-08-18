@@ -298,7 +298,7 @@ const hideMenus = () => {
     const accountTrigger = document.getElementById("trigger-dropdown-account-mobile");
     const accountMenu = document.getElementById("dropdown-menu-account-mobile");
 
-    if (accountMenu.getAttribute("aria-hidden") === "false" && !accountTrigger.contains(e.target) && !accountMenu.contains(e.target)) {
+    if (accountMenu && accountMenu.getAttribute("aria-hidden") === "false" && !accountTrigger.contains(e.target) && !accountMenu.contains(e.target)) {
       focusGuard.disable();
       document.body.classList.toggle("overflow-hidden", false);
 
