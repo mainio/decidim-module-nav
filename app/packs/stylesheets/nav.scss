@@ -164,12 +164,20 @@ header {
     &__logo {
       @apply flex flex-col items-center justify-center max-[449px]:col-span-7 max-[470px]:col-span-6 max-[539px]:col-span-5 col-span-4 sm:col-span-3 lg:flex-row lg:justify-start lg:gap-8 lg:col-span-5 xl:col-span-4;
     }
+
+    &__dropdown-trigger {
+      @apply px-0;
+    }
+
+    &__links-desktop__item {
+      @apply px-0;
+    }
   }
 }
 
-.main-bar__dropdown-trigger {
-  @apply w-[50px] h-[64px];
-}
+// .main-bar__dropdown-trigger {
+//   @apply w-[50px] h-[64px];
+// }
 
 .simple-locales-container {
   .locale {
