@@ -132,7 +132,7 @@
 }
 
 .mobile-search {
-  @apply text-xl font-bold font-bio;
+  @apply text-xl font-bold;
 }
 
 .dropdown-menu-account-mobile {
@@ -145,7 +145,7 @@
       @apply border-b-2 border-background w-full pb-4;
 
       a {
-        @apply text-xl font-bold font-bio pl-5;
+        @apply text-xl font-bold pl-5;
 
         svg {
           @apply h-6 w-6 fill-[--primary];
