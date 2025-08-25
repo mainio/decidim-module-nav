@@ -118,7 +118,7 @@
   @apply relative list-none pl-0 block w-full hover:bg-gray-3 text-center;
 
   .button {
-    @apply p-4;
+    @apply w-full justify-start p-4;
   }
 }
 
@@ -190,13 +190,13 @@
   @apply hidden relative left-0 right-0 h-[calc(100vh-4rem)] bg-white z-50 overflow-y-auto;
 
   > ul {
-    @apply flex flex-col items-start gap-4 pt-4;
+    @apply flex flex-col items-start;
 
     li {
-      @apply border-b-2 border-background w-full pb-4;
+      @apply border-b-2 border-background w-full;
 
       a {
-        @apply text-xl font-bold pl-5;
+        @apply text-xl font-bold py-4 px-5;
 
         svg {
           @apply h-6 w-6 fill-[--primary];
