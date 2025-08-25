@@ -1,9 +1,13 @@
 .active-link {
-  @apply underline decoration-2;
+  @apply underline;
+
+  &::after {
+    @apply content-[""] absolute left-0 bottom-0 w-full h-0.5 bg-primary;
+  }
 }
 
 .active-locale {
-  @apply underline decoration-2;
+  @apply underline;
 }
 
 .menu-link {
@@ -11,11 +15,25 @@
 }
 
 .menu__bar {
-  @apply py-4 bg-white border-y hidden lg:block;
+  @apply min-h-[3.41rem] bg-white border-y hidden lg:block border-y-2 border-gray-3;
+
+  &-container {
+    @apply justify-center;
+  }
+
+  &-element--link {
+    @apply text-[--primary] text-xl;
+  }
+
+  &-mobile {
+    a {
+      @apply w-full justify-start text-left text-xl font-bold;
+    }
+  }
 }
 
 .menu__bar-element {
-  @apply relative hidden sm:max-lg:hidden lg:inline self-center pl-4;
+  @apply relative hidden sm:max-lg:hidden lg:inline self-center;
 }
 
 .menu__bar-mobile {
@@ -23,19 +41,27 @@
 }
 
 .menu-element {
-  @apply flex items-center gap-0.5 justify-center;
+  @apply relative flex items-center gap-0.5 justify-center;
 }
 
 .menu-element-mobile {
-  @apply flex items-center justify-between w-full h-12 text-3xl pl-4 border-b-2 border-background;
+  @apply flex items-center justify-between w-full h-12 text-3xl border-b-2 border-background;
+
+  .menu-element-caret {
+    @apply relative top-0 right-0 mt-0 h-[47px] w-[70px] rounded-none border-l-2 border-background flex items-center justify-center;
+  }
 }
 
 .menu-element-caret {
-  @apply ml-2 p-px bg-gray-3 rounded border-2 border-gray-3;
-}
+  @apply absolute right-7 top-[50%] mt-[-0.7em];
 
-.menu-element-caret-mobile {
-  @apply h-[47px] w-[70px] rounded-none border-l-2 border-background flex items-center justify-center;
+  &[aria-expanded="true"] {
+    @apply rotate-180;
+  }
+
+  svg {
+    @apply bg-transparent text-[--primary];
+  }
 }
 
 .caret {
@@ -47,35 +73,60 @@
 }
 
 .menu__bar-container {
-  @apply flex flex-row gap-6;
+  @apply flex flex-row gap-7;
 }
 
 .menu__bar-element--link {
-  @apply text-black text-lg;
+  @apply pt-[0.75rem] pb-[0.7rem] px-8 my-1 text-primary text-lg;
+
+  &:hover {
+    &::after {
+      @apply content-[""] absolute left-0 bottom-0 w-full h-0.5 bg-primary;
+    }
+  }
+}
+
+.menu__bar-element[data-submenu="true"] {
+  & > .menu-element > .menu__bar-element--link {
+    // 8 for the link itself + 6 for the caret
+    @apply pr-14;
+  }
 }
 
 .menu__bar-submenu {
-  @apply absolute mt-4 hidden min-w-[300px] z-50 bg-white border-t shadow-md left-0;
+  @apply absolute hidden min-w-[300px] z-50 bg-white border-t shadow-md left-0;
 
-  .menu__bar-element--link{
+  &[data-state="open"] {
+    @apply block;
+  }
+
+  .menu__bar-element--link {
     @apply px-px;
   }
 }
 
 .menu__bar-submenu-mobile {
-  @apply hidden transition-all duration-300 overflow-hidden space-y-2;
+  @apply hidden transition-all duration-300 overflow-hidden;
+
+  &[data-state="open"] {
+    @apply block;
+  }
 }
 
 
 .submenu-element {
-  @apply list-none pl-0 block w-full px-4 py-4 hover:bg-gray-3 text-center;
+  @apply relative list-none pl-0 block w-full hover:bg-gray-3 text-center;
+
+  .button {
+    @apply p-4;
+  }
 }
 
 .submenu-element-mobile {
   @apply w-full border-b;
 
   .menu__bar-element--link {
-    @apply w-full justify-start pl-8 py-2 font-normal;
+    @apply w-full justify-start px-8 py-2 font-normal;
   }
 }
 
@@ -88,19 +139,19 @@
 }
 
 .mobile-menu {
-  @apply relative left-0 w-full h-[calc(100vh-4rem)] bg-white z-50 shadow-lg overflow-auto;
+  @apply hidden relative left-0 w-full h-[calc(100vh-4rem)] bg-white z-50 shadow-lg overflow-auto;
 
   form {
-    @apply flex justify-center gap-2;
+    @apply flex justify-center;
 
     input {
-      @apply bg-gray-3 rounded p-2;
+      @apply grow rounded p-2;
     }
   }
 }
 
 .toggle-mobile-menu {
-  @apply relative flex flex-col justify-center items-center text-[--primary] font-bold text-sm;
+  @apply relative flex flex-col justify-center items-center text-[--primary] font-bold;
 
   svg {
     @apply fill-[--primary];
@@ -132,11 +183,11 @@
 }
 
 .mobile-search {
-  @apply text-xl font-bold font-bio;
+  @apply text-xl font-bold font-serif;
 }
 
 .dropdown-menu-account-mobile {
-  @apply fixed left-0 right-0 h-[calc(100vh-4rem)] bg-white z-50 overflow-y-auto border-t-2;
+  @apply hidden relative left-0 right-0 h-[calc(100vh-4rem)] bg-white z-50 overflow-y-auto;
 
   > ul {
     @apply flex flex-col items-start gap-4 pt-4;
@@ -145,7 +196,7 @@
       @apply border-b-2 border-background w-full pb-4;
 
       a {
-        @apply text-xl font-bold font-bio pl-5;
+        @apply text-xl font-bold pl-5;
 
         svg {
           @apply h-6 w-6 fill-[--primary];
@@ -170,14 +221,10 @@ header {
     }
 
     &__links-desktop__item {
-      @apply px-0;
+      @apply px-0 text-center;
     }
   }
 }
-
-// .main-bar__dropdown-trigger {
-//   @apply w-[50px] h-[64px];
-// }
 
 .simple-locales-container {
   .locale {
@@ -186,23 +233,74 @@ header {
 }
 
 #mobile-buttons {
+  .toggle-mobile-menu,
   .main-bar__links-desktop__item {
+    @apply md:text-xs font-bold;
+  }
+
+  .main-bar__links-desktop__item,
+  .toggle-mobile-menu {
     svg {
       @apply h-8 w-8 fill-[--primary];
+    }
+  }
 
-      & + span {
-        @apply text-xs font-bold;
+  button {
+    .mobile-account-label,
+    .mobile-menu-label {
+      @apply block;
+    }
+
+    [data-state="active"] {
+      @apply hidden;
+    }
+  }
+}
+
+header[data-navbar-active] {
+  @apply fixed z-[9999] top-0 bottom-0 left-0 right-0 bg-white;
+
+  #admin-bar {
+    @apply hidden;
+  }
+}
+
+header[data-navbar-active="mobile-menu"] {
+  .mobile-menu {
+    @apply block lg:hidden;
+  }
+
+  #mobile-buttons {
+    button[data-navbar-toggle="mobile-menu"] {
+      [data-state="inactive"] {
+        @apply hidden;
+      }
+
+      [data-state="active"] {
+        @apply block;
       }
     }
   }
 }
 
+header[data-navbar-active="mobile-account-menu"] {
+  .dropdown-menu-account-mobile {
+    @apply block lg:hidden;
+  }
 
-header {
-  .main-bar {
-    &__links-desktop,
-    > *:last-child {
-      @apply col-start-8;
+  #mobile-buttons {
+    button[data-navbar-toggle="mobile-account-menu"] {
+      .main-bar__notification {
+        @apply invisible;
+      }
+
+      [data-state="inactive"] {
+        @apply hidden;
+      }
+
+      [data-state="active"] {
+        @apply block;
+      }
     }
   }
 }

@@ -10,22 +10,24 @@
       <%= render partial: "layouts/decidim/header/main_links_desktop" %>
     </div>
 
-    <div id="mobile-buttons" class="lg:hidden flex items-center gap-2">
-      <%= render partial: "layouts/decidim/header/mobile_account_menu" %>
+    <div id="mobile-buttons" class="lg:hidden flex items-center gap-4 sm:gap-6">
+      <%= render partial: "layouts/decidim/header/mobile_account_menu_toggle" %>
 
       <div id="mobile-menu-button-wrapper">
         <button
-          id="toggle-mobile-menu"
-          class="toggle-mobile-menu"
-          aria-label="Toggle mobile menu"
-          data-label-open='<%= t(".menu") %>'
-          data-label-close='<%= t(".close") %>'
+          aria-label="<%= t(".menu") %>"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          data-navbar-toggle="mobile-menu"
         >
-          <span class="mobile-menu-icon">
-            <%= icon "menu-line", class: "w-8 h-8 icon-menu" %>
-            <%= icon "close-line", class: "w-8 h-8 icon-close hidden" %>
+          <span class="toggle-mobile-menu" data-state="inactive">
+            <span class="mobile-menu-icon"><%= icon "menu-line" %></span>
+            <span class="mobile-menu-label text-sm"><%= t(".menu") %></span>
           </span>
-          <span class="mobile-menu-label w-16"><%= t(".menu") %></span>
+          <span class="toggle-mobile-menu" data-state="active">
+            <span class="mobile-menu-icon"><%= icon "close-line" %></span>
+            <span class="mobile-menu-label text-sm"><%= t(".close") %></span>
+          </span>
         </button>
       </div>
     </div>

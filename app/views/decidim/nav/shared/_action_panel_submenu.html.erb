@@ -1,9 +1,16 @@
 <% current_children = children[link.id] %>
 <% mobile ||= false %>
+<%
+link_cls = %w(button button__text menu__bar-element--link)
+link_aria = {}
+if link.current?(request.fullpath)
+  link_cls << "active-link"
+  link_aria[:current] = "page"
+end
+%>
 
-
-<li class="<%= mobile ? 'submenu-element-mobile' : 'submenu-element' %>">
-  <%= link_to translated_attribute(link.href), target: link.target.presence, class: ("button button__text menu__bar-element--link") do %>
+<li class="<%= mobile ? "submenu-element-mobile" : "submenu-element" %>">
+  <%= link_to translated_attribute(link.href), target: link.target.presence, class: link_cls.join(" "), aria: link_aria do %>
     <span><%= translated_attribute(link.title) %></span>
   <% end %>
 
@@ -17,7 +24,7 @@
       aria-controls="<%= submenu_id %>"
       data-toggle-target="<%= submenu_id %>">
       <%= icon "arrow-down-s-line", class: "w-6 h-6 flex-none text-black fill-current bg-gray-3", "aria-hidden": "true" %>
-      <span class="sr-only">Toggle submenu for <%= translated_attribute(link.title) %></span>
+      <span class="sr-only"><%= t("decidim.nav.shared.subnav.open", title: translated_attribute(link.title)) %></span>
     </button>
   <% end %>
 </li>

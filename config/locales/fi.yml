@@ -85,6 +85,6 @@ fi:
         main:
           close: Sulje
           menu: Valikko
-        mobile_account_menu:
+        mobile_account_menu_toggle:
           menu: Käyttäjätili
           close: Sulje

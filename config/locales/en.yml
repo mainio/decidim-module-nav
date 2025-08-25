@@ -85,6 +85,6 @@ en:
         main:
           close: Close
           menu: Menu
-        mobile_account_menu:
+        mobile_account_menu_toggle:
           menu: Profile
           close: Close

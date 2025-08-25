@@ -16,7 +16,7 @@ end
 <% mobile ||= false %>
 
 <% if mobile %>
-  <div class="mobile-menu hidden" id="mobile-menu" role="menu" aria-labelledby="toggle-mobile-menu">
+  <div class="mobile-menu" id="mobile-menu">
     <div class="mobile-language">
       <% if available_locales.length > 3 %>
         <div class="main-bar__language-container">
@@ -33,7 +33,7 @@ end
             </span>
           </button>
 
-          <div id="dropdown-menu-language-chooser-mobile" aria-hidden="true">
+          <div id="dropdown-menu-language-chooser-mobile">
             <ul class="main-bar__language" role="menu">
               <% (available_locales - [I18n.locale.to_s]).each do |locale| %>
                 <li class="text-black text-md hover:underline hover:text-white transition" role="presentation">
@@ -47,12 +47,16 @@ end
         <% unless available_locales.length == 1 %>
           <div class="simple-locales-container flex flex-row gap-2">
             <% available_locales.each do |locale| %>
+              <%
+              cls = %w(locale p-2 text-md text-black hover:underline transition)
+              cls << "active-locale" if current_locale == locale
+              %>
               <%= link_to locale_name(locale),
                           decidim.locale_path(locale:),
                           method: :post,
                           role: "menuitem",
                           lang: locale,
-                          class: "locale p-2 text-md text-black hover:underline transition" %>
+                          class: cls.join(" ") %>
             <% end %>
           </div>
         <% end %>
@@ -69,3 +73,4 @@ end
 <% end %>
 
 <%= render partial: "decidim/nav/shared/action_panel_link", collection: top, as: :link, locals: { children: children } unless mobile %>
+

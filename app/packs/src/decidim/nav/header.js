@@ -1,409 +1,221 @@
-import FocusGuard from "src/decidim/focus_guard"
+// import FocusGuard from "src/decidim/nav/focus_guard";
+import FocusGuard from "src/decidim/focus_guard";
 
-const activeLink = () => {
-  const highLightLink = (selector) => {
-    const links = document.querySelectorAll(`${selector} a`);
+let headerFocusGuard = null;
+const mediaQuery = window.matchMedia('(min-width: 1024px)');
 
-    links.forEach(link => link.classList.add("menu-link"));
-
-    const currentPath = window.location.pathname;
-    let closestMatch = null;
-    let closestMatchLength = 0;
-
-    links.forEach(link => {
-      const href = link.getAttribute("href");
-
-      if (href && (currentPath === href || (href !== "/" && currentPath.startsWith(href)))) {
-        if (href.length > closestMatchLength) {
-          closestMatch = link;
-          closestMatchLength = href.length;
-        }
-      }
-    })
-
-    if (closestMatch) {
-      closestMatch.classList.add("active-link");
-
-      const menuElement = closestMatch.closest(".menu-element");
-
-      if (menuElement) {
-        const caret = menuElement.querySelector(".menu-element-caret");
-
-        if (caret) {
-          caret.classList.add("active-caret");
-        }
-      }
-
-      const parent = closestMatch.closest(".menu__bar-submenu");
-
-      if (parent) {
-        const parentWrapper = parent.closest(".menu__bar-element");
-        const parentLink = parentWrapper.querySelector(".menu-element > a");
-        const parentCaret = parentWrapper.querySelector(".menu-element-caret");
-
-        parentLink.classList.add("active-link");
-        parentCaret.classList.add("active-caret");
-      }
-    }
+/**
+ * Enables or disables body scrolling.
+ *
+ * @param {Boolean} enabled Whether the body scroll is enabled (true) or
+ *   disabled (false).
+ */
+const toggleBodyScroll = (enabled) => {
+  if (enabled) {
+    document.body.classList.remove("overflow-hidden");
+  } else {
+    document.body.classList.add("overflow-hidden");
   }
+};
 
-  // desktop
-  highLightLink("#menu-bar");
+/**
+ * Tells if the body scroll is currently disabled.
+ *
+ * @returns {Boolean} Whether body scroll is disabled or not.
+ */
+const bodyScrollDisabled = () => {
+  return document.body.classList.contains("overflow-hidden");
+};
 
-  // mobile
-  highLightLink("#mobile-menu");
-}
+/**
+ * Toggles the focus guard within the header element when the menu is active.
+ *
+ * Note that the Decidim focus guard (i.e. `window.focusGuard`) only handles the
+ * focus guard from the document borders, so the focus guard within the elements
+ * has to be handled separately with another focus guard.
+ *
+ * @param {HTMLElement} header The header element.
+ * @param {String} mode Layout mode (either "desktop" or "mobile").
+ */
+const toggleFocusGuard = (header, mode = "mobile") => {
+  if (header.getAttribute("data-navbar-active")) {
+    if (mode === "desktop") {
+      headerFocusGuard.disable();
+      window.focusGuard.disable();
+    } else {
+      headerFocusGuard.trap(header);
+      window.focusGuard.trap(header);
+    }
+  } else if (!bodyScrollDisabled()) {
+    headerFocusGuard.disable();
+    window.focusGuard.disable();
+  }
+};
 
-const activeLocale = () => {
-  const localesContainers = document.querySelectorAll(".simple-locales-container");
+/**
+ * Initializes the submenu items for desktop.
+ */
+const initializeSubmenus = () => {
+  const itemsWithSubmenu = document.querySelectorAll("#menu-bar .menu__bar-element[data-submenu]");
 
-  localesContainers.forEach(localesContainer => {
-    if (localesContainer) {
-      const locales = localesContainer.querySelectorAll(".locale");
-      const docLanguage = document.documentElement.lang;
+  const toggleSubmenu = (menuItem, state) => {
+    const toggle = menuItem.querySelector(".menu-element > .menu-element-caret");
+    const submenu = menuItem.querySelector(".menu__bar-submenu");
 
-      locales.forEach(locale => {
-        if (docLanguage === locale.getAttribute("lang")) {
-          locale.classList.add("active-locale");
+    if (state === "open") {
+      itemsWithSubmenu.forEach((item) => {
+        if (item === menuItem) {
+          return;
         }
+        toggleSubmenu(item, "closed");
       })
+
+      toggle.setAttribute("aria-expanded", true);
+      submenu.setAttribute("data-state", "open");
+    } else {
+      toggle.setAttribute("aria-expanded", false);
+      submenu.setAttribute("data-state", "closed");
     }
-  })
-}
+  };
 
-let focusGuard;
+  itemsWithSubmenu.forEach((menuItem) => {
+    const menuEl = menuItem.querySelector(".menu-element");
+    const toggle = menuEl.querySelector(":scope > .menu-element-caret");
+    const submenu = menuItem.querySelector(".menu__bar-submenu");
 
-const hideMobileMenu = (mobileMenu) => {
-  const mobileMenuButton = document.getElementById("toggle-mobile-menu");
+    submenu.setAttribute("data-state", "closed");
 
-  const iconSpan = mobileMenuButton.querySelector(".mobile-menu-icon");
-  const labelSpan = mobileMenuButton.querySelector(".mobile-menu-label");
-
-  const openIcon = mobileMenuButton.dataset.iconOpen;
-  const openLabel = mobileMenuButton.dataset.labelOpen;
-
-  mobileMenu.classList.add("hidden");
-  iconSpan.innerHTML = openIcon;
-  labelSpan.innerHTML = openLabel;
-}
-
-const changeMobileMenuIcon = () => {
-  const iconContainer = document.querySelector(".mobile-menu-icon");
-
-  if(!iconContainer) return;
-
-  const menuIcon = iconContainer.querySelector(".icon-menu");
-  const closeIcon = iconContainer.querySelector(".icon-close");
-
-  const menuVisible = !menuIcon.classList.contains("hidden");
-
-  menuIcon.classList.toggle("hidden", menuVisible);
-  closeIcon.classList.toggle("hidden", !menuVisible);
-}
-
-const changeAccountIcon = () => {
-  const iconContainer = document.querySelector(".mobile-account-icon");
-
-  if(!iconContainer) return;
-
-  const userIcon = iconContainer.querySelector(".icon-user");
-  const closeIcon = iconContainer.querySelector(".icon-close");
-
-  const userVisible = !userIcon.classList.contains("hidden");
-
-  userIcon.classList.toggle("hidden", userVisible);
-  closeIcon.classList.toggle("hidden", !userVisible);
-}
-
-const hideAccountMenu = (accountMenuTrigger) => {
-  const notification = document.querySelector(".account-notification");
-  const labelSpan = accountMenuTrigger.querySelector(".mobile-account-label");
-  const openLabel = accountMenuTrigger.dataset.labelOpen;
-
-  changeAccountIcon();
-  labelSpan.innerHTML = openLabel;
-  notification.classList.add("main-bar__notification");
-}
-
-const initializeAccountMenu = () => {
-  const mobileAccount = document.getElementById("trigger-dropdown-account-mobile");
-  const accountMenu = document.getElementById("dropdown-menu-account-mobile");
-  const focusWrapper = document.getElementById("focus-wrapper-mobile");
-  const mobileMenu = document.getElementById("mobile-menu");
-
-  if (mobileAccount) {
-    const notification = mobileAccount.querySelector(".main-bar__notification");
-
-    if (notification) {
-      notification.classList.add("account-notification");
-    }
-
-    mobileAccount.addEventListener("click", () => {
-      const labelSpan = mobileAccount.querySelector(".mobile-account-label");
-
-      const closeLabel = mobileAccount.dataset.labelClose;
-
-      if (!mobileMenu.classList.contains("hidden")) {
-        hideMobileMenu(mobileMenu);
+    let mouseInside = false;
+    menuItem.addEventListener("mouseenter", () => {
+      mouseInside = true;
+      toggleSubmenu(menuItem, "open");
+    });
+    menuItem.addEventListener("mouseleave", () => {
+      mouseInside = false;
+      if (toggle.getAttribute("data-active") === "true") {
+        return;
+      }
+      toggleSubmenu(menuItem, "closed");
+    });
+    toggle.addEventListener("mouseenter", () => {
+      if (toggle.getAttribute("data-active") === "true") {
+        return;
       }
 
-      const visible = accountMenu.getAttribute("aria-hidden") === "false";
-      document.body.classList.toggle("overflow-hidden", visible);
-
-      if (!visible) {
-        focusGuard.disable();
-        hideAccountMenu(mobileAccount);
-      } else {
-        focusGuard.trap(focusWrapper);
-        changeAccountIcon();
-        labelSpan.innerHTML = closeLabel;
-
-        notification.classList.remove("main-bar__notification");
-
-        const focusable = getFocusableElements(focusWrapper, "#toggle-mobile-menu");
-
-        if (focusable.length > 0) {
-          focusable[0].focus();
-        }
+      toggleSubmenu(menuItem, "closed");
+    });
+    toggle.addEventListener("mouseleave", () => {
+      if (mouseInside) {
+        toggleSubmenu(menuItem, "open");
       }
     });
-
-    focusWrapper.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") { focusGuard.disable(); document.body.classList.toggle("overflow-hidden", false); }
-      if (e.key !== "Tab" || accountMenu.getAttribute("aria-hidden") === "true") return;
-
-      const focusable = getFocusableElements(focusWrapper, "#toggle-mobile-menu");
-
-      if (focusable.length === 0) return;
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
+    toggle.addEventListener("click", () => {
+      if (submenu.getAttribute("data-state") === "open") {
+        toggleSubmenu(menuItem, "closed");
+        toggle.removeAttribute("data-active");
+      } else {
+        toggleSubmenu(menuItem, "open");
+        toggle.setAttribute("data-active", true);
       }
-    })
-  }
-}
+    });
+  });
 
-const getFocusableElements = (focusWrapper, ignored) => {
-  return [...focusWrapper.querySelectorAll(
-    `a[href], button:not([disabled]):not(${ignored}), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])`
-  )].filter(el =>
-    el.offsetWidth > 0 &&
-    el.offsetHeight > 0 &&
-    !el.classList.contains("focusguard") &&
-    !(el.tagName === "A" && el.closest(".main-bar__logo"))
-  );
+  document.addEventListener("click", (ev) => {
+    if (ev.target.closest(".menu__bar-element[data-submenu]")) {
+      return;
+    }
+
+    itemsWithSubmenu.forEach((item) => toggleSubmenu(item, "closed"));
+  });
+};
+
+/**
+ * Initializes the submenu items for mobile.
+ */
+const initializeMobileSubmenus = () => {
+  const mobileItemsWithSubmenu = document.querySelectorAll("#mobile-menu .menu__bar-mobile[data-submenu]");
+
+  mobileItemsWithSubmenu.forEach((menuItem) => {
+    const menuEl = menuItem.querySelector(".menu-element-mobile");
+    const toggle = menuEl.querySelector(":scope > .menu-element-caret");
+    const submenu = menuItem.querySelector(".menu__bar-submenu-mobile");
+
+    menuEl.addEventListener("click", () => {
+      if (submenu.getAttribute("data-state") === "open") {
+        toggle.setAttribute("aria-expanded", false);
+        submenu.setAttribute("data-state", "closed");
+        toggle.removeAttribute("data-active");
+      } else {
+        toggle.setAttribute("aria-expanded", true);
+        submenu.setAttribute("data-state", "open");
+        toggle.setAttribute("data-active", true);
+      }
+    });
+  });
+};
+
+/**
+ * Handles the mobile navbar toggles for opening/closing the main navigation and
+ * the account navigation elements.
+ */
+const navbarToggles = (header) => {
+  header.querySelectorAll("[data-navbar-toggle]").forEach((toggle) => {
+    const target = toggle.getAttribute("data-navbar-toggle");
+
+    toggle.setAttribute("aria-expanded", false);
+    toggle.addEventListener("click", () => {
+      const current = header.getAttribute("data-navbar-active");
+
+      // Set other toggles as not expanded
+      header.querySelectorAll("[data-navbar-toggle]").forEach((otherToggle) => {
+        if (otherToggle === toggle) {
+          return;
+        }
+        otherToggle.setAttribute("aria-expanded", false);
+      });
+
+      if (target === current) {
+        toggleBodyScroll(true);
+        header.removeAttribute("data-navbar-active");
+        toggle.setAttribute("aria-expanded", false);
+        toggleFocusGuard(header);
+      } else {
+        toggleBodyScroll(false);
+        header.setAttribute("data-navbar-active", target);
+        toggle.setAttribute("aria-expanded", true);
+        toggleFocusGuard(header);
+      }
+    });
+  });
+};
+
+const handleLayoutChange = (size) => {
+  if (!size.matches) {
+    return;
+  }
+
+  const header = document.querySelector("header");
+  header.removeAttribute("data-navbar-active");
+  header.querySelectorAll("[data-navbar-toggle]").forEach((toggle) => {
+    toggle.setAttribute("aria-expanded", false);
+  });
+
+  toggleBodyScroll(true);
+  toggleFocusGuard(header, "desktop");
 };
 
 
-const initializeMobileMenu = () => {
-  const mobileMenuButton = document.getElementById("toggle-mobile-menu");
-  const mainBar = document.getElementById("main-bar");
-  const mobileMenu = document.getElementById("mobile-menu");
-
-  if (mainBar) {
-
-    const focusWrapper = document.createElement("div");
-    focusWrapper.setAttribute("id", "focus-wrapper-mobile");
-    focusWrapper.style.position = "relative";
-
-    mainBar.parentNode.insertBefore(focusWrapper, mainBar);
-    focusWrapper.appendChild(mainBar);
-    focusWrapper.appendChild(mobileMenu);
-
-    focusGuard = new FocusGuard(focusWrapper);
-
-    mobileMenuButton.addEventListener("click", () => {
-      const isHidden = mobileMenu.classList.toggle("hidden");
-      document.body.classList.toggle("overflow-hidden", !isHidden);
-
-      const labelSpan = mobileMenuButton.querySelector(".mobile-menu-label");
-
-      const openLabel = mobileMenuButton.dataset.labelOpen;
-      const closeLabel = mobileMenuButton.dataset.labelClose;
-
-      if (!isHidden) {
-        focusGuard.trap(focusWrapper);
-        changeMobileMenuIcon();
-        labelSpan.innerHTML = closeLabel;
-
-        const focusable = getFocusableElements(focusWrapper, "#trigger-dropdown-account-mobile");
-
-        if (focusable.length > 0) {
-          focusable[0].focus();
-        }
-      } else {
-        focusGuard.disable();
-        changeMobileMenuIcon();
-        labelSpan.innerHTML = openLabel;
-      }
-    });
-
-    focusWrapper.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        focusGuard.disable();
-        document.body.classList.toggle("overflow-hidden", false);
-        mobileMenu.classList.toggle("hidden");
-      }
-      if (e.key !== "Tab" || mobileMenu.classList.contains("hidden")) return;
-
-      const focusable = getFocusableElements(focusWrapper, "#trigger-dropdown-account-mobile");
-
-      if (focusable.length === 0) return;
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  if (!document.getElementById("main-bar")) {
+    return;
   }
-}
 
-const hideMenus = () => {
-  const submenuCarets = document.querySelectorAll("[data-toggle-target]");
-
-  document.addEventListener("click", (e) => {
-    submenuCarets.forEach(caret => {
-      const submenuId = caret.getAttribute("data-toggle-target");
-      const submenu = document.getElementById(submenuId);
-
-      if (!submenu) return;
-
-      const isExpanded = caret.getAttribute("aria-expanded") === "true";
-
-      if (isExpanded && !caret.contains(e.target) && !submenu.contains(e.target)) {
-        caret.classList.toggle("rotate-180");
-        caret.setAttribute("aria-expanded", "false");
-        submenu.style.display = "none";
-      }
-    });
-
-    // handle accountmenu icon change and mobilemenu close
-
-    const mobileMenuButton = document.getElementById("toggle-mobile-menu");
-    const mobileMenu = document.getElementById("mobile-menu");
-
-    const accountTrigger = document.getElementById("trigger-dropdown-account-mobile");
-    const accountMenu = document.getElementById("dropdown-menu-account-mobile");
-
-    if (accountMenu && accountMenu.getAttribute("aria-hidden") === "false" && !accountTrigger.contains(e.target) && !accountMenu.contains(e.target)) {
-      focusGuard.disable();
-      document.body.classList.toggle("overflow-hidden", false);
-
-      hideAccountMenu(accountTrigger);
-    }
-
-    if (!mobileMenu.classList.contains("hidden") && !mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
-      focusGuard.disable();
-
-      mobileMenu.classList.toggle("hidden");
-      document.body.classList.toggle("overflow-hidden", false);
-
-      const labelSpan = mobileMenuButton.querySelector(".mobile-menu-label");
-      const openLabel = mobileMenuButton.dataset.labelOpen;
-      changeMobileMenuIcon();
-      labelSpan.innerHTML = openLabel;
-    }
-  });
-}
-
-const handleSubmenu = () => {
-  const submenuCarets = document.querySelectorAll("[data-toggle-target]");
-
-  submenuCarets.forEach(caret => {
-    const caretIcon = caret.querySelector("svg");
-
-    caret.addEventListener("click", (e) => {
-      e.stopPropagation();
-      caretIcon.classList.toggle("rotate-180");
-
-      const submenuId = caret.getAttribute("data-toggle-target");
-      const submenu = document.getElementById(submenuId);
-
-      if (!submenu) return;
-
-      submenuCarets.forEach(otherCaret => {
-        const caretIcon = otherCaret.querySelector("svg");
-
-        if (otherCaret === caret) return;
-
-        const otherSubmenuId = otherCaret.getAttribute("data-toggle-target");
-        const otherSubmenu = document.getElementById(otherSubmenuId);
-
-        if (!otherSubmenu) return;
-
-        caretIcon.classList.remove("rotate-180");
-        otherCaret.setAttribute("aria-expanded", "false");
-        otherSubmenu.style.display = "none";
-      });
-
-      const isExpanded = caret.getAttribute("aria-expanded") === "true";
-      caret.setAttribute("aria-expanded", (!isExpanded).toString());
-      submenu.style.display = isExpanded ? "none" : "block";
-    });
-  });
-}
-
-const handleAccountMenu = () => {
   const header = document.querySelector("header");
-  const dropdown = document.querySelector(".dropdown-menu-account-mobile");
 
-  if (header && dropdown) {
-    const headerHeight = header.offsetHeight;
-    dropdown.style.top = `${headerHeight}px`;
-  }
-}
+  initializeSubmenus();
+  initializeMobileSubmenus();
+  navbarToggles(header);
+  mediaQuery.addEventListener("change", handleLayoutChange);
 
-const mediaQuery = window.matchMedia('(min-width: 1024px)');
-
-const handleScreenSize = (size) => {
-  const mobileMenuButton = document.getElementById("toggle-mobile-menu");
-  const mobileMenu = document.getElementById("mobile-menu");
-
-  const mobileAccount = document.getElementById("trigger-dropdown-account-mobile");
-
-  if (mobileAccount) {
-    handleAccountMenu();
-  }
-
-  if (mobileMenuButton) {
-    if (size.matches) {
-      if (mobileAccount && mobileAccount.getAttribute("aria-expanded") === "true") {
-        mobileAccount.dispatchEvent(new Event("click"))
-      }
-
-      if (!mobileMenu.classList.contains("hidden")) {
-        hideMobileMenu(mobileMenu);
-      }
-
-      document.body.classList.remove("overflow-hidden");
-    } else {
-      return;
-    }
-  }
-}
-
-$(() => {
-  if (document.getElementById("main-bar")) {
-    activeLink();
-    activeLocale();
-    initializeMobileMenu();
-    initializeAccountMenu();
-    handleSubmenu();
-    handleScreenSize(mediaQuery);
-    hideMenus();
-    mediaQuery.addEventListener("change", handleScreenSize);
-  }
-})
+  headerFocusGuard = new FocusGuard(header);
+});

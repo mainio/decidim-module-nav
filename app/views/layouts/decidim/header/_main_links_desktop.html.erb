@@ -27,12 +27,16 @@
   <% elsif available_locales.length > 1 %>
     <div class="simple-locales-container flex flex-row gap-2">
       <% available_locales.each do |locale| %>
+        <%
+        cls = %w(locale p-2 text-md text-black hover:underline transition)
+        cls << "active-locale" if current_locale == locale
+        %>
         <%= link_to locale_name(locale),
                     decidim.locale_path(locale:),
                     method: :post,
                     role: "menuitem",
                     lang: locale,
-                    class: "locale p-2 text-md text-black hover:underline transition" %>
+                    class: cls.join(" ") %>
       <% end %>
     </div>
   <% end %>

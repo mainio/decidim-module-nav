@@ -77,3 +77,12 @@ sv:
     admin:
       menu:
         nav: Navigering
+  layouts:
+    decidim:
+      header:
+        main:
+          close: Stäng
+          menu: Menu
+        mobile_account_menu_toggle:
+          menu: Konto
+          close: Stäng
