@@ -45,7 +45,7 @@
 }
 
 .menu-element-mobile {
-  @apply flex items-center justify-between w-full h-12 text-3xl border-b-2 border-background;
+  @apply flex items-center justify-between w-full h-12 text-lg border-b-2 border-background;
 
   .menu-element-caret {
     @apply relative top-0 right-0 mt-0 h-[47px] w-[70px] rounded-none border-l-2 border-background flex items-center justify-center;
