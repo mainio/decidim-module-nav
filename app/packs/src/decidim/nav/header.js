@@ -1,8 +1,8 @@
-// import FocusGuard from "src/decidim/nav/focus_guard";
 import FocusGuard from "src/decidim/focus_guard";
+import { screens } from "tailwindcss/defaultTheme";
 
 let headerFocusGuard = null;
-const mediaQuery = window.matchMedia('(min-width: 1024px)');
+const mediaQuery = window.matchMedia(`(min-width: ${screens.lg})`);
 
 /**
  * Enables or disables body scrolling.
