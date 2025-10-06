@@ -64,7 +64,7 @@ describe "Menu" do
       it "shows language selection with current language underlined and search bar in the menu" do
         find_by_id("toggle-mobile-menu").click
 
-        expect(page).to have_css("#mobile-menu #input-search")
+        expect(page).to have_css("#mobile-menu .input-search")
         expect(page).to have_css("#mobile-menu .mobile-language .menu-link", count: 3)
         expect(page).to have_css("#mobile-menu .mobile-language .active-locale", count: 1)
         expect(find("#mobile-menu .mobile-language .active-locale")["lang"]).to eq("en")
