@@ -13,6 +13,10 @@
 # default test application
 spec/decidim_dummy_app
 
+# env vars
+.env
+.rbenv-vars
+
 # default development application
 development_app
 /.byebug_history
