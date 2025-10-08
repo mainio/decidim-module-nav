@@ -5,7 +5,6 @@ require "spec_helper"
 describe "Menu" do
   let!(:organization) { create(:organization, enable_omnipresent_banner: true, available_locales: [:en, :fi, :es]) }
   let!(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
-  let!(:menu_content_block) { create(:content_block, organization:, manifest_name: :global_menu, scope_name: :homepage) }
   let(:nav_link) { Decidim::Nav::Link.first }
   let(:link) { translated(nav_link.href) }
 
@@ -19,7 +18,7 @@ describe "Menu" do
     )
 
     switch_to_host(organization.host)
-    visit decidim.root_path
+    visit decidim.root_path(locale: "en")
   end
 
   it "renders the the nav link in menu main menu" do
@@ -33,7 +32,7 @@ describe "Menu" do
       it "underlines the current link" do
         click_on "ExampleLink"
 
-        expect(page).to have_css("a.menu-link.active-link")
+        expect(page).to have_css("a.menu__bar-element--link.active-link", text: "ExampleLink")
       end
     end
 
@@ -50,22 +49,26 @@ describe "Menu" do
     end
 
     it "minimizes the main menu to an icon" do
-      expect(page).to have_button("toggle-mobile-menu")
+      expect(page).to have_css("#mobile-menu-button-wrapper button")
       expect(page).to have_no_link(translated(nav_link.title, locale: :en), href: link)
     end
 
     context "when main menu icon clicked" do
       it "opens a screen filling menu" do
-        find_by_id("toggle-mobile-menu").click
+        within "#mobile-menu-button-wrapper" do
+          click_on "Menu"
+        end
 
         expect(page).to have_link(translated(nav_link.title, locale: :en), href: link)
       end
 
       it "shows language selection with current language underlined and search bar in the menu" do
-        find_by_id("toggle-mobile-menu").click
+        within "#mobile-menu-button-wrapper" do
+          click_on "Menu"
+        end
 
         expect(page).to have_css("#mobile-menu .input-search")
-        expect(page).to have_css("#mobile-menu .mobile-language .menu-link", count: 3)
+        expect(page).to have_css("#mobile-menu .mobile-language a", count: 3)
         expect(page).to have_css("#mobile-menu .mobile-language .active-locale", count: 1)
         expect(find("#mobile-menu .mobile-language .active-locale")["lang"]).to eq("en")
       end
@@ -73,12 +76,16 @@ describe "Menu" do
 
     context "when visiting a link" do
       it "underlines the current link" do
-        find_by_id("toggle-mobile-menu").click
+        within "#mobile-menu-button-wrapper" do
+          click_on "Menu"
+        end
 
         click_on "ExampleLink"
 
-        find_by_id("toggle-mobile-menu").click
-        expect(page).to have_css("a.menu-link.active-link")
+        within "#mobile-menu-button-wrapper" do
+          click_on "Menu"
+        end
+        expect(page).to have_css("a.menu__bar-element--link.active-link", text: "ExampleLink")
       end
     end
   end
