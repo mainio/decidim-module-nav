@@ -82,6 +82,7 @@ en:
   layouts:
     decidim:
       header:
+        log_in: Log in
         main:
           close: Close
           menu: Menu

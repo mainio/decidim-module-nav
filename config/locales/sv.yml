@@ -80,6 +80,7 @@ sv:
   layouts:
     decidim:
       header:
+        log_in: Logga in
         main:
           close: Stäng
           menu: Menu

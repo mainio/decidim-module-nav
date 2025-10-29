@@ -82,6 +82,7 @@ fi:
   layouts:
     decidim:
       header:
+        log_in: Kirjaudu
         main:
           close: Sulje
           menu: Valikko
