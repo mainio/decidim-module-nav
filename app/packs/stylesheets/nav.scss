@@ -208,6 +208,8 @@
 
 header {
   .main-bar {
+    @apply gap-8 sm:gap-4;
+
     &__search {
       @apply hidden lg:block col-span-2 col-start-5 xl:col-start-4;
     }
