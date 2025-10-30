@@ -139,7 +139,7 @@
 }
 
 .mobile-menu {
-  @apply hidden relative left-0 w-full h-[calc(100vh-4rem)] bg-white z-50 shadow-lg overflow-auto;
+  @apply hidden relative left-0 w-full h-[calc(100vh-4rem)] bg-white z-50 shadow-lg overflow-auto pb-32;
 
   form {
     @apply flex justify-center;
