@@ -22,12 +22,15 @@ module Decidim
 
       initializer "decidim_nav.add_customizations", before: "decidim_comments.query_extensions" do
         config.to_prepare do
+          # Cell extensions
+          Decidim::ContentBlocks::GlobalMenuCell.include(Cell::ViewModel::Partial)
+
+          # Controller extensions
+          Decidim::ApplicationController.include(Decidim::Nav::ApplicationControllerExtensions)
+
           # Presenter extensions
           Decidim::MenuPresenter.include(Decidim::Nav::MenuPresenterExtensions)
           Decidim::MenuItemPresenter.include(Decidim::Nav::MenuItemPresenterExtensions)
-
-          # Cell extensions
-          Decidim::ContentBlocks::GlobalMenuCell.include(Cell::ViewModel::Partial)
         end
       end
     end
