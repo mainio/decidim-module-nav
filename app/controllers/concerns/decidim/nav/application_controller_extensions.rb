@@ -7,12 +7,21 @@ module Decidim
 
       included do
         before_action :nav_javascript
-      end
+        helper_method :breadcrumbs
 
-      private
+        private
 
-      def nav_javascript
-        snippets.add(:foot, view_context.javascript_pack_tag("decidim_nav_header"))
+        def add_breadcrumb(title, url)
+          breadcrumbs << [title, url]
+        end
+
+        def breadcrumbs
+          @breadcrumbs ||= []
+        end
+
+        def nav_javascript
+          snippets.add(:foot, view_context.javascript_pack_tag("decidim_nav_header"))
+        end
       end
     end
   end

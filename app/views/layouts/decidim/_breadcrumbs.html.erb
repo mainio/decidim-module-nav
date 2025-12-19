@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="breadcrumbs-section">
+    <nav class="breadcrumb-bar" aria-label="<%= t(".label") %>">
+      <ul class="breadcrumbs">
+        <% if respond_to?(:breadcrumbs) %>
+          <% breadcrumbs.each_with_index do |item, index| %>
+            <% if breadcrumbs.length == index + 1 %>
+              <li aria-current="page">
+                <%= item[0] %>
+              </li>
+            <% else %>
+              <li>
+                <%= link_to item[0], item[1] %>
+                <span aria-hidden="true" class="breadcrumbs-separator"><%= icon("arrow-right-s-line", role: "img", "aria-hidden": true) %></span>
+              </li>
+            <% end %>
+          <% end %>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+</div>

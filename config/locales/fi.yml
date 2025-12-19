@@ -81,6 +81,7 @@ fi:
         nav: Navigaatio
   layouts:
     decidim:
+      breadcrumbs: Navigointipolku
       header:
         log_in: Kirjaudu
         main:

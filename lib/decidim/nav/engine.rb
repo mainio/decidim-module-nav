@@ -27,6 +27,9 @@ module Decidim
 
           # Controller extensions
           Decidim::ApplicationController.include(Decidim::Nav::ApplicationControllerExtensions)
+          Decidim::Proposals::ProposalsController.include(Decidim::Nav::ProposalsControllerExtensions)
+          Decidim::ParticipatoryProcesses::ParticipatoryProcessesController.include(Decidim::Nav::ParticipatoryProcessesControllerExtensions)
+          Decidim::PagesController.include(Decidim::Nav::PagesControllerExtensions)
 
           # Presenter extensions
           Decidim::MenuPresenter.include(Decidim::Nav::MenuPresenterExtensions)

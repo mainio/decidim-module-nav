@@ -226,6 +226,28 @@ header {
       @apply px-0 text-center;
     }
   }
+
+  .breadcrumbs-section {
+    .breadcrumb-bar {
+      @apply py-2;
+
+      .breadcrumbs {
+        @apply flex gap-1;
+
+        li {
+          @apply flex gap-1;
+
+          a {
+            @apply text-[--primary]
+          }
+
+          span > svg {
+            @apply h-4 w-4 mt-[3px];
+          }
+        }
+      }
+    }
+  }
 }
 
 .simple-locales-container {
