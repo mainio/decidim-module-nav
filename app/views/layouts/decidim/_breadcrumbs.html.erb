@@ -2,18 +2,27 @@
   <div class="breadcrumbs-section">
     <nav class="breadcrumb-bar" aria-label="<%= t(".label") %>">
       <ul class="breadcrumbs">
-        <% if respond_to?(:breadcrumbs) %>
-          <% breadcrumbs.each_with_index do |item, index| %>
-            <% if breadcrumbs.length == index + 1 %>
-              <li aria-current="page">
-                <%= item[0] %>
-              </li>
-            <% else %>
-              <li>
-                <%= link_to item[0], item[1] %>
-                <span aria-hidden="true" class="breadcrumbs-separator"><%= icon("arrow-right-s-line", role: "img", "aria-hidden": true) %></span>
-              </li>
-            <% end %>
+        <% breadcrumb_items.each_with_index do |item, index| %>
+          <% current_page = index == breadcrumb_items.size - 1%>
+
+          <li>
+            <%= link_to t("decidim.menu.home"), decidim.root_path %>
+            <span aria-hidden="true" class="breadcrumbs-separator">
+              <%= icon("arrow-right-s-line", role: "img", "aria-hidden": true) %>
+            </span>
+          </li>
+
+          <% if current_page %>
+            <li aria-current="page">
+              <span><%= translated_attribute(item[:label]) %></span>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to translated_attribute(item[:label]), item[:url] %>
+              <span aria-hidden="true" class="breadcrumbs-separator">
+                <%= icon("arrow-right-s-line", role: "img", "aria-hidden": true) %>
+              </span>
+            </li>
           <% end %>
         <% end %>
       </ul>
