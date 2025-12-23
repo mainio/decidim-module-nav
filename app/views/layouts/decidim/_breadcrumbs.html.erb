@@ -9,18 +9,21 @@
           </span>
         </li>
         <% breadcrumb_items.each_with_index do |item, index| %>
-          <% current_page = index == breadcrumb_items.size - 1%>
+          <% last_breadcrumb = index == breadcrumb_items.size - 1 %>
+          <% last_path = request.path == item[:url] %>
 
-          <% if current_page %>
+          <% if last_breadcrumb && last_path %>
             <li aria-current="page">
               <span><%= translated_attribute(item[:label]) %></span>
             </li>
           <% else %>
             <li>
               <%= link_to translated_attribute(item[:label]), item[:url] %>
-              <span aria-hidden="true" class="breadcrumbs-separator">
-                <%= icon("arrow-right-s-line", role: "img", "aria-hidden": true) %>
-              </span>
+              <% unless last_breadcrumb %>
+                <span aria-hidden="true" class="breadcrumbs-separator">
+                  <%= icon("arrow-right-s-line", role: "img", "aria-hidden": true) %>
+                </span>
+              <% end %>
             </li>
           <% end %>
         <% end %>
