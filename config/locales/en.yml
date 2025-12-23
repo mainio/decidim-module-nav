@@ -81,6 +81,8 @@ en:
         nav: Navigation
   layouts:
     decidim:
+      breadcrumbs:
+        label: Breadcrumbs
       header:
         log_in: Log in
         main:
