@@ -6,7 +6,8 @@ attrs[:data] = {submenu: true} if current_children.present?
 
 link_cls = %w(button button__text menu__bar-element--link)
 link_aria = {}
-if link.current?(request.fullpath)
+
+if link.current?(request.fullpath) || current_children && current_children.any? { |child| child.current?(request.fullpath) }
   link_cls << "active-link"
   link_aria[:current] = "page"
 end
