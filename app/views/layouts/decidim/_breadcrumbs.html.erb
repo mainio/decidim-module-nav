@@ -10,9 +10,18 @@
         </li>
         <% breadcrumb_items.each_with_index do |item, index| %>
           <% last_breadcrumb = index == breadcrumb_items.size - 1 %>
-          <% last_path = request.path == item[:url] %>
+          <% account_keys = [
+              t("profile", scope: "layouts.decidim.user_menu"),
+              t("profile", scope: "layouts.decidim.user_profile")
+            ]
+          %>
+          <% account_settings = account_keys.include?(item[:label]) %>
 
-          <% if last_breadcrumb && last_path %>
+          <% last_path =
+               !account_settings &&
+               request.path == URI.parse(item[:url]).path %>
+
+          <% if account_settings || (last_breadcrumb && last_path) %>
             <li aria-current="page">
               <span><%= translated_attribute(item[:label]) %></span>
             </li>
