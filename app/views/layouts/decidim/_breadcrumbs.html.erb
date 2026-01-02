@@ -1,3 +1,7 @@
+<% breadcrumbs = breadcrumb_items.reject do |item|
+                   item[:url].blank? && item[:label].blank?
+                 end %>
+
 <div class="container">
   <div class="breadcrumbs-section">
     <nav class="breadcrumb-bar" aria-label="<%= t(".label") %>">
@@ -8,18 +12,18 @@
             <%= icon("arrow-right-s-line", role: "img", "aria-hidden": true) %>
           </span>
         </li>
-        <% breadcrumb_items.each_with_index do |item, index| %>
-          <% last_breadcrumb = index == breadcrumb_items.size - 1 %>
+        <% breadcrumbs.each_with_index do |item, index| %>
+          <% last_breadcrumb = index == breadcrumbs.size - 1 %>
           <% account_keys = [
               t("profile", scope: "layouts.decidim.user_menu"),
               t("profile", scope: "layouts.decidim.user_profile")
             ]
           %>
           <% account_settings = account_keys.include?(item[:label]) %>
-
+          <% path = URI.parse(item[:url]).path rescue item[:url] %>
           <% last_path =
-               !account_settings &&
-               request.path == URI.parse(item[:url]).path %>
+                      !account_settings &&
+                      request.path == path %>
 
           <% if account_settings || (last_breadcrumb && last_path) %>
             <li aria-current="page">
