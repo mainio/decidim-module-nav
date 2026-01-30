@@ -16,18 +16,8 @@ def seed_db(path)
 end
 
 desc "Generates a dummy app for testing"
-task :test_app do
+task test_app: "decidim:generate_external_test_app" do
   ENV["RAILS_ENV"] = "test"
-  generate_decidim_app(
-    "spec/decidim_dummy_app",
-    "--app_name",
-    "#{base_app_name}_test_app",
-    "--path",
-    "../..",
-    "--recreate_db",
-    "--skip_gemfile",
-    "--demo"
-  )
   install_module("spec/decidim_dummy_app")
 end
 
