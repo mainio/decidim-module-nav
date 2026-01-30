@@ -211,19 +211,25 @@ header {
     @apply gap-8 sm:gap-4;
 
     &__search {
-      @apply hidden lg:block col-span-2 col-start-5 xl:col-start-4;
+      @apply hidden lg:bottom-5 lg:relative lg:block col-span-2 col-start-5 xl:col-start-4;
     }
 
     &__logo {
-      @apply flex flex-col items-center justify-center mr-auto max-[449px]:col-span-7 max-[470px]:col-span-6 max-[539px]:col-span-5 col-span-4 sm:col-span-3 lg:flex-row lg:justify-start lg:gap-8 lg:col-span-5 xl:col-span-4;
+      @apply flex flex-col items-center justify-center mr-auto col-span-3 lg:flex-row lg:justify-start lg:gap-8 lg:col-span-5 xl:col-span-4;
     }
 
     &__dropdown-trigger {
       @apply px-0;
     }
 
-    &__links-desktop__item {
-      @apply px-0 text-center;
+    &__links {
+      &-desktop {
+        @apply relative bottom-5;
+
+        &__item {
+          @apply px-0 text-center;
+        }
+      }
     }
   }
 
