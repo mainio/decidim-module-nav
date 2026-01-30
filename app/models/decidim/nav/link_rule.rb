@@ -5,9 +5,9 @@ module Decidim
     class LinkRule < ApplicationRecord
       belongs_to :link, foreign_key: :decidim_nav_link_id, class_name: "Decidim::Nav::Link"
 
-      enum rule_type: { current_page: 0 }
-      enum source: { path: 0 }, _prefix: true
-      enum operator: {
+      enum :rule_type, { current_page: 0 }
+      enum :source, { path: 0 }, prefix: true
+      enum :operator, {
         equals: 1,
         not_equals: -1,
         contains: 2,
@@ -16,7 +16,7 @@ module Decidim
         not_start_with: -3,
         end_with: 4,
         not_end_with: -4
-      }, _prefix: true
+      }, prefix: true
 
       scope :ordered, -> { order(:position) }
 
