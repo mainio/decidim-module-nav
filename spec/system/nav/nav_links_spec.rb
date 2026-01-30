@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe "Menu" do
-  let!(:organization) { create(:organization, enable_omnipresent_banner: true, available_locales: [:en, :fi, :es]) }
+  let!(:organization) { create(:organization, enable_omnipresent_banner: true, available_locales: [:en, :ca, :es]) }
   let!(:participatory_space) { create(:participatory_process, :with_steps, organization:) }
   let(:nav_link) { Decidim::Nav::Link.first }
   let(:link) { translated(nav_link.href) }
