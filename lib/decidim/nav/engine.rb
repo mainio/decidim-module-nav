@@ -27,6 +27,13 @@ module Decidim
 
           # Controller extensions
           Decidim::ApplicationController.include(Decidim::Nav::ApplicationControllerExtensions)
+          Decidim::Accountability::ResultsController.include(Decidim::Nav::ResultsControllerExtensions)
+          Decidim::Blogs::PostsController.include(Decidim::Nav::PostsControllerExtensions)
+          Decidim::Budgets::ProjectsController.include(Decidim::Nav::ProjectsControllerExtensions)
+          Decidim::Debates::DebatesController.include(Decidim::Nav::DebatesControllerExtensions)
+          Decidim::Meetings::MeetingsController.include(Decidim::Nav::MeetingsControllerExtensions)
+          Decidim::Proposals::ProposalsController.include(Decidim::Nav::ProposalsControllerExtensions)
+          Decidim::Sortitions::SortitionsController.include(Decidim::Nav::SortitionsControllerExtensions)
 
           # Presenter extensions
           Decidim::MenuPresenter.include(Decidim::Nav::MenuPresenterExtensions)
