@@ -34,6 +34,10 @@ module Decidim
           Decidim::Meetings::MeetingsController.include(Decidim::Nav::MeetingsControllerExtensions)
           Decidim::Proposals::ProposalsController.include(Decidim::Nav::ProposalsControllerExtensions)
           Decidim::Sortitions::SortitionsController.include(Decidim::Nav::SortitionsControllerExtensions)
+          Decidim::Proposals::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
+          Decidim::Accountability::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
+          Decidim::Meetings::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
+          Decidim::Debates::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
 
           # Presenter extensions
           Decidim::MenuPresenter.include(Decidim::Nav::MenuPresenterExtensions)
