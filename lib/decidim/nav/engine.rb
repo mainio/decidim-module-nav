@@ -38,6 +38,12 @@ module Decidim
           Decidim::Accountability::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
           Decidim::Meetings::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
           Decidim::Debates::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
+          Decidim::PagesController.include(Decidim::Nav::PagesControllerExtensions)
+          Decidim::Devise::SessionsController.include(Decidim::Nav::SessionsControllerExtensions)
+          Decidim::Devise::RegistrationsController.include(Decidim::Nav::RegistrationsControllerExtensions)
+          Decidim::Devise::PasswordsController.include(Decidim::Nav::PasswordsControllerExtensions)
+          Decidim::Devise::ConfirmationsController.include(Decidim::Nav::ConfirmationsControllerExtensions)
+          Decidim::Devise::UnlocksController.include(Decidim::Nav::UnlocksControllerExtensions)
 
           # Presenter extensions
           Decidim::MenuPresenter.include(Decidim::Nav::MenuPresenterExtensions)
