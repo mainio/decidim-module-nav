@@ -155,6 +155,33 @@ const initializeMobileSubmenus = () => {
 };
 
 /**
+ * Handles breadcrumbs in case the screen width is too narrow for all the steps
+ * First and last always show, steps in the middle truncate if needed
+*/
+const collapseBreadcrumbs = () => {
+  const breadcrumbs = document.querySelector(".breadcrumbs");
+  if (!breadcrumbs) return;
+
+  const items = Array.from(
+    breadcrumbs.querySelectorAll(".collapsible")
+  );
+
+  items.forEach(li => {
+    const link = li.querySelector("a");
+
+    if (breadcrumbs.scrollWidth > breadcrumbs.clientWidth) {
+      link.innerText = "...";
+    } else {
+      if (link.innerText == "...") {
+        link.innerText = link.dataset.label;
+      }
+
+      return;
+    }
+  });
+}
+
+/**
  * Handles the mobile navbar toggles for opening/closing the main navigation and
  * the account navigation elements.
  */
@@ -190,6 +217,8 @@ const navbarToggles = (header) => {
 };
 
 const handleLayoutChange = (size) => {
+  collapseBreadcrumbs();
+
   if (!size.matches) {
     return;
   }
@@ -215,6 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeSubmenus();
   initializeMobileSubmenus();
   navbarToggles(header);
+  collapseBreadcrumbs();
   mediaQuery.addEventListener("change", handleLayoutChange);
 
   headerFocusGuard = new FocusGuard(header);

@@ -6,7 +6,7 @@
   <div class="breadcrumbs-section">
     <nav class="breadcrumb-bar" aria-label="<%= t(".label") %>">
       <ul class="breadcrumbs">
-        <li>
+        <li class="bread-root">
           <%= link_to t("decidim.menu.home"), decidim.root_path %>
           <span aria-hidden="true" class="breadcrumbs-separator">
             <%= icon("arrow-right-s-line", role: "img", "aria-hidden": true) %>
@@ -24,14 +24,15 @@
           <% last_path =
                       !account_settings &&
                       request.path == path %>
+          <% translated_label = translated_attribute(item[:label]) %>
 
           <% if account_settings || (last_breadcrumb && last_path) %>
-            <li aria-current="page">
-              <span><%= translated_attribute(item[:label]) %></span>
+            <li class="bread-current" aria-current="page">
+              <span><%= translated_label %></span>
             </li>
           <% else %>
-            <li>
-              <%= link_to translated_attribute(item[:label]), item[:url] %>
+            <li class="collapsible">
+              <%= link_to translated_label, item[:url], data: { label: translated_label } %>
               <% unless last_breadcrumb %>
                 <span aria-hidden="true" class="breadcrumbs-separator">
                   <%= icon("arrow-right-s-line", role: "img", "aria-hidden": true) %>
