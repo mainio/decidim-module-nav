@@ -36,6 +36,12 @@ module Decidim
             url: versioned_resource_path(versioned_resource),
             active: true
           }
+
+          items << {
+            label: t("version", scope: "decidim.versions.resource_version", number: params[:id]),
+            url: request.path,
+            active: true
+          }
         end
 
         def versioned_resource_path(versioned_resource)
