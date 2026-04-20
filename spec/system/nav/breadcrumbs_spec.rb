@@ -231,7 +231,7 @@ describe "Breadcrumbs", versioning: true do
       expect(page).to have_css("ul.breadcrumbs li", count: 2)
 
       within ".breadcrumbs" do
-        expect(page).to have_content("Create an account")
+        expect(page).to have_content("Sign up")
       end
     end
 
