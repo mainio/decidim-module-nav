@@ -74,7 +74,9 @@ describe "Breadcrumbs", versioning: true do
         visit_component
 
         within ".accountability__grid" do
-          find(".accountability__status-title").click
+          status_title = find(".accountability__status-title")
+          scroll_to status_title
+          status_title.click
         end
 
         click_on translated_attribute(result.title)
