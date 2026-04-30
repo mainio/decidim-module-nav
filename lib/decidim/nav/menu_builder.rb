@@ -31,13 +31,13 @@ module Decidim
 
             sublinks = builder.child_links_for(current_organization, link)
             if sublinks.any?
-              submenu_key = "submenu_#{link.id}".to_sym
+              submenu_key = :"submenu_#{link.id}"
               builder.create_menu(submenu_key) { sublinks }
               options[:submenu] = { target_menu: submenu_key }
             end
 
             menu.add_item(
-              "link_#{link.id}".to_sym,
+              :"link_#{link.id}",
               translated_attribute(link.title),
               translated_attribute(link.href),
               **options
