@@ -1,6 +1,4 @@
 .active-link {
-  @apply underline;
-
   &::after {
     @apply content-[""] absolute left-0 bottom-0 w-full h-0.5 bg-primary;
   }
@@ -22,7 +20,7 @@
   }
 
   &-element--link {
-    @apply text-[--primary] text-xl;
+    @apply text-[--primary] text-xl hover:no-underline;
   }
 
   &-mobile {
