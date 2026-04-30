@@ -28,6 +28,10 @@ describe "Menu" do
   end
 
   context "when desktop view" do
+    before do
+      page.driver.browser.manage.window.resize_to(1280, 800)
+    end
+
     context "when visiting a link" do
       it "underlines the current link" do
         click_on "ExampleLink"

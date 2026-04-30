@@ -40,6 +40,7 @@ describe "Breadcrumbs", versioning: true do
       let!(:meeting) { create(:meeting, :published, title: { en: "Meeting title" }, component:) }
 
       before do
+        stub_geocoding_coordinates([meeting.latitude, meeting.longitude])
         visit_component
 
         click_on translated_attribute(meeting.title)
@@ -58,11 +59,18 @@ describe "Breadcrumbs", versioning: true do
 
     context "when in result version page" do
       let(:manifest_name) { "accountability" }
-      let!(:result) { create(:result, title: { en: "Result title" }, component:) }
-      let!(:category) { create(:category, participatory_space:) }
+      let!(:result) { create(:result, title: { en: "Result title" }, component:, taxonomies: [taxonomy]) }
+      let(:taxonomy) { create(:taxonomy, :with_parent, skip_injection: true, organization:) }
+      let(:sub_taxonomy) { create(:taxonomy, parent: taxonomy, organization:) }
+      let!(:other_taxonomy) { create(:taxonomy, parent: taxonomy.parent, organization:) }
+      let(:other_sub_taxonomy) { create(:taxonomy, parent: other_taxonomy, organization:) }
+      let(:taxonomy_filter) { create(:taxonomy_filter, root_taxonomy: taxonomy.parent) }
+      let!(:taxonomy_filter_item) { create(:taxonomy_filter_item, taxonomy_filter:, taxonomy_item: taxonomy) }
+      let!(:sub_taxonomy_filter_item) { create(:taxonomy_filter_item, taxonomy_filter:, taxonomy_item: sub_taxonomy) }
+      let(:taxonomy_filter_ids) { [taxonomy_filter.id] }
 
       before do
-        result.update!(category:)
+        component.update!(settings: { taxonomy_filters: taxonomy_filter_ids })
         visit_component
 
         within ".accountability__grid" do
