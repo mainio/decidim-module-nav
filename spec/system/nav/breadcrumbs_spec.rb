@@ -73,12 +73,6 @@ describe "Breadcrumbs", versioning: true do
         component.update!(settings: { taxonomy_filters: taxonomy_filter_ids })
         visit_component
 
-        within ".accountability__grid" do
-          status_title = find(".accountability__status-title")
-          scroll_to status_title
-          status_title.click
-        end
-
         click_on translated_attribute(result.title)
       end
 
@@ -159,6 +153,8 @@ describe "Breadcrumbs", versioning: true do
 
       before do
         visit_component
+
+        click_on translated_attribute(budget.title)
 
         click_on translated_attribute(project.title)
       end
