@@ -20,7 +20,7 @@ end
     <div class="mobile-language">
       <% if available_locales.length > 3 %>
         <div class="main-bar__language-container">
-          <button id="trigger-dropdown-language-chooser-mobile" data-component="dropdown" data-target="dropdown-menu-language-chooser-mobile" class="flex">
+          <button id="trigger-dropdown-language-chooser-mobile" data-controller="dropdown" data-target="dropdown-menu-language-chooser-mobile" class="flex">
             <%= icon "global-line" %>
             <span><%= t("name", scope: "locale" ) %></span>
             <%= icon "arrow-down-s-line" %>

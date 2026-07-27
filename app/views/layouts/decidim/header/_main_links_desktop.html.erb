@@ -1,7 +1,7 @@
 <div class="main-bar__links-desktop__item-wrapper">
   <% if available_locales.length > 3 %>
     <div class="main-bar__language-container">
-      <button id="trigger-dropdown-language-chooser" data-component="dropdown" data-target="dropdown-menu-language-chooser" class="flex">
+      <button id="trigger-dropdown-language-chooser" data-controller="dropdown" data-target="dropdown-menu-language-chooser" class="flex">
         <%= icon "global-line" %>
         <span><%= t("name", scope: "locale" ) %></span>
         <%= icon "arrow-down-s-line" %>
