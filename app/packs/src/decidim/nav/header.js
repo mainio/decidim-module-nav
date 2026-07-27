@@ -1,4 +1,4 @@
-import FocusGuard from "src/decidim/focus_guard";
+import FocusGuard from "src/decidim/refactor/moved/focus_guard";
 import { screens } from "tailwindcss/defaultTheme";
 
 let headerFocusGuard = null;
