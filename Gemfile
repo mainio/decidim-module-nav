@@ -27,6 +27,7 @@ group :development, :test do
   gem "decidim-dev", DECIDIM_VERSION
 
   gem "brakeman", "~> 5.2"
+  gem "parallel_tests", "~> 4.2"
 
   # Fix issue with simplecov-cobertura
   # See: https://github.com/jessebs/simplecov-cobertura/pull/44
