@@ -7,7 +7,6 @@ require "decidim/accountability/test/factories"
 require "decidim/debates/test/factories"
 require "decidim/blogs/test/factories"
 require "decidim/budgets/test/factories"
-require "decidim/sortitions/test/factories"
 
 FactoryBot.define do
   factory :page_component, parent: :component do

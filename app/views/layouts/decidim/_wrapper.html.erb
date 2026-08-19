@@ -11,27 +11,38 @@ end
 %>
 
 <div class="layout-container">
-  <header>
-    <%= render partial: "layouts/decidim/admin_links" if current_user && allowed_to?(:read, :admin_dashboard) %>
-    <%= render partial: "layouts/decidim/header/main" %>
-    <%= render partial: "decidim/nav/shared/action_panel_links", locals: { navigable: current_organization, mobile: true } %>
-    <%= render partial: "layouts/decidim/header/menu" %>
-    <%= render partial: "layouts/decidim/header/mobile_account_menu" %>
-    <%= render partial: "layouts/decidim/breadcrumbs" unless controller.is_a?(Decidim::HomepageController) %>
+  <header <%= "class=with-admin-bar" if current_user && allowed_to?(:read, :admin_dashboard) %> role="banner">
+    <div id="header-container">
+      <%= render partial: "layouts/decidim/impersonation_warning" %>
+      <%= render partial: "layouts/decidim/omnipresent_banner" %>
+      <%= render partial: "layouts/decidim/offline_banner" %>
+      <%= render partial: "layouts/decidim/admin_links" if current_user && allowed_to?(:read, :admin_dashboard) %>
+      <%= render partial: "layouts/decidim/header/main" %>
+    </div>
+    <div id="menu-bar-container">
+      <% if !current_user&.ephemeral? && !content_for?(:focus_mode) %>
+        <%= render partial: "layouts/decidim/header/menu" %>
+      <% end %>
+    </div>
   </header>
 
-  <div id="content" data-content>
-    <% if display_flash_messages.present? %>
-      <div class="container">
-        <%= display_flash_messages %>
-      </div>
-    <% end %>
+  <% if display_flash_messages.present? %>
+    <div id="flash-messages-container" class="container">
+      <%= display_flash_messages %>
+    </div>
+  <% end %>
+  <%= display_onboarding_action_message(current_user) %>
 
+  <div id="content" data-content>
     <%= yield %>
   </div>
 
-  <footer>
-    <%= render partial: "layouts/decidim/footer/main" %>
-    <%= render partial: "layouts/decidim/footer/mini" %>
+  <footer role="contentinfo">
+    <% if current_user&.ephemeral? || content_for?(:focus_mode) %>
+      <%= render partial: "layouts/decidim/footer/focus_mode_main" %>
+    <% else %>
+      <%= render partial: "layouts/decidim/footer/main" %>
+      <%= render partial: "layouts/decidim/footer/mini" %>
+    <% end %>
   </footer>
 </div>

@@ -22,31 +22,10 @@ module Decidim
 
       initializer "decidim_nav.add_customizations", before: "decidim_comments.query_extensions" do
         config.to_prepare do
-          # Cell extensions
-          Decidim::ContentBlocks::GlobalMenuCell.include(Cell::ViewModel::Partial)
-
           # Controller extensions
           Decidim::ApplicationController.include(Decidim::Nav::ApplicationControllerExtensions)
-          Decidim::Accountability::ResultsController.include(Decidim::Nav::ResultsControllerExtensions)
-          Decidim::Blogs::PostsController.include(Decidim::Nav::PostsControllerExtensions)
-          Decidim::Budgets::ProjectsController.include(Decidim::Nav::ProjectsControllerExtensions)
-          Decidim::Debates::DebatesController.include(Decidim::Nav::DebatesControllerExtensions)
-          Decidim::Meetings::MeetingsController.include(Decidim::Nav::MeetingsControllerExtensions)
-          Decidim::Proposals::ProposalsController.include(Decidim::Nav::ProposalsControllerExtensions)
-          Decidim::Sortitions::SortitionsController.include(Decidim::Nav::SortitionsControllerExtensions)
-          Decidim::Proposals::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
-          Decidim::Accountability::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
-          Decidim::Meetings::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
-          Decidim::Debates::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
-          Decidim::PagesController.include(Decidim::Nav::PagesControllerExtensions)
-          Decidim::Devise::SessionsController.include(Decidim::Nav::SessionsControllerExtensions)
-          Decidim::Devise::RegistrationsController.include(Decidim::Nav::RegistrationsControllerExtensions)
-          Decidim::Devise::PasswordsController.include(Decidim::Nav::PasswordsControllerExtensions)
-          Decidim::Devise::ConfirmationsController.include(Decidim::Nav::ConfirmationsControllerExtensions)
-          Decidim::Devise::UnlocksController.include(Decidim::Nav::UnlocksControllerExtensions)
 
           # Presenter extensions
-          Decidim::MenuPresenter.include(Decidim::Nav::MenuPresenterExtensions)
           Decidim::MenuItemPresenter.include(Decidim::Nav::MenuItemPresenterExtensions)
         end
       end

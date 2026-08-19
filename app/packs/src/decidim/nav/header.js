@@ -9,6 +9,7 @@ const mediaQuery = window.matchMedia(`(min-width: ${screens.lg})`);
  *
  * @param {Boolean} enabled Whether the body scroll is enabled (true) or
  *   disabled (false).
+ * @returns {void}
  */
 const toggleBodyScroll = (enabled) => {
   if (enabled) {
@@ -36,6 +37,7 @@ const bodyScrollDisabled = () => {
  *
  * @param {HTMLElement} header The header element.
  * @param {String} mode Layout mode (either "desktop" or "mobile").
+ * @returns {void}
  */
 const toggleFocusGuard = (header, mode = "mobile") => {
   if (header.getAttribute("data-navbar-active")) {
@@ -54,6 +56,8 @@ const toggleFocusGuard = (header, mode = "mobile") => {
 
 /**
  * Initializes the submenu items for desktop.
+ *
+ * @returns {void}
  */
 const initializeSubmenus = () => {
   const itemsWithSubmenu = document.querySelectorAll("#menu-bar .menu__bar-element[data-submenu]");
@@ -131,6 +135,8 @@ const initializeSubmenus = () => {
 
 /**
  * Initializes the submenu items for mobile.
+ *
+ * @returns {void}
  */
 const initializeMobileSubmenus = () => {
   const mobileItemsWithSubmenu = document.querySelectorAll("#mobile-menu .menu__bar-mobile[data-submenu]");
@@ -155,28 +161,28 @@ const initializeMobileSubmenus = () => {
 };
 
 /**
- * Handles breadcrumbs in case the screen width is too narrow for all the steps
- * First and last always show, steps in the middle truncate if needed
-*/
+ * Handles breadcrumbs in case the screen width is too narrow for all the steps.
+ * First and last always show, steps in the middle truncate if needed.
+ *
+ * @returns {void}
+ */
 const collapseBreadcrumbs = () => {
   const breadcrumbs = document.querySelector(".breadcrumbs");
-  if (!breadcrumbs) return;
+  if (!breadcrumbs) {
+    return;
+  }
 
   const items = Array.from(
     breadcrumbs.querySelectorAll(".collapsible")
   );
 
-  items.forEach(li => {
+  items.forEach((li) => {
     const link = li.querySelector("a");
 
     if (breadcrumbs.scrollWidth > breadcrumbs.clientWidth) {
       link.innerText = "...";
-    } else {
-      if (link.innerText == "...") {
-        link.innerText = link.dataset.label;
-      }
-
-      return;
+    } else if (link.innerText === "...") {
+      link.innerText = link.dataset.label;
     }
   });
 }
@@ -184,6 +190,9 @@ const collapseBreadcrumbs = () => {
 /**
  * Handles the mobile navbar toggles for opening/closing the main navigation and
  * the account navigation elements.
+ *
+ * @param {HTMLElement} header The header element.
+ * @returns {void}
  */
 const navbarToggles = (header) => {
   header.querySelectorAll("[data-navbar-toggle]").forEach((toggle) => {

@@ -31,8 +31,7 @@ describe "Menu" do
     context "when visiting a link" do
       it "underlines the current link" do
         click_on "ExampleLink"
-
-        expect(page).to have_css("a.menu__bar-element--link.active-link", text: "ExampleLink")
+        expect(page).to have_css("a.button.menu__bar-element--link.button__text", text: "ExampleLink")
       end
     end
 
@@ -89,7 +88,7 @@ describe "Menu" do
         within "#mobile-menu-button-wrapper" do
           click_on "Menu"
         end
-        expect(page).to have_css("a.menu__bar-element--link.active-link", text: "ExampleLink")
+        expect(page).to have_css("a.button.menu__bar-element--link.button__text", text: "ExampleLink")
       end
     end
   end

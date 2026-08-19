@@ -111,7 +111,6 @@
   }
 }
 
-
 .submenu-element {
   @apply relative list-none pl-0 block w-full hover:bg-gray-3 text-center;
 
@@ -167,7 +166,7 @@
     @apply rounded-none border bg-white h-10;
   }
 
-  button[type=submit] {
+  button[type="submit"] {
     @apply w-10 h-10 top-0 right-0 bg-secondary text-white border-l border-black;
 
     svg {
@@ -242,7 +241,7 @@ header {
           @apply flex gap-1;
 
           a {
-            @apply text-[--primary]
+            @apply text-[--primary];
           }
 
           span > svg {
