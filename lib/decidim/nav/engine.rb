@@ -22,6 +22,9 @@ module Decidim
 
       initializer "decidim_nav.add_customizations", before: "decidim_comments.query_extensions" do
         config.to_prepare do
+          # Action Controller
+          ActionController::Base.helper(Decidim::Nav::ContentBlocksHelper)
+
           # Cell extensions
           Decidim::ContentBlocks::GlobalMenuCell.include(Cell::ViewModel::Partial)
 
@@ -44,9 +47,6 @@ module Decidim
           Decidim::Devise::PasswordsController.include(Decidim::Nav::PasswordsControllerExtensions)
           Decidim::Devise::ConfirmationsController.include(Decidim::Nav::ConfirmationsControllerExtensions)
           Decidim::Devise::UnlocksController.include(Decidim::Nav::UnlocksControllerExtensions)
-
-          # Helper extensions
-          Decidim::ApplicationHelper.include(Decidim::Nav::ContentBlocksHelper)
 
           # Presenter extensions
           Decidim::MenuPresenter.include(Decidim::Nav::MenuPresenterExtensions)
