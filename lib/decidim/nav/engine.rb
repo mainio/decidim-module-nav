@@ -45,6 +45,9 @@ module Decidim
           Decidim::Devise::ConfirmationsController.include(Decidim::Nav::ConfirmationsControllerExtensions)
           Decidim::Devise::UnlocksController.include(Decidim::Nav::UnlocksControllerExtensions)
 
+          # Helper extensions
+          Decidim::ApplicationHelper.include(Decidim::Nav::ContentBlocksHelper)
+
           # Presenter extensions
           Decidim::MenuPresenter.include(Decidim::Nav::MenuPresenterExtensions)
           Decidim::MenuItemPresenter.include(Decidim::Nav::MenuItemPresenterExtensions)
