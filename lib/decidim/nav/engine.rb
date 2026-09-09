@@ -22,6 +22,9 @@ module Decidim
 
       initializer "decidim_nav.add_customizations", before: "decidim_comments.query_extensions" do
         config.to_prepare do
+          # Action Controller
+          ActionController::Base.helper(Decidim::Nav::ContentBlocksHelper)
+
           # Controller extensions
           Decidim::ApplicationController.include(Decidim::Nav::ApplicationControllerExtensions)
 
