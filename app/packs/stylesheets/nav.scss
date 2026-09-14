@@ -205,10 +205,10 @@
 
 header {
   .main-bar {
-    @apply gap-8 sm:gap-4;
+    @apply flex gap-8 sm:gap-4 grid-cols-none;
 
     &__search {
-      @apply hidden lg:bottom-5 lg:relative lg:block col-span-2 col-start-5 xl:col-start-4;
+      @apply hidden col-auto lg:block;
     }
 
     &__logo {
@@ -221,7 +221,7 @@ header {
 
     &__links {
       &-desktop {
-        @apply relative bottom-5;
+        @apply ml-0;
 
         &__item {
           @apply px-0 text-center;
