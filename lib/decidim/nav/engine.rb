@@ -34,7 +34,6 @@ module Decidim
           Decidim::Blogs::PostsController.include(Decidim::Nav::PostsControllerExtensions)
           Decidim::Budgets::ProjectsController.include(Decidim::Nav::ProjectsControllerExtensions)
           Decidim::Debates::DebatesController.include(Decidim::Nav::DebatesControllerExtensions)
-          Decidim::Meetings::MeetingsController.include(Decidim::Nav::MeetingsControllerExtensions)
           Decidim::Proposals::ProposalsController.include(Decidim::Nav::ProposalsControllerExtensions)
           Decidim::Sortitions::SortitionsController.include(Decidim::Nav::SortitionsControllerExtensions)
           Decidim::Proposals::VersionsController.include(Decidim::Nav::VersionsControllerExtensions)
