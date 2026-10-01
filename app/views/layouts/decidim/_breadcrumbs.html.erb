@@ -1,0 +1,47 @@
+<% breadcrumbs = breadcrumb_items.reject do |item|
+                   item[:url].blank? && item[:label].blank?
+                 end %>
+
+<div class="container">
+  <div class="breadcrumbs-section">
+    <nav class="breadcrumb-bar" aria-label="<%= t(".label") %>">
+      <ul class="breadcrumbs">
+        <li class="bread-root">
+          <%= link_to t("decidim.menu.home"), decidim.root_path %>
+          <span aria-hidden="true" class="breadcrumbs-separator">
+            <%= icon("arrow-right-s-line", role: "img", "aria-hidden": true) %>
+          </span>
+        </li>
+        <% breadcrumbs.each_with_index do |item, index| %>
+          <% last_breadcrumb = index == breadcrumbs.size - 1 %>
+          <% account_keys = [
+              t("profile", scope: "layouts.decidim.user_menu"),
+              t("profile", scope: "layouts.decidim.user_profile")
+            ]
+          %>
+          <% account_settings = account_keys.include?(item[:label]) %>
+          <% path = URI.parse(item[:url]).path rescue item[:url] %>
+          <% last_path =
+                      !account_settings &&
+                      request.path == path %>
+          <% translated_label = translated_attribute(item[:label]) %>
+
+          <% if account_settings || (last_breadcrumb && last_path) %>
+            <li class="bread-current" aria-current="page">
+              <span><%= translated_label %></span>
+            </li>
+          <% else %>
+            <li class="collapsible">
+              <%= link_to translated_label, item[:url], data: { label: translated_label } %>
+              <% unless last_breadcrumb %>
+                <span aria-hidden="true" class="breadcrumbs-separator">
+                  <%= icon("arrow-right-s-line", role: "img", "aria-hidden": true) %>
+                </span>
+              <% end %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+</div>
