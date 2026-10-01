@@ -40,6 +40,9 @@ fi:
             success: Linkin päivitys onnistui.
       titles:
         nav: Navigaatio
+    content_blocks:
+      global_menu:
+        name: Päänavigaatio
     nav:
       admin:
         links:

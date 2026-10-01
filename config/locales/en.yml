@@ -40,6 +40,9 @@ en:
             success: The link update succeeded.
       titles:
         nav: Navigation
+    content_blocks:
+      global_menu:
+        name: Global menu
     nav:
       admin:
         links:
