@@ -1,12 +1,12 @@
 <div class="main-bar__links-desktop__item-wrapper">
   <% if available_locales.length > 3 %>
     <div class="language-choose relative">
-      <%= button_tag id: "admin-menu-trigger-responsive", data: { controller: "dropdown", target: "admin-dropdown-menu-language-responsive" }, class: "dropdown__trigger" do %>
+      <%= button_tag id: "menu-bar-trigger", data: { controller: "dropdown", target: "dropdown-menu-language" }, class: "dropdown__trigger" do %>
           <%= t("name", scope: "locale") %>
           <%= icon "arrow-down-s-line" %>
       <% end %>
 
-      <div id="admin-dropdown-menu-language-responsive" aria-hidden="true">
+      <div id="dropdown-menu-language" aria-hidden="true">
         <ul class="dropdown dropdown__bottom">
           <% (available_locales - [I18n.locale.to_s]).each do |locale| %>
             <li class="dropdown__item">

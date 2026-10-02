@@ -75,7 +75,7 @@
 }
 
 .menu__bar-element--link {
-  @apply pt-[0.75rem] pb-[0.7rem] px-8 my-1 text-primary text-lg;
+  @apply pt-[0.75rem] pb-[0.7rem] px-8 my-1 text-[--primary] text-lg;
 
   &:hover {
     &::after {
@@ -156,7 +156,7 @@
 }
 
 .mobile-language {
-  @apply flex justify-center bg-background;
+  @apply flex justify-center items-center py-2 bg-background;
 }
 
 .mobile-search-container {
@@ -224,7 +224,7 @@ header {
         @apply ml-0;
 
         &__item {
-          @apply px-0 text-center;
+          @apply px-0 text-center flex-col;
         }
       }
     }
@@ -262,7 +262,7 @@ header {
 #mobile-buttons {
   .toggle-mobile-menu,
   .main-bar__links-desktop__item {
-    @apply md:text-xs font-bold;
+    @apply md:text-xs font-bold text-[--primary];
   }
 
   .main-bar__links-desktop__item,
