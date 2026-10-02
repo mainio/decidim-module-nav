@@ -21,7 +21,7 @@ end
       <%= render partial: "decidim/nav/shared/action_panel_links", locals: { navigable: current_organization, mobile: true } %>
       <%= render partial: "layouts/decidim/header/menu" %>
       <%= render partial: "layouts/decidim/header/mobile_account_menu" %>
-      <%= render partial: "layouts/decidim/breadcrumbs" unless && controller_name == "homepage" %>
+      <%= render partial: "layouts/decidim/breadcrumbs" unless controller_name == "homepage" %>
     </div>
   </header>
 
