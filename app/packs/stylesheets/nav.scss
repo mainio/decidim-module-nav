@@ -236,6 +236,10 @@ header {
         }
       }
     }
+
+    &__notification {
+      @apply top-1.5;
+    }
   }
 
   .breadcrumbs-section {
