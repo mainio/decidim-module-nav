@@ -77,7 +77,8 @@
 .menu__bar-element--link {
   @apply pt-[0.75rem] pb-[0.7rem] px-8 my-1 text-[--primary] text-lg;
 
-  &:hover {
+  &:hover,
+  &:focus {
     &::after {
       @apply content-[""] absolute left-0 bottom-0 w-full h-0.5 bg-primary;
     }
@@ -183,8 +184,38 @@
   @apply text-xl font-bold;
 }
 
+.dropdown {
+  &__item {
+    .dropdown__button {
+      @apply text-[--primary];
+
+      svg {
+        @apply fill-[--primary];
+      }
+
+      &:hover {
+        background-color: rgb(var(--primary-rgb)) !important;
+
+        svg {
+          @apply fill-white;
+        }
+      }
+    }
+  }
+}
+
 .dropdown-menu-account-mobile {
   @apply hidden relative left-0 right-0 h-[calc(100vh-4rem)] bg-white z-50 overflow-y-auto;
+
+  .dropdown__item {
+    .dropdown__button {
+      @apply text-[--primary];
+
+      svg {
+        @apply fill-[--primary];
+      }
+    }
+  }
 
   > ul {
     @apply flex flex-col items-start;
@@ -205,14 +236,26 @@
 
 header {
   .main-bar {
-    @apply flex gap-8 sm:gap-4 grid-cols-none;
+    @apply flex gap-8 sm:gap-4 grid-cols-none pt-4 pb-5 h-auto;
 
     &__search {
       @apply hidden col-auto lg:block;
+
+      form {
+        @apply border-black;
+      }
+
+      input[type="text"] {
+        @apply h-[42px];
+
+        &::placeholder {
+          @apply text-md;
+        }
+      }
     }
 
     &__logo {
-      @apply flex flex-col items-center justify-center mr-auto col-span-3 lg:flex-row lg:justify-start lg:gap-8 lg:col-span-5 xl:col-span-4;
+      @apply flex flex-col items-center justify-center mr-auto col-span-3 lg:flex-row lg:justify-start lg:gap-8 lg:col-span-5 xl:col-span-4 prose-img:max-h-[2.35rem] md:prose-img:max-h-[3.65rem];
     }
 
     &__dropdown-trigger {
@@ -224,7 +267,15 @@ header {
         @apply ml-0;
 
         &__item {
-          @apply px-1 text-center flex-col;
+          @apply px-1 text-center flex-col text-[--primary];
+
+          &:hover {
+            @apply bg-gray-3 text-primary;
+          }
+
+          .main-bar__avatar {
+            @apply h-9 w-9 mr-0;
+          }
 
           &-wrapper {
             .language-choose {
@@ -247,7 +298,7 @@ header {
       @apply py-2;
 
       .breadcrumbs {
-        @apply flex gap-1;
+        @apply flex gap-1 sm:flex-wrap;
 
         li {
           @apply flex gap-1;
@@ -274,11 +325,8 @@ header {
 #mobile-buttons {
   .toggle-mobile-menu,
   .main-bar__links-desktop__item {
-    @apply md:text-xs font-bold text-[--primary];
-  }
+    @apply md:text-xs font-bold text-[--primary] gap-1;
 
-  .main-bar__links-desktop__item,
-  .toggle-mobile-menu {
     svg {
       @apply h-8 w-8 fill-[--primary];
     }
@@ -287,7 +335,7 @@ header {
   button {
     .mobile-account-label,
     .mobile-menu-label {
-      @apply block;
+      @apply flex;
     }
 
     [data-state="active"] {
@@ -338,7 +386,7 @@ header[data-navbar-active="mobile-account-menu"] {
       }
 
       [data-state="active"] {
-        @apply block;
+        @apply flex;
       }
     }
   }
