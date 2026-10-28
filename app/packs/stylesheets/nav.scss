@@ -298,7 +298,7 @@ header {
       @apply py-2;
 
       .breadcrumbs {
-        @apply flex gap-1 sm:flex-wrap;
+        @apply flex gap-1 flex-wrap;
 
         li {
           @apply flex gap-1;
