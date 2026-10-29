@@ -17,7 +17,7 @@
       </div>
     </div>
   <% elsif available_locales.length > 1 %>
-    <div class="simple-locales-container flex flex-row gap-2">
+    <nav class="simple-locales-container flex flex-row gap-2" aria-label="<%= t("layouts.decidim.language_chooser.choose_language") %>">
       <% available_locales.each do |locale| %>
         <%
         cls = %w(locale p-2 text-md text-black hover:underline transition)
@@ -26,11 +26,11 @@
         <%= link_to locale_name(locale),
                     decidim.locale_path(locale:),
                     method: :post,
-                    role: "menuitem",
                     lang: locale,
-                    class: cls.join(" ") %>
+                    class: cls.join(" "),
+                    aria: { current: (current_locale == locale ? "true" : nil) } %>
       <% end %>
-    </div>
+    </nav>
   <% end %>
 </div>
 
