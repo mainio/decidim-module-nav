@@ -364,7 +364,7 @@ header[data-navbar-active="mobile-menu"] {
       }
 
       [data-state="active"] {
-        @apply block;
+        @apply flex;
       }
     }
   }
