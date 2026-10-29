@@ -258,8 +258,13 @@ header {
       @apply flex flex-col items-center justify-center mr-auto col-span-3 lg:flex-row lg:justify-start lg:gap-8 lg:col-span-5 xl:col-span-4 prose-img:max-h-[2.35rem] md:prose-img:max-h-[3.65rem];
     }
 
-    &__dropdown-trigger {
-      @apply px-0;
+    &__dropdown {
+      &-trigger {
+        @apply px-0;
+      }
+      &-avatar_trigger {
+        @apply flex flex-col items-center text-secondary relative px-0 pt-0 pb-1;;
+      }
     }
 
     &__links {
