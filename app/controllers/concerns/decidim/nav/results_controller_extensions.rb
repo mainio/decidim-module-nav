@@ -6,6 +6,7 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
+        # rubocop:disable Decidim/EnforcePermissionTo
         def set_controller_breadcrumb
           controller_breadcrumb_items.concat(breadcrumb_item)
         end
@@ -31,6 +32,7 @@ module Decidim
 
           items
         end
+        # rubocop:enable Decidim/EnforcePermissionTo
       end
     end
   end
