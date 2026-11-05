@@ -13,14 +13,12 @@ module Decidim
 
         helper_method :current_participatory_space, :links_path, :link_path, :new_link_path, :edit_link_path
 
-        # rubocop:disable Decidim/EnforcePermissionTo
+        private
+
         def permission_class_chain
           space_permissions = PermissionsRegistry.chain_for(Decidim::ParticipatoryProcesses::Admin::Concerns::ParticipatoryProcessAdmin)
           [Decidim::Nav::Admin::Permissions] + space_permissions + super
         end
-        # rubocop:enable Decidim/EnforcePermissionTo
-
-        private
 
         def layout
           current_participatory_space.manifest.context(:admin).layout
